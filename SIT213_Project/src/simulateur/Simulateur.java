@@ -1,8 +1,12 @@
 package simulateur;
 import destinations.Destination;
-import sources.Source;
+import sources.*;
 import transmetteurs.Transmetteur;
+import visualisations.*;
 
+import java.security.KeyStore.TrustedCertificateEntry;
+import java.util.Random;
+import java.util.stream.IntStream;
 
 /** La classe Simulateur permet de construire et simuler une chaîne de
  * transmission composée d'une Source, d'un nombre variable de
@@ -56,9 +60,11 @@ public class Simulateur {
     public  Simulateur(String [] args) throws ArgumentsException {
     	// analyser et récupérer les arguments   	
     	analyseArguments(args);
-      
-      	// TODO : Partie à compléter
-      		
+    	if (messageAleatoire == false) {
+    		source = new SourceFixe(messageString);
+    	}
+    	
+    	source.connecter(new SondeLogique("Source", 200));
     }
    
    
@@ -84,7 +90,7 @@ public class Simulateur {
     public  void analyseArguments(String[] args)  throws  ArgumentsException {
 
     	for (int i=0;i<args.length;i++){ // traiter les arguments 1 par 1
-
+    		    		
     		if (args[i].matches("-s")){
     			affichage = true;
     		}
@@ -104,10 +110,11 @@ public class Simulateur {
     		else if (args[i].matches("-mess")){
     			i++; 
     			// traiter la valeur associee
-    			messageString = args[i];
+    			
     			if (args[i].matches("[0,1]{7,}")) { // au moins 7 digits
     				messageAleatoire = false;
     				nbBitsMess = args[i].length();
+    				messageString=args[i];
     			} 
     			else if (args[i].matches("[0-9]{1,6}")) { // de 1 à 6 chiffres
     				messageAleatoire = true;
@@ -119,11 +126,26 @@ public class Simulateur {
     				throw new ArgumentsException("Valeur du parametre -mess invalide : " + args[i]);
     		}
     		
-    		//TODO : ajouter ci-après le traitement des nouvelles options
+    		//TODO : ajouter ci-après le traitement des nouvelles options    		
 
-    		else throw new ArgumentsException("Option invalide :"+ args[i]);
+    		else throw new ArgumentsException("Option invalide :"+ args[i]);	
     	}
-      
+    	
+    	if (messageAleatoire == true) {
+    		Random randomZeroOrOne = new Random();
+			int randomInt;
+    		messageString = "";
+		
+			for (int index=0; index < nbBitsMess; index++) {
+				randomInt = randomZeroOrOne.nextInt(0,2);
+				messageString += randomInt;    					
+			}
+		}
+    	//else {
+    		//messageString = parameters.replaceAll("[^01]{7,}", "");
+    	//}
+    	
+    	//System.out.println(messageString);
     }
      
     
@@ -135,9 +157,8 @@ public class Simulateur {
      *
      */ 
     public void execute() throws Exception {      
-         
-    	// TODO : typiquement source.emettre(); 
-      	     	      
+    	
+    	source.emettre();     	      
     }
    
    	   	
