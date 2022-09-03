@@ -70,12 +70,14 @@ public class Simulateur {
     		source = new SourceAleatoire(nbBitsMess);
     	}
 
+
     	source.connecter(new SondeLogique("Source", 100));
     	
     	transmetteurLogique = new TransmetteurParfait();
     	source.connecter(transmetteurLogique);
     	destination = new DestinationFinale();
     	transmetteurLogique.connecter(destination);
+
     }
    
    
@@ -219,7 +221,9 @@ public class Simulateur {
     		System.out.println(e);
     		e.printStackTrace();
     		System.exit(-2);
+
     	}              
+
 
     }
 }

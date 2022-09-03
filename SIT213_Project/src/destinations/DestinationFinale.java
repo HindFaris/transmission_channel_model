@@ -10,4 +10,6 @@ public class DestinationFinale extends Destination <Boolean>{
 		
 		informationRecue = information;
 	}
+	
+
 }
