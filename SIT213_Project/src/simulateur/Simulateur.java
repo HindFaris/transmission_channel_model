@@ -69,17 +69,15 @@ public class Simulateur {
     	else {
     		source = new SourceAleatoire(nbBitsMess);
     	}
+
+
+    	source.connecter(new SondeLogique("Source", 100));
     	
-    	source.connecter(new SondeLogique("Source", 200));
     	transmetteurLogique = new TransmetteurParfait();
     	source.connecter(transmetteurLogique);
-    	
     	destination = new DestinationFinale();
-    	
     	transmetteurLogique.connecter(destination);
-    
-    	
-      		
+
     }
    
    
@@ -216,14 +214,17 @@ public class Simulateur {
     		for (int i = 0; i < args.length; i++) { //copier tous les paramètres de simulation
     			s += args[i] + "  ";
     		}
+    		System.out.println(simulateur.destination.getInformationRecue());
     		System.out.println(s + "  =>   TEB : " + simulateur.calculTauxErreurBinaire());
     	}
     	catch (Exception e) {
     		System.out.println(e);
     		e.printStackTrace();
     		System.exit(-2);
-    	} 
-    	
+
+    	}              
+
+
     }
 }
 
