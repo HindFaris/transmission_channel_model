@@ -1,7 +1,9 @@
 package simulateur;
 import destinations.Destination;
+import destinations.DestinationFinale;
 import sources.*;
 import transmetteurs.Transmetteur;
+import transmetteurs.TransmetteurParfait;
 import visualisations.*;
 
 import java.security.KeyStore.TrustedCertificateEntry;
@@ -68,8 +70,16 @@ public class Simulateur {
     		source = new SourceAleatoire(nbBitsMess);
     	}
     	
-
-    	source.connecter(new SondeLogique("Source", 100));
+    	source.connecter(new SondeLogique("Source", 200));
+    	transmetteurLogique = new TransmetteurParfait();
+    	source.connecter(transmetteurLogique);
+    	
+    	destination = new DestinationFinale();
+    	
+    	transmetteurLogique.connecter(destination);
+    
+    	
+      		
     }
    
    
@@ -212,7 +222,8 @@ public class Simulateur {
     		System.out.println(e);
     		e.printStackTrace();
     		System.exit(-2);
-    	}              	
+    	} 
+    	
     }
 }
 
