@@ -1,30 +1,35 @@
 package sources;
 
 import java.util.Random;
+import information.Information;
 
-public class SourceAleatoire {
+public class SourceAleatoire extends Source{
 
-
-	private int nbBitsMess;
-	private String mssg;
 
 	public SourceAleatoire (int nbBitsMess) {
 
-		this.nbBitsMess = nbBitsMess;
+
 		Random randomZeroOrOne = new Random();
 		int randomInt;
-		String messageString = "";
+
+		informationGeneree = new Information<Boolean>();
 
 		for (int index=0; index < nbBitsMess; index++) {
 			randomInt = randomZeroOrOne.nextInt(0,2);
-			messageString += randomInt;
-			
-			this.mssg = messageString;
-			
+
+			if(randomInt == 1) {
+				informationGeneree.add(true);;
+			}
+
+			else {
+				informationGeneree.add(false);
+			}
+
 		}
 
 	}
-	    
 
 }
+
+
 
