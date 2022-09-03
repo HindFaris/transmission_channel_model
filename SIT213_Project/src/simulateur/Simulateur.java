@@ -64,7 +64,7 @@ public class Simulateur {
     		source = new SourceFixe(messageString);
     	}
     	
-    	source.connecter(new SondeLogique("Source", 200));
+    	source.connecter(new SondeLogique("Source", 100));
     }
    
    

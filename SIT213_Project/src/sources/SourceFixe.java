@@ -11,12 +11,13 @@ public class SourceFixe extends Source<Boolean>{
     public SourceFixe (String binaryWord) {
         informationGeneree = new Information<Boolean>();
         for (int index = 0; index < binaryWord.length(); index++) {
-        	if (binaryWord.charAt(index) == 1) {
+        	if (binaryWord.charAt(index) == '1') {
         		informationGeneree.add(true);
         	}
         	else {
         		informationGeneree.add(false);
         	}
-        }        
+        }
+        System.out.println(informationGeneree);
     }
 }
