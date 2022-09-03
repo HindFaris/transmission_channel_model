@@ -70,9 +70,9 @@ public class Simulateur {
     		source = new SourceAleatoire(nbBitsMess);
     	}
 
-
-    	source.connecter(new SondeLogique("Source", 100));
-    	
+    	if (affichage == true) {
+    		source.connecter(new SondeLogique("Source", 100));
+    	}
     	transmetteurLogique = new TransmetteurParfait();
     	source.connecter(transmetteurLogique);
     	destination = new DestinationFinale();
@@ -171,7 +171,10 @@ public class Simulateur {
      */ 
     public void execute() throws Exception {      
     	
-    	source.emettre();     	      
+    	source.emettre(); 
+    	if (affichage == true) {
+    		transmetteurLogique.connecter(new SondeLogique("transmetteur", 200));
+    	}
     }
    
    	   	
@@ -183,9 +186,14 @@ public class Simulateur {
      */   	   
     public float  calculTauxErreurBinaire() {
 
-    	// TODO : A compléter
-
-    	return  0.0f;
+    	int nbDifferentChars = 0;
+    	for(int index = 0; index < nbBitsMess; index++) {
+    		if ((messageString.charAt(index) == 1 && destination.getInformationRecue().iemeElement(index) == false) ||
+    				(messageString.charAt(index) == 0 && destination.getInformationRecue().iemeElement(index) == true)) {
+    			nbDifferentChars += 1;
+    		}
+    	}
+    	return  nbDifferentChars/nbBitsMess;
     }
    
    
@@ -197,7 +205,7 @@ public class Simulateur {
      *  @param args les différents arguments qui serviront à l'instanciation du Simulateur.
      */
     public static void main(String [] args) { 
-
+    	
     	Simulateur simulateur = null;
 
     	try {
@@ -210,6 +218,7 @@ public class Simulateur {
 
     	try {
     		simulateur.execute();
+    		simulateur.transmetteurLogique.emettre();
     		String s = "java  Simulateur  ";
     		for (int i = 0; i < args.length; i++) { //copier tous les paramètres de simulation
     			s += args[i] + "  ";
@@ -222,8 +231,7 @@ public class Simulateur {
     		e.printStackTrace();
     		System.exit(-2);
 
-    	}              
-
+    	}   
 
     }
 }
