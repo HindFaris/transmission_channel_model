@@ -68,9 +68,8 @@ public class Simulateur {
     		source = new SourceAleatoire(nbBitsMess);
     	}
     	
-    	source.connecter(new SondeLogique("Source", 200));
-      	
-      		
+
+    	source.connecter(new SondeLogique("Source", 100));
     }
    
    
