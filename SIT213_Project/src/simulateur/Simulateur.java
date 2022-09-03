@@ -60,11 +60,17 @@ public class Simulateur {
     public  Simulateur(String [] args) throws ArgumentsException {
     	// analyser et récupérer les arguments   	
     	analyseArguments(args);
-    	if (messageAleatoire == false) {
-    		source = new SourceFixe(messageString);
+      
+    	if(messageAleatoire = false) {
+    		source = new SourceFixe(messageString);    		
+    	}
+    	else {
+    		source = new SourceAleatoire(nbBitsMess);
     	}
     	
     	source.connecter(new SondeLogique("Source", 200));
+      	
+      		
     }
    
    
