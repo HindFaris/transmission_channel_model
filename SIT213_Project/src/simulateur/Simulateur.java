@@ -29,7 +29,7 @@ public class Simulateur {
     private boolean aleatoireAvecGerme = false;
     
     /** la valeur de la semence utilisée pour les générateurs aléatoires */
-    private Integer seed = null; // pas de semence par défaut
+    private Integer seed = 0; // pas de semence par défaut
     
     /** la longueur du message aléatoire à transmettre si un message n'est pas imposé */
     private int nbBitsMess = 100; 
@@ -63,11 +63,16 @@ public class Simulateur {
     	// analyser et récupérer les arguments   	
     	analyseArguments(args);
       
-    	if(messageAleatoire = false) {
+    	if(messageAleatoire == false) {
     		source = new SourceFixe(messageString);    		
     	}
+
+    	else if(aleatoireAvecGerme == true) {
+    		source = new SourceAleatoire(100, seed);
+    	}
     	else {
-    		source = new SourceAleatoire(nbBitsMess);
+    		source = new SourceAleatoire(nbBitsMess,0);
+    		
     	}
 
     	if (affichage == true) {
@@ -124,7 +129,7 @@ public class Simulateur {
     			i++; 
     			// traiter la valeur associee
     			
-    			if (args[i].matches("[0,1]{7,}")) { // au moins 7 digits
+    			if (args[i].matches("[0,1]{7,}")) { // au moins 7 digits entre 1 et 0
     				messageAleatoire = false;
     				nbBitsMess = args[i].length();
     				messageString=args[i];
@@ -143,22 +148,8 @@ public class Simulateur {
 
     		else throw new ArgumentsException("Option invalide :"+ args[i]);	
     	}
-    	
-    	if (messageAleatoire == true) {
-    		Random randomZeroOrOne = new Random();
-			int randomInt;
-    		messageString = "";
-		
-			for (int index=0; index < nbBitsMess; index++) {
-				randomInt = randomZeroOrOne.nextInt(0,2);
-				messageString += randomInt;    					
-			}
-		}
-    	//else {
-    		//messageString = parameters.replaceAll("[^01]{7,}", "");
-    	//}
-    	
-    	//System.out.println(messageString);
+  
+    
     }
      
     
@@ -184,7 +175,7 @@ public class Simulateur {
      *
      * @return  La valeur du Taux dErreur Binaire.
      */   	   
-    public float  calculTauxErreurBinaire() {
+   /*public float  calculTauxErreurBinaire() {
 
     	int nbDifferentChars = 0;
     	for(int index = 0; index < nbBitsMess; index++) {
@@ -196,7 +187,7 @@ public class Simulateur {
     	return  nbDifferentChars/nbBitsMess;
     }
    
-   
+   */
    
    
     /** La fonction main instancie un Simulateur à l'aide des
@@ -223,8 +214,7 @@ public class Simulateur {
     		for (int i = 0; i < args.length; i++) { //copier tous les paramètres de simulation
     			s += args[i] + "  ";
     		}
-    		System.out.println(simulateur.destination.getInformationRecue());
-    		System.out.println(s + "  =>   TEB : " + simulateur.calculTauxErreurBinaire());
+    		//System.out.println(s + "  =>   TEB : " + simulateur.calculTauxErreurBinaire());
     	}
     	catch (Exception e) {
     		System.out.println(e);
