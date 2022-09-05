@@ -6,7 +6,7 @@ public class SourceFixe extends Source<Boolean>{
     
     
     /**
-     * Une source qui envoie toujours le même message
+     * Une source qui envoie toujours le mï¿½me message
      */
     public SourceFixe (String binaryWord) {
         informationGeneree = new Information<Boolean>();
@@ -18,6 +18,6 @@ public class SourceFixe extends Source<Boolean>{
         		informationGeneree.add(false);
         	}
         }
-        System.out.println(informationGeneree);
+        
     }
 }
