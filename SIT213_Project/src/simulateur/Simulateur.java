@@ -6,7 +6,7 @@ import sources.*;
 import transmetteurs.Transmetteur;
 import transmetteurs.TransmetteurParfait;
 import visualisations.*;
-
+import information.*;
 import java.security.KeyStore.TrustedCertificateEntry;
 import java.util.Random;
 import java.util.stream.IntStream;
@@ -50,6 +50,42 @@ public class Simulateur {
 	private Destination <Boolean>  destination = null;
 
 
+	
+	/**
+	 * Un simple getter qui renvoie la taille du mot  reçu à la destiation
+	 * @return int 
+	 * 			la longueur du mot reçu
+	 */
+	public int getTailleMotDestination(){
+		return destination.getLongueurInformationRecue();
+	}
+	
+	/**
+	 * Un simple getter qui renvoie un booléen disant si le message est aléatoire ou non
+	 * @return -boolean
+	 * 			vrai si le message est aléatoire. Faux sinon
+	 */
+	public boolean getMessageAleatoire() {
+		return messageAleatoire;
+	}
+
+	/**
+	 * Un simple getter qui renvoie un booleéen disant si le message a une germe ou non
+	 * @return -boolean
+	 * 			vrai si le message contient une germe. Faux sinon
+	 */
+	public boolean getAleatoireAvecGerme() {
+		return aleatoireAvecGerme;
+	}
+	
+	/**
+	 * Un simple getter qui renvoie un booleéen disant si les sondes sont actives
+	 * @return -boolean
+	 * 			vrai si les sondes sont actives. Faux sinon
+	 */
+	public boolean getAffichage() {
+		return affichage;
+	}
 	/** Le constructeur de Simulateur construit une chaîne de
 	 * transmission composée d'une Source <Boolean>, d'une Destination
 	 * <Boolean> et de Transmetteur(s) [voir la méthode
@@ -60,7 +96,7 @@ public class Simulateur {
 	 *
 	 * @throws ArgumentsException si un des arguments est incorrect
 	 *
-	 */   
+	 */  
 	public  Simulateur(String [] args) throws ArgumentsException {
 		// analyser et récupérer les arguments   	
 		analyseArguments(args);
@@ -80,9 +116,9 @@ public class Simulateur {
 		if (affichage == true) {
 			source.connecter(new SondeLogique("Source", 100));
 		}
+
 		transmetteurLogique = new TransmetteurParfait();
 		source.connecter(transmetteurLogique);
-
 		destination = new DestinationFinale();
 		transmetteurLogique.connecter(destination);
 
@@ -108,7 +144,7 @@ public class Simulateur {
 	 * @throws ArgumentsException si un des arguments est incorrect.
 	 *
 	 */   
-	public  void analyseArguments(String[] args)  throws  ArgumentsException {
+	public void analyseArguments(String[] args)  throws  ArgumentsException {
 
 		for (int i=0;i<args.length;i++){ // traiter les arguments 1 par 1
 
@@ -169,6 +205,7 @@ public class Simulateur {
 		if (affichage == true) {
 			transmetteurLogique.connecter(new SondeLogique("transmetteur", 200));
 		}
+		transmetteurLogique.emettre();
 	}
 
 
@@ -179,7 +216,7 @@ public class Simulateur {
 	 * @return  La valeur du Taux dErreur Binaire.
 	 */   	   
 	public float  calculTauxErreurBinaire() {
-		
+
 		Information <Boolean> chaineEmise = source.getInformationEmise();
 		Information <Boolean> chaineRecue = destination.getInformationRecue();
 		int nbVariablesDifferentes = 0;
@@ -212,7 +249,6 @@ public class Simulateur {
 
 		try {
 			simulateur.execute();
-			simulateur.transmetteurLogique.emettre();
 			String s = "java  Simulateur  ";
 			for (int i = 0; i < args.length; i++) { //copier tous les paramètres de simulation
 				s += args[i] + "  ";
