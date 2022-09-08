@@ -9,10 +9,10 @@ import transmetteurs.TransmetteurParfait;
 import visualisations.SondeLogique;
 
 public class SourceAleatoire extends Source{
-	private int randomInt;
 
 	public SourceAleatoire (int nbBitsMess, int seed) {
 
+		int randomInt;
 		if (seed == 0) {
 			informationGeneree = new Information<Boolean>();
 
@@ -50,10 +50,7 @@ public class SourceAleatoire extends Source{
 			String texte = informationGeneree.toString();
 		}		
 	}
-	public int getRandomInt() {
-		return randomInt;
-	}
-	
+
 	
 }
 
