@@ -18,47 +18,21 @@ public class SourceAleatoire extends Source{
 	 * 			la seed permet de rejouer une simulation si elle est différente de 0
 	 */
 	public SourceAleatoire (int nbBitsMess, int seed) {
-
-		int randomInt;
+		informationGeneree = new Information<Boolean>();
 		if (seed == 0) {
-			informationGeneree = new Information<Boolean>();
-
 			Random randomZeroOrOne = new Random();
 			for (int index=0; index < nbBitsMess; index++) {
-				randomInt = randomZeroOrOne.nextInt(0,2);
-
-				if(randomInt == 1) {
-					informationGeneree.add(true);;
-				}
-
-				else {
-					informationGeneree.add(false);
-				}
+				informationGeneree.add(randomZeroOrOne.nextBoolean());
 			}
 		}
 		
 		else {
-			informationGeneree = new Information<Boolean>();
-
 			Random randomZeroOrOne = new Random(seed);
 			for (int index=0; index < nbBitsMess; index++) {
-
-				randomInt = randomZeroOrOne.nextInt(0,2);
-
-				if(randomInt == 1) {
-					informationGeneree.add(true);;
-				}
-
-				else {
-					informationGeneree.add(false);
-				}
-				
+				informationGeneree.add(randomZeroOrOne.nextBoolean());
 			}
-			String texte = informationGeneree.toString();
 		}		
 	}
-
-	
 }
 
 

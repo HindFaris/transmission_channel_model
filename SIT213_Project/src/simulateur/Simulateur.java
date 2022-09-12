@@ -34,7 +34,7 @@ public class Simulateur {
 	private Integer seed = 0; // pas de semence par défaut
 
 	/** la longueur du message aléatoire à transmettre si un message n'est pas imposé */
-	private int nbBitsMess = 100; 
+	private int nbBitsMess = 100;
 
 	/** la chaîne de caractères correspondant à m dans l'argument -mess m */
 	private String messageString = "100";
@@ -106,22 +106,25 @@ public class Simulateur {
 		}
 
 		else if(aleatoireAvecGerme == true) {
-			source = new SourceAleatoire(100, seed);
+			source = new SourceAleatoire(nbBitsMess, seed);
 		}
 		else {
 			source = new SourceAleatoire(nbBitsMess,0);
 
 		}
-
-		if (affichage == true) {
-			source.connecter(new SondeLogique("Source", 100));
-		}
-
+		//initialisation des equipements
 		transmetteurLogique = new TransmetteurParfait();
-		source.connecter(transmetteurLogique);
 		destination = new DestinationFinale();
+		// ajout des sondes source et transmetteur si affichage est vrai
+		if (affichage) {
+			source.connecter(new SondeLogique("Source", 200));
+			transmetteurLogique.connecter(new SondeLogique("Transmetteur", 200));
+ 
+		}		
+		//connexion des equipements entre eux
+		source.connecter(transmetteurLogique);
 		transmetteurLogique.connecter(destination);
-
+		
 	}
 
 
@@ -183,7 +186,7 @@ public class Simulateur {
 					throw new ArgumentsException("Valeur du parametre -mess invalide : " + args[i]);
 			}
 
-			//TODO : ajouter ci-après le traitement des nouvelles options    		
+			// TODO : ajouter ci-après le traitement des nouvelles options    		
 
 			else throw new ArgumentsException("Option invalide :"+ args[i]);	
 		}
@@ -200,11 +203,7 @@ public class Simulateur {
 	 *
 	 */ 
 	public void execute() throws Exception {      
-
-		source.emettre(); 
-		if (affichage == true) {
-			transmetteurLogique.connecter(new SondeLogique("transmetteur", 200));
-		}
+		source.emettre();
 		transmetteurLogique.emettre();
 	}
 
@@ -220,12 +219,12 @@ public class Simulateur {
 		Information <Boolean> chaineEmise = source.getInformationEmise();
 		Information <Boolean> chaineRecue = destination.getInformationRecue();
 		int nbVariablesDifferentes = 0;
-		for(int indice = 0; indice < nbBitsMess; indice++) {
+		for(int indice = 0; indice < source.getInformationEmise().nbElements(); indice++) {
 			if ((chaineEmise.iemeElement(indice) != chaineRecue.iemeElement(indice))) {
 				nbVariablesDifferentes += 1;
 			}
 		}
-		return  nbVariablesDifferentes/nbBitsMess;
+		return  nbVariablesDifferentes/source.getInformationEmise().nbElements();
 	}
 
 
@@ -261,7 +260,7 @@ public class Simulateur {
 			System.exit(-2);
 
 		}   
-
+		
 	}
 }
 
