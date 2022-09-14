@@ -15,7 +15,7 @@ public abstract class Signal<R,E> {
 		signalEntree = new Information<E>();
 	}
 	
-	public Signal(Information<E> informationRecue, int nbEchantillons, float min, float max) {
+	public Signal (Information<E> informationRecue, int nbEchantillons, float min, float max) {
 		signalEntree = informationRecue;
 	}
 	
