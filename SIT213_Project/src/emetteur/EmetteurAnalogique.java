@@ -11,6 +11,8 @@ public class EmetteurAnalogique extends Transmetteur<Boolean, Float>{
 	
 	private String typeEmmeteur;
 	private int nbEchantillons;
+	private float min=0f;
+	private float max=1f;
 	
 	public EmetteurAnalogique(String _typeEmetteur, int _nbEchantillons) {
 		super();
@@ -29,15 +31,15 @@ public class EmetteurAnalogique extends Transmetteur<Boolean, Float>{
 	public void emettre() throws InformationNonConformeException{
 		
 		if(typeEmmeteur.equalsIgnoreCase("RZ")) {
-			Signal<Boolean,Float> signal = new SignalRZ<>(informationRecue, nbEchantillons);
+			Signal<Boolean,Float> signal = new SignalRZ<>(informationRecue, nbEchantillons, min, max);
 			informationEmise = signal.generer();
 		}
 		else if(typeEmmeteur.equalsIgnoreCase("NRZ")) {
-			Signal<Boolean,Float> signal = new SignalNRZ<>(informationRecue, nbEchantillons);
+			Signal<Boolean,Float> signal = new SignalNRZ<>(informationRecue, nbEchantillons, min, max);
 			informationEmise = signal.generer();
 		}
 		else if(typeEmmeteur.equalsIgnoreCase("NRZT")) {
-			Signal<Boolean,Float> signal = new SignalNRZT<>(informationRecue, nbEchantillons);
+			Signal<Boolean,Float> signal = new SignalNRZT<>(informationRecue, nbEchantillons, min, max);
 			informationEmise = signal.generer();
 		}
 		else {

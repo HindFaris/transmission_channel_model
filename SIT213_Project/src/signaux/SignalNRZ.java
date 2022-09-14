@@ -5,10 +5,14 @@ public class SignalNRZ extends Signal<Float,Boolean>{
 	public void generer() {
 		for(Boolean bit : signalEntree) {
 			if (bit == true) {
-				signalSortieInformation.add((float)5);
+				for(int index = 0; index < nbEchantillon; index++) {
+					signalSortieInformation.add(max);
+				}
 			}
 			else {
-				signalSortieInformation.add((float)-5);
+				for(int index = 0; index < nbEchantillon; index++) {
+					signalSortieInformation.add(min);
+				}
 			}
 		}
 	}

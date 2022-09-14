@@ -232,7 +232,7 @@ public class Simulateur {
 			}
 
 
-			// TODO : ajouter ci-après le traitement des nouvelles options    		
+			// TODO : ajouter la lecture du min et max + throw exception si min>=max
 
 			else throw new ArgumentsException("Option invalide :"+ args[i]);	
 		}

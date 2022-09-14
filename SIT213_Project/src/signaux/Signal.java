@@ -6,16 +6,16 @@ import information.Information;
 public abstract class Signal<R,E> {
 	
 	protected Information<E> signalEntree;
-	
 	protected Information<R> signalSortieInformation;
-	
-	protected int nbEchantillon;
+	protected int nbEchantillon = 30;
+	protected float min=0f;
+	protected float max=1f;
 	
 	public Signal() {
 		signalEntree = new Information<E>();
 	}
 	
-	public Signal(Information<E> informationRecue, int nbEchantillons) {
+	public Signal(Information<E> informationRecue, int nbEchantillons, float min, float max) {
 		signalEntree = informationRecue;
 	}
 	
