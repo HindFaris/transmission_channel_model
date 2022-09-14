@@ -1,86 +1,80 @@
 package recepteur;
 
 
-import transmetteurs.TransmetteurInterface;
-
-import java.util.LinkedList;
-
+import destinations.DestinationInterface;
 import destinations.*;
-import information.Information;
-import information.InformationNonConformeException;
+import information.*;
+import transmetteurs.*;
+import signaux.*;
 
-public abstract class Recepteur <R,E> implements TransmetteurInterface <E>, DestinationInterface <R> {
 
-	
-	 /** 
-     * la liste des composants destination connectés en sortie du transmetteur 
-     */
-    protected LinkedList <DestinationInterface <E>> DestinationsConnectees;
-   
-    /** 
-     * l'information reçue en entrée du transmetteur 
-     */
-    protected Information <R>  informationRecue;
+public class Recepteur extends Transmetteur<Float, Boolean> {
+
+
+	private int nbEchantillons;
+	private float min=0f;
+	private float max=1f;
+
+
+
+	public Recepteur(int _nbEchantillons, float min, float max) {
+		this.min=min;
+		this.max=max;
+		nbEchantillons=_nbEchantillons;
 		
-    /** 
-     * l'information émise en sortie du transmetteur
-     */		
-    protected Information <E>  informationEmise;
-   
-    /** 
-     * un constructeur factorisant les initialisations communes aux
-     * réalisations de la classe abstraite Transmetteur
-     */
-    public Recepteur() {
-    DestinationsConnectees = new LinkedList <DestinationInterface <E>> ();
-	informationRecue = null;
-	informationEmise = null;
-    }
-   	
-    /**
-     * retourne la dernière information reçue en entrée du
-     * transmetteur
-     * @return une information   
-     */
-	public Information <R>  getInformationTransmetteurRecue() {
-		return this.informationRecue;
 	}
 
-	/**
-	 * retourne la dernière information émise en sortie du
-	 * transmetteur
-	 * @return une information   
-	 */
-	public Information <E>  getInformationTransmetteurEmise() {
-		return this.informationEmise;
+	public  void recevoir(Information <Float> information) throws InformationNonConformeException{
+		informationRecue = information;
+		try {
+			dechiffrer(informationRecue);
+			}
+			catch(InformationNonConformeException E) {
+				
+			}
+		this.emettre();
 	}
-	
-    /**
-     * connecte une destination à la sortie du transmetteur
-     * @param destination  la destination à connecter
-     */
-    public void connecter (DestinationInterface <E> destination) {
-    	DestinationsConnectees.add(destination); 
-    }
 
-    /**
-     * déconnecte une destination de la la sortie du transmetteur
-     * @param destination  la destination à déconnecter
-     */
-    public void deconnecter (DestinationInterface <E> destination) {
-    	DestinationsConnectees.remove(destination); 
-    }
-   	    
-    /**
-     * reçoit une information.  Cette méthode, en fin d'exécution,
-     * appelle la méthode émettre.
-     * @param information  l'information  reçue
-     */
-    public abstract void recevoirDepuisTransmetteur(Information <R> information) throws InformationNonConformeException;
+	public  void dechiffrer(Information <Float> information) throws InformationNonConformeException{
+		
+		informationEmise  = new Information<Boolean>(); 
+		float moyenneTemp = 0f;
+		int tailleDesBooleens = information.nbElements()/nbEchantillons;
 
-	/**
-	 * émet l'information construite par l'emetteur
-	 */
-	public abstract void emettreDepuisRecepteur() throws InformationNonConformeException;   
+		for(int index = 0 ; index < tailleDesBooleens ; index++){
+			moyenneTemp=0;
+			for (int j = 0; j < nbEchantillons; j++) {
+				moyenneTemp += information.iemeElement(j+index*j);
+			}
+			moyenneTemp = moyenneTemp/nbEchantillons;
+			System.out.println(moyenneTemp);
+			if(moyenneTemp >= (max+min)/2) {
+				informationEmise.add(true);
+			}
+			else {
+				informationEmise.add(false);
+			}
+			
+			
+		
+		}
+		for (int index=0;index<informationEmise.nbElements();index++) {
+			System.out.println(informationEmise.iemeElement(index));
+		}
+
+		this.emettre();
+	}
+
+
+	public void emettre() throws InformationNonConformeException{
+
+		for (DestinationInterface <Boolean> destinationConnectee : destinationsConnectees) {
+			destinationConnectee.recevoir(informationEmise);
+		}
+		
+
+	}
+
+
 
 }

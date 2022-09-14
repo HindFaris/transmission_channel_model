@@ -8,35 +8,35 @@ import information.*;
  * @author prou
  */
 public  abstract class Destination <T> implements DestinationInterface <T> {
-    
-    /** 
-     * l'information reçue par la destination
-     */
-    protected Information <T>  informationRecue;
-    
-    /** 
-     * un constructeur factorisant les initialisations communes aux
-     * réalisations de la classe abstraite Destination
-     */
-    public Destination() {
-	informationRecue = null;
-    }
 
-    /**
-     * retourne la dernière information reçue par la destination
-     * @return une information   
-     */
-    public Information  <T>  getInformationRecue() {
-	return this.informationRecue;
-    }
-    
-    public int getLongueurInformationRecue() {
-    	return informationRecue.nbElements();
-    }
-   	    
-    /**
-     * reçoit une information
-     * @param information  l'information  à recevoir
-     */
-    public  abstract void recevoir(Information <T> information) throws InformationNonConformeException;  
+	/** 
+	 * l'information reçue par la destination
+	 */
+	protected Information <T>  informationRecue;
+
+	/** 
+	 * un constructeur factorisant les initialisations communes aux
+	 * réalisations de la classe abstraite Destination
+	 */
+	public Destination() {
+		informationRecue = null;
+	}
+
+	/**
+	 * retourne la dernière information reçue par la destination
+	 * @return une information   
+	 */
+	public Information  <T>  getInformationRecue() {
+		return this.informationRecue;
+	}
+
+	public int getLongueurInformationRecue() {
+		return informationRecue.nbElements();
+	}
+
+	/**
+	 * reçoit une information
+	 * @param information  l'information  à recevoir
+	 */
+	public  abstract void recevoir(Information <T> information) throws InformationNonConformeException;  
 }
