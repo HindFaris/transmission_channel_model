@@ -22,9 +22,4 @@ public class TransmetteurParfait extends Transmetteur<Boolean, Boolean>{
 		informationEmise = informationRecue;   	
 	}
 
-
-
-
-
-
 }

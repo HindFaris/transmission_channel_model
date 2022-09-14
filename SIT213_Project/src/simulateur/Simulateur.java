@@ -1,16 +1,18 @@
 package simulateur;
 import destinations.Destination;
 import destinations.DestinationFinale;
-import information.Information;
 import sources.*;
 import transmetteurs.Transmetteur;
+import transmetteurs.TransmetteurAnalogiqueParfait;
 import transmetteurs.TransmetteurParfait;
 import visualisations.*;
 import information.*;
+import recepteur.*;
+import java.nio.charset.CoderMalfunctionError;
 import java.security.KeyStore.TrustedCertificateEntry;
 import java.util.Random;
 import java.util.stream.IntStream;
-
+import emetteur.*;
 /** La classe Simulateur permet de construire et simuler une chaîne de
  * transmission composée d'une Source, d'un nombre variable de
  * Transmetteur(s) et d'une Destination.
@@ -20,7 +22,7 @@ import java.util.stream.IntStream;
  */
 public class Simulateur {
 
-	private int nbEch=0;
+	private int nbEchantillon=30;
 
 	private float min=0.0f;
 
@@ -31,6 +33,8 @@ public class Simulateur {
 	private boolean SignalNRZT = false;
 
 	private boolean SignalRZ = false;
+
+	private String formSignal="NRZ";
 
 	/** indique si le Simulateur utilise des sondes d'affichage */
 	private boolean affichage = false;
@@ -57,10 +61,17 @@ public class Simulateur {
 	/** le  composant Transmetteur parfait logique de la chaine de transmission */
 	private Transmetteur <Boolean, Boolean>  transmetteurLogique = null;
 
+	/** le  composant Transmetteur parfait logique de la chaine de transmission */
+	private Transmetteur <Float, Float>  transmetteurAnalogiqueParfait = null;
+
 	/** le  composant Destination de la chaine de transmission */
 	private Destination <Boolean>  destination = null;
 
+	/** le  composant Transmetteur parfait logique de la chaine de transmission */
+	private Transmetteur <Boolean, Float>  emetteurAnalogique = null;
 
+	/** le  composant Transmetteur parfait logique de la chaine de transmission */
+	private Transmetteur <Float, Boolean >  recepteur = null;
 
 	/**
 	 * Un simple getter qui renvoie la taille du mot  reçu à la destiation
@@ -109,7 +120,7 @@ public class Simulateur {
 	 *
 	 */  
 	public  Simulateur(String [] args) throws ArgumentsException {
-		// analyser et récupérer les arguments   	
+
 		analyseArguments(args);
 
 		if(messageAleatoire == false) {
@@ -123,18 +134,39 @@ public class Simulateur {
 			source = new SourceAleatoire(nbBitsMess,0);
 
 		}
-		//initialisation des equipements
-		transmetteurLogique = new TransmetteurParfait();
-		destination = new DestinationFinale();
-		// ajout des sondes source et transmetteur si affichage est vrai
-		if (affichage) {
-			source.connecter(new SondeLogique("Source", 200));
-			transmetteurLogique.connecter(new SondeLogique("Transmetteur", 200));
 
-		}		
-		//connexion des equipements entre eux
-		source.connecter(transmetteurLogique);
-		transmetteurLogique.connecter(destination);
+
+
+		// test de 2éme étape nbEchantillon, min, max
+
+		if (formSignal.equals("NRZ")) {
+
+			emetteurAnalogique = new EmetteurAnalogique(formSignal, nbEchantillon, min, max);
+			transmetteurAnalogiqueParfait = new TransmetteurAnalogiqueParfait();
+			recepteur = new Recepteur(nbEchantillon,min,max);
+			destination = new DestinationFinale();
+			
+			if (affichage) {
+				source.connecter(new SondeLogique("Source", 200));
+				emetteurAnalogique.connecter(new SondeAnalogique("EmetteurAnalogique"));
+				transmetteurAnalogiqueParfait.connecter(new SondeAnalogique("Transmetteur Analogique parfait"));
+				recepteur.connecter(new SondeLogique("Recepteur", 200));
+			}
+			source.connecter(emetteurAnalogique);
+			emetteurAnalogique.connecter(transmetteurAnalogiqueParfait);
+			transmetteurAnalogiqueParfait.connecter(recepteur);
+			recepteur.connecter(destination);
+		}
+
+
+		else if (formSignal.equals("RZ")){
+			//to do
+		}
+
+		else if (formSignal.equals("NRZT") ){
+			//to do
+		}
+
 
 	}
 
@@ -197,31 +229,36 @@ public class Simulateur {
 					throw new ArgumentsException("Valeur du parametre -mess invalide : " + args[i]);
 			}
 
-			else if(args[i].matches("-mess")){
+			else if(args[i].matches("-form")){
 				i++; 
 
 				if (args[i].matches("NRZ")) { 
-					SignalNRZ = true;
+					formSignal = "NRZ";
 				} 
 				else if (args[i].matches("NRZT")) { 
-					SignalNRZT = true;
+					formSignal = "NRZT";
 				}
 				else if (args[i].matches("RZ")) { 
-					SignalRZ = true;
+					formSignal = "RZ";
 				}
 
+				else 
+					throw new ArgumentsException("Valeur du parametre -mess invalide : " + args[i]);
+
 			}
 
-			else if(args[i].matches("nbEch")){
+			else if(args[i].matches("-nbEch")){
 				i++; 		
-				nbEch=Integer.valueOf(args[i]);
+				nbEchantillon=Integer.valueOf(args[i]);
 			}
 
-			else if(args[i].matches("ampl")){
+			else if(args[i].matches("-ampl")){
 				i++; 
+
+				//Ajouter un test de integer ou pas
 				try {
 					min=Integer.valueOf(args[i]);
-					i++; 
+					i++;
 					max=Integer.valueOf(args[i]);
 				}
 				catch (Exception e) {
@@ -245,9 +282,16 @@ public class Simulateur {
 	 * @throws Exception si un problème survient lors de l'exécution
 	 *
 	 */ 
-	public void execute() throws Exception {      
+	public void executelogique() throws Exception {      
 		source.emettre();
-		transmetteurLogique.emettre();
+		transmetteurLogique.emettre();	
+	}
+
+	public void executeanalogique() throws Exception {      
+		source.emettre();
+		emetteurAnalogique.emettre();
+		transmetteurAnalogiqueParfait.emettre();
+		//recepteur.emettre();
 	}
 
 
@@ -257,6 +301,7 @@ public class Simulateur {
 	 *
 	 * @return  La valeur du Taux dErreur Binaire.
 	 */   	   
+	/*
 	public float  calculTauxErreurBinaire() {
 
 		Information <Boolean> chaineEmise = source.getInformationEmise();
@@ -269,7 +314,7 @@ public class Simulateur {
 		}
 		return  nbVariablesDifferentes/source.getInformationEmise().nbElements();
 	}
-
+	 */
 
 
 	/** La fonction main instancie un Simulateur à l'aide des
@@ -280,7 +325,6 @@ public class Simulateur {
 	public static void main(String [] args) { 
 
 		Simulateur simulateur = null;
-
 		try {
 			simulateur = new Simulateur(args);
 		}
@@ -290,12 +334,13 @@ public class Simulateur {
 		} 
 
 		try {
-			simulateur.execute();
+			//simulateur.executelogique();
+			simulateur.executeanalogique();
 			String s = "java  Simulateur  ";
 			for (int i = 0; i < args.length; i++) { //copier tous les paramètres de simulation
 				s += args[i] + "  ";
 			}
-			System.out.println(s + "  =>   TEB : " + simulateur.calculTauxErreurBinaire());
+			//System.out.println(s + "  =>   TEB : " + simulateur.calculTauxErreurBinaire());
 		}
 		catch (Exception e) {
 			System.out.println(e);

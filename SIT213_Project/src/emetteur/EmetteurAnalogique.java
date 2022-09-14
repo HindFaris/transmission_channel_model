@@ -14,8 +14,9 @@ public class EmetteurAnalogique extends Transmetteur<Boolean, Float>{
 	private float min=0f;
 	private float max=1f;
 	
-	public EmetteurAnalogique(String _typeEmetteur, int _nbEchantillons) {
-		super();
+	public EmetteurAnalogique(String _typeEmetteur, int _nbEchantillons, float min, float max) {
+		this.min = min;
+		this.max = max;
 		typeEmmeteur=_typeEmetteur;
 		nbEchantillons=_nbEchantillons;
 	}
@@ -31,16 +32,19 @@ public class EmetteurAnalogique extends Transmetteur<Boolean, Float>{
 	public void emettre() throws InformationNonConformeException{
 		
 		if(typeEmmeteur.equalsIgnoreCase("RZ")) {
-			Signal<Boolean,Float> signal = new SignalRZ<Boolean, Float>(informationRecue, nbEchantillons, min, max);
-			informationEmise = signal.generer();
+			SignalNRZ signal = new SignalNRZ(informationRecue, nbEchantillons, min, max);
+			signal.generer();
+			informationEmise = signal.getSignalSortieInformation();
 		}
 		else if(typeEmmeteur.equalsIgnoreCase("NRZ")) {
 			SignalNRZ signal = new SignalNRZ(informationRecue, nbEchantillons, min, max);
-			informationEmise = signal.generer();
+			signal.generer();
+			informationEmise = signal.getSignalSortieInformation();
 		}
 		else if(typeEmmeteur.equalsIgnoreCase("NRZT")) {
-			Signal<Boolean,Float> signal = new SignalNRZT<>(informationRecue, nbEchantillons, min, max);
-			informationEmise = signal.generer();
+			SignalNRZ signal = new SignalNRZ(informationRecue, nbEchantillons, min, max);
+			signal.generer();
+			informationEmise = signal.getSignalSortieInformation();
 		}
 		else {
 			throw new InformationNonConformeException("Vous devez spécifier RZ, NRZ ou NRZT en"

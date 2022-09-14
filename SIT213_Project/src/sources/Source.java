@@ -1,6 +1,7 @@
 package sources;
 
 import information.*;
+import transmetteurs.Transmetteur;
 import destinations.DestinationInterface;
 import java.util.*;
 
@@ -15,6 +16,8 @@ public  abstract class Source <T> implements  SourceInterface <T> {
 	 * la liste des composants destination connectés
 	 */
 	protected LinkedList <DestinationInterface <T>> destinationsConnectees;
+	
+	protected LinkedList <Transmetteur <Boolean,Float>> transmetteursConnectees;
 
 	/** 
 	 * l'information générée par la source
@@ -65,9 +68,13 @@ public  abstract class Source <T> implements  SourceInterface <T> {
 	 */
 	public   void emettre() throws InformationNonConformeException {
 		// émission vers les composants connectés
-		for (DestinationInterface <T> destinationConnectee : destinationsConnectees) {
+		
+		// Logique
+		for (DestinationInterface<T> destinationConnectee : destinationsConnectees) {
 			destinationConnectee.recevoir(informationGeneree);
 		}
-		this.informationEmise = informationGeneree;   			 			      
+		
+		this.informationEmise = informationGeneree;   	
+		
 	}
 }
