@@ -20,6 +20,12 @@ import java.util.stream.IntStream;
  */
 public class Simulateur {
 
+	
+	private boolean SignalNRZ = false;
+	
+	private boolean SignalNRZT = false;
+	
+	private boolean SignalRZ = false;
 
 	/** indique si le Simulateur utilise des sondes d'affichage */
 	private boolean affichage = false;
@@ -184,6 +190,22 @@ public class Simulateur {
 				}
 				else 
 					throw new ArgumentsException("Valeur du parametre -mess invalide : " + args[i]);
+			}
+			
+			else if(args[i].matches("-mess")){
+				i++; 
+				
+				if (args[i].matches("NRZ")) { 
+					SignalNRZ = true;
+				} 
+				else if (args[i].matches("NRZT")) { 
+					SignalNRZT = true;
+				}
+				else if (args[i].matches("RZ")) { 
+					SignalRZ = true;
+				}
+	
+				
 			}
 
 			// TODO : ajouter ci-après le traitement des nouvelles options    		
