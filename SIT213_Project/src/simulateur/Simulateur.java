@@ -222,7 +222,7 @@ public class Simulateur {
 				try {
 					min=Integer.valueOf(args[i]);
 					i++; 
-					min=Integer.valueOf(args[i]);
+					max=Integer.valueOf(args[i]);
 				}
 				catch (Exception e) {
 					System.out.println("erreur dans les parmètres "); 
@@ -230,9 +230,6 @@ public class Simulateur {
 				} 
 
 			}
-
-
-			// TODO : ajouter la lecture du min et max + throw exception si min>=max
 
 			else throw new ArgumentsException("Option invalide :"+ args[i]);	
 		}
