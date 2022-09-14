@@ -20,11 +20,16 @@ import java.util.stream.IntStream;
  */
 public class Simulateur {
 
-	
+	private int nbEch=0;
+
+	private float min=0.0f;
+
+	private float max=1.0f;
+
 	private boolean SignalNRZ = false;
-	
+
 	private boolean SignalNRZT = false;
-	
+
 	private boolean SignalRZ = false;
 
 	/** indique si le Simulateur utilise des sondes d'affichage */
@@ -56,7 +61,7 @@ public class Simulateur {
 	private Destination <Boolean>  destination = null;
 
 
-	
+
 	/**
 	 * Un simple getter qui renvoie la taille du mot  reçu à la destiation
 	 * @return int 
@@ -65,7 +70,7 @@ public class Simulateur {
 	public int getTailleMotDestination(){
 		return destination.getLongueurInformationRecue();
 	}
-	
+
 	/**
 	 * Un simple getter qui renvoie un booléen disant si le message est aléatoire ou non
 	 * @return -boolean
@@ -83,7 +88,7 @@ public class Simulateur {
 	public boolean getAleatoireAvecGerme() {
 		return aleatoireAvecGerme;
 	}
-	
+
 	/**
 	 * Un simple getter qui renvoie un booleéen disant si les sondes sont actives
 	 * @return -boolean
@@ -125,12 +130,12 @@ public class Simulateur {
 		if (affichage) {
 			source.connecter(new SondeLogique("Source", 200));
 			transmetteurLogique.connecter(new SondeLogique("Transmetteur", 200));
- 
+
 		}		
 		//connexion des equipements entre eux
 		source.connecter(transmetteurLogique);
 		transmetteurLogique.connecter(destination);
-		
+
 	}
 
 
@@ -191,10 +196,10 @@ public class Simulateur {
 				else 
 					throw new ArgumentsException("Valeur du parametre -mess invalide : " + args[i]);
 			}
-			
+
 			else if(args[i].matches("-mess")){
 				i++; 
-				
+
 				if (args[i].matches("NRZ")) { 
 					SignalNRZ = true;
 				} 
@@ -204,9 +209,28 @@ public class Simulateur {
 				else if (args[i].matches("RZ")) { 
 					SignalRZ = true;
 				}
-	
-				
+
 			}
+
+			else if(args[i].matches("nbEch")){
+				i++; 		
+				nbEch=Integer.valueOf(args[i]);
+			}
+
+			else if(args[i].matches("ampl")){
+				i++; 
+				try {
+					min=Integer.valueOf(args[i]);
+					i++; 
+					min=Integer.valueOf(args[i]);
+				}
+				catch (Exception e) {
+					System.out.println("erreur dans les parmètres "); 
+					System.exit(-1);
+				} 
+
+			}
+
 
 			// TODO : ajouter ci-après le traitement des nouvelles options    		
 
@@ -282,7 +306,7 @@ public class Simulateur {
 			System.exit(-2);
 
 		}   
-		
+
 	}
 }
 
