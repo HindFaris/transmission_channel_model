@@ -1,10 +1,15 @@
 package signaux;
 
-import information.Information;
+public class SignalNRZ extends Signal<Float,Boolean>{
 
-public class SignalNRZ<R,E> extends Signal<R,E>{
-
-	public Information<R> generer() {
-		
+	public void generer() {
+		for(Boolean bit : signalEntree) {
+			if (bit == true) {
+				signalSortieInformation.add((float)5);
+			}
+			else {
+				signalSortieInformation.add((float)-5);
+			}
+		}
 	}
 }
