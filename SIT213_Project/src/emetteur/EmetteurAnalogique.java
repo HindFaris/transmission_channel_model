@@ -54,6 +54,7 @@ public class EmetteurAnalogique extends Transmetteur<Boolean, Float>{
 		for (DestinationInterface<Float> transmetteurConnectee : destinationsConnectees) {
 			transmetteurConnectee.recevoir(informationEmise);
 		}
+	
 		 
 	}
 }
