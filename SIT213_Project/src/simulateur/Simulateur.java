@@ -174,7 +174,7 @@ public class Simulateur {
 	 * <br> 
 	 * <dl>
 	 * <dt> -mess m  </dt><dd> m (String) constitué de 7 ou plus digits à 0 | 1, le message à transmettre</dd>
-	 * <dt> -mess m  </dt><dd> m (int) constitué de 1 à 6 digits, le nombre de bits du message "aléatoire" à transmettre</dd> 
+	 * <dt> -mess m  </dt><dd> m (int) constitué de 1 à 6 digits, le nombre de bits du message "aléatoire" à transmettre</dd> 
 	 * <dt> -s </dt><dd> pour demander l'utilisation des sondes d'affichage</dd>
 	 * <dt> -seed v </dt><dd> v (int) d'initialisation pour les générateurs aléatoires</dd> 
 	 * </dl>
@@ -327,4 +327,3 @@ public class Simulateur {
 
 	}
 }
-
