@@ -27,13 +27,7 @@ public class Simulateur {
 	private float min=0.0f;
 
 	private float max=1.0f;
-
-	private boolean SignalNRZ = false;
-
-	private boolean SignalNRZT = false;
-
-	private boolean SignalRZ = false;
-
+	
 	private String formSignal="NRZ";
 
 	/** indique si le Simulateur utilise des sondes d'affichage */

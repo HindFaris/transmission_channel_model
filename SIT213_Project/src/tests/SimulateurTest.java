@@ -13,7 +13,7 @@ class SimulateurTest {
 
 		//transmetteurLogique
 		Simulateur simulateur =  new Simulateur(new String[] {"-mess","1010010001"});
-		simulateur.execute();
+		simulateur.executeanalogique();
 		assertEquals( 0.0 , simulateur.calculTauxErreurBinaire() , "Le taux d'erreur binaire n'est pas de 0");
 
 		//Nous ne pouvons pas tester un cas ou le taux d'erreur binaire est différet de 0 car nous n'avons qu'un transmetteur parfait à disposition
