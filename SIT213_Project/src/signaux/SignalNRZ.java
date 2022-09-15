@@ -12,7 +12,7 @@ public class SignalNRZ extends Signal<Float,Boolean>{
 	}
 
 	public void generer() {
-
+//
 		signalSortieInformation  = new Information<Float>();
 		signalSortieInformation.add((max+min)/2);
 
