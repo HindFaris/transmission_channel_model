@@ -22,13 +22,17 @@ import emetteur.*;
  */
 public class Simulateur {
 
+	/** indique si le nombre d'échantillon à utiliser */
 	private int nbEchantillon=30;
 
+	/** indique le minimum en emplitude*/
 	private float min=0.0f;
 
+	/** indique le maximum en emplitude*/
 	private float max=1.0f;
 
-	private String formSignal="NRZ";
+	/** indique le maximum en emplitude*/
+	private String formSignal="RZ";
 
 	/** indique si le Simulateur utilise des sondes d'affichage */
 	private boolean affichage = false;
@@ -125,29 +129,24 @@ public class Simulateur {
 			source = new SourceAleatoire(nbBitsMess,0);
 
 		}
-
+		//permet d'initialiser les éléments de la chaine
 		emetteurAnalogique = new EmetteurAnalogique(formSignal, nbEchantillon, min, max);
 		transmetteurAnalogiqueParfait = new TransmetteurAnalogiqueParfait();
 		recepteur = new Recepteur(nbEchantillon,min,max);
 		destination = new DestinationFinale();
-
-
+		//permet de connecter les sondes
 		if (affichage) {
 			source.connecter(new SondeLogique("Source", 200));
 			emetteurAnalogique.connecter(new SondeAnalogique("Emetteur Analogique"));
 			transmetteurAnalogiqueParfait.connecter(new SondeAnalogique("Transmetteur Analogique parfait"));
 			recepteur.connecter(new SondeLogique("Recepteur", 200));
 		}
+		//permet de connecter les éléments de la chaine entre eux
 		source.connecter(emetteurAnalogique);
 		emetteurAnalogique.connecter(transmetteurAnalogiqueParfait);
 		transmetteurAnalogiqueParfait.connecter(recepteur);
 		recepteur.connecter(destination);
-
-
-
-
 	}
-
 
 
 	/** La méthode analyseArguments extrait d'un tableau de chaînes de
@@ -163,6 +162,9 @@ public class Simulateur {
 	 * <dt> -mess m  </dt><dd> m (int) constitué de 1 à 6 digits, le nombre de bits du message "aléatoire" à transmettre</dd> 
 	 * <dt> -s </dt><dd> pour demander l'utilisation des sondes d'affichage</dd>
 	 * <dt> -seed v </dt><dd> v (int) d'initialisation pour les générateurs aléatoires</dd> 
+	 * <dt> -form v </dt><dd> v (String) d'initialiser le type du codage du signal à emettre</dd> 
+	 * <dt> -nbEch v </dt><dd> v (int) choisir le nombre d'échantillon permettront à coder le signal à emettre</dd> 
+	 * <dt> -ampl v </dt><dd> v (int) choisir l'amplitude du signal à emettre</dd> 
 	 * </dl>
 	 *
 	 * @throws ArgumentsException si un des arguments est incorrect.
@@ -208,8 +210,7 @@ public class Simulateur {
 			}
 
 			else if(args[i].matches("-form")){
-				i++; 
-
+				i++;
 				if (args[i].matches("NRZ")) { 
 					formSignal = "NRZ";
 				} 
@@ -227,8 +228,11 @@ public class Simulateur {
 			else if(args[i].matches("-nbEch")){
 				i++; 
 				nbEchantillon=Integer.valueOf(args[i]);
-				if( nbEchantillon < 0)
-					throw new ArgumentsException("Valeur du parametre -nbEch invalide : " + args[i]);
+				if(formSignal.equals("NRZT"))
+					if(nbEchantillon%6 != 0)
+						throw new ArgumentsException("le nombre d'echantillon pour generer un NRZT doit etre multiple de 3 : ");
+				if( nbEchantillon < 6)
+					throw new ArgumentsException("Valeur du parametre -nbEch invalide, il faut rentrer un nombre plus grand que 6 : " + args[i]);
 			}
 
 			else if(args[i].matches("-ampl")){
@@ -243,8 +247,8 @@ public class Simulateur {
 	}
 
 	/** La méthode execute effectue un envoi de message par la source
-	 * de la chaîne de transmission du Simulateur.
-	 *
+	 * de la chaîne de transmission du Simulateur, en passant
+	 * par les différents éléments de la chaine
 	 * @throws Exception si un problème survient lors de l'exécution
 	 *
 	 */ 
@@ -259,10 +263,9 @@ public class Simulateur {
 
 	/** La méthode qui calcule le taux d'erreur binaire en comparant
 	 * les bits du message émis avec ceux du message reçu.
-	 *
 	 * @return  La valeur du Taux dErreur Binaire.
 	 */   	   
-//
+
 	public float  calculTauxErreurBinaire() {
 
 		Information <Boolean> chaineEmise = source.getInformationEmise();
@@ -277,12 +280,12 @@ public class Simulateur {
 	}
 
 
-
 	/** La fonction main instancie un Simulateur à l'aide des
 	 *  arguments paramètres et affiche le résultat de l'exécution
 	 *  d'une transmission.
 	 *  @param args les différents arguments qui serviront à l'instanciation du Simulateur.
 	 */
+
 	public static void main(String [] args) { 
 
 		Simulateur simulateur = null;

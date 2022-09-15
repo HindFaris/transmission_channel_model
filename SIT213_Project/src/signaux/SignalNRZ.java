@@ -11,8 +11,11 @@ public class SignalNRZ extends Signal<Float,Boolean>{
 		super(informationRecue, nbEchantillons, min, max);
 	}
 
+	/**
+	 * permet de générer le signal analogique en prenant en entrée le signal logique
+	 */
 	public void generer() {
-//
+
 		signalSortieInformation  = new Information<Float>();
 		signalSortieInformation.add((max+min)/2);
 

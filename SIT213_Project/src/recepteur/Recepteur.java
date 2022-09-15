@@ -14,6 +14,12 @@ public class Recepteur extends Transmetteur<Float, Boolean> {
 	private float min=0f;
 	private float max=1f;
 
+	/**
+	 * permet d'initialiser le Recepteur
+	 * @param _nbEchantillons
+	 * @param min
+	 * @param max
+	 */
 	public Recepteur(int _nbEchantillons, float min, float max) {
 		this.min=min;
 		this.max=max;
@@ -21,6 +27,10 @@ public class Recepteur extends Transmetteur<Float, Boolean> {
 		
 	}
 
+	/**
+	 * permet de recevoir l'nformation float, ensuite fait appel à la méthode déchiffrer pour la transformer en boolean
+	 * @param information
+	 */
 	public  void recevoir(Information <Float> information) throws InformationNonConformeException{
 		informationRecue = information;
 		try {
@@ -31,6 +41,12 @@ public class Recepteur extends Transmetteur<Float, Boolean> {
 			}
 	}
 
+	/**
+	 * permet de déchiffrer l'information et de passer 'ue information float à une information boolean
+	 * @param information
+	 * @throws InformationNonConformeException
+	 */
+	
 	public  void dechiffrer(Information <Float> information) throws InformationNonConformeException{
 		
 		informationEmise  = new Information<Boolean>(); 
@@ -42,11 +58,8 @@ public class Recepteur extends Transmetteur<Float, Boolean> {
 			for (int j = 0; j < nbEchantillons; j++) {
 				moyenneTemp += information.iemeElement(j+index*nbEchantillons);
 			}
-			System.out.println("Somme des valeurs = " + moyenneTemp);
 			
 			moyenneTemp = (float)(moyenneTemp/(float)nbEchantillons);
-			
-			System.out.println(moyenneTemp);
 			
 			if(moyenneTemp >= (max+min)/2) {
 				informationEmise.add(true);
@@ -54,16 +67,13 @@ public class Recepteur extends Transmetteur<Float, Boolean> {
 			else {
 				informationEmise.add(false);
 			}
-			
-			
+		}
 		
-		}
-		for (int index=0;index<informationEmise.nbElements();index++) {
-			System.out.println(informationEmise.iemeElement(index));
-		}
-
 	}
 
+	/**
+	 * transmet aux différentes destinations
+	 */
 
 	public void emettre() throws InformationNonConformeException{
 
