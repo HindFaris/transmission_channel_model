@@ -27,7 +27,7 @@ public class Simulateur {
 	private float min=0.0f;
 
 	private float max=1.0f;
-	
+
 	private String formSignal="NRZ";
 
 	/** indique si le Simulateur utilise des sondes d'affichage */
@@ -133,7 +133,7 @@ public class Simulateur {
 			recepteur = new Recepteur(nbEchantillon,min,max);
 			destination = new DestinationFinale();
 
-			
+
 			if (affichage) {
 				source.connecter(new SondeLogique("Source", 200));
 				emetteurAnalogique.connecter(new SondeAnalogique("Emetteur Analogique"));
@@ -144,7 +144,7 @@ public class Simulateur {
 			emetteurAnalogique.connecter(transmetteurAnalogiqueParfait);
 			transmetteurAnalogiqueParfait.connecter(recepteur);
 			recepteur.connecter(destination);
-			
+
 		}
 
 
@@ -220,18 +220,19 @@ public class Simulateur {
 
 			else if(args[i].matches("-form")){
 				i++; 
-				if (args[i].matches("NRZ")) { 
-					formSignal = "NRZ";
-				} 
-				else if (args[i].matches("NRZT")) { 
-					formSignal = "NRZT";
-				}
-				else if (args[i].matches("RZ")) { 
-					formSignal = "RZ";
-				}
-				else 
-					throw new ArgumentsException("Valeur du parametre -form invalide : " + args[i]);
-
+				
+					if (args[i].matches("NRZ")) { 
+						formSignal = "NRZ";
+					} 
+					else if (args[i].matches("NRZT")) { 
+						formSignal = "NRZT";
+					}
+					else if (args[i].matches("RZ")) { 
+						formSignal = "RZ";
+					}
+					else 
+						throw new ArgumentsException("Valeur du parametre -form invalide : " + args[i]);
+				
 			}
 
 			else if(args[i].matches("-nbEch")){
@@ -300,6 +301,7 @@ public class Simulateur {
 			simulateur = new Simulateur(args);
 		}
 		catch (ArgumentsException e) {
+			System.out.println(e);
 		} 
 
 		try {
