@@ -262,7 +262,7 @@ public class Simulateur {
 	 *
 	 * @return  La valeur du Taux dErreur Binaire.
 	 */   	   
-
+//
 	public float  calculTauxErreurBinaire() {
 
 		Information <Boolean> chaineEmise = source.getInformationEmise();
