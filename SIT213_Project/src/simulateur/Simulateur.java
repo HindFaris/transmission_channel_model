@@ -135,20 +135,17 @@ public class Simulateur {
 
 		}
 
-
-
-		// test de 2éme étape nbEchantillon, min, max
-
 		if (formSignal.equals("NRZ")) {
 
 			emetteurAnalogique = new EmetteurAnalogique(formSignal, nbEchantillon, min, max);
 			transmetteurAnalogiqueParfait = new TransmetteurAnalogiqueParfait();
 			recepteur = new Recepteur(nbEchantillon,min,max);
 			destination = new DestinationFinale();
+
 			
 			if (affichage) {
 				source.connecter(new SondeLogique("Source", 200));
-				emetteurAnalogique.connecter(new SondeAnalogique("EmetteurAnalogique"));
+				emetteurAnalogique.connecter(new SondeAnalogique("Emetteur Analogique"));
 				transmetteurAnalogiqueParfait.connecter(new SondeAnalogique("Transmetteur Analogique parfait"));
 				recepteur.connecter(new SondeLogique("Recepteur", 200));
 			}
@@ -156,6 +153,7 @@ public class Simulateur {
 			emetteurAnalogique.connecter(transmetteurAnalogiqueParfait);
 			transmetteurAnalogiqueParfait.connecter(recepteur);
 			recepteur.connecter(destination);
+			
 		}
 
 
@@ -201,7 +199,7 @@ public class Simulateur {
 			else if (args[i].matches("-seed")) {
 				aleatoireAvecGerme = true;
 				i++; 
-				// traiter la valeur associee
+				// traiter la valeur associéé
 				try { 
 					seed = Integer.valueOf(args[i]);
 				}
@@ -231,7 +229,6 @@ public class Simulateur {
 
 			else if(args[i].matches("-form")){
 				i++; 
-
 				if (args[i].matches("NRZ")) { 
 					formSignal = "NRZ";
 				} 
@@ -241,38 +238,31 @@ public class Simulateur {
 				else if (args[i].matches("RZ")) { 
 					formSignal = "RZ";
 				}
-
 				else 
-					throw new ArgumentsException("Valeur du parametre -mess invalide : " + args[i]);
+					throw new ArgumentsException("Valeur du parametre -form invalide : " + args[i]);
 
 			}
 
 			else if(args[i].matches("-nbEch")){
-				i++; 		
+				i++; 
 				nbEchantillon=Integer.valueOf(args[i]);
+				if( nbEchantillon < 0)
+					throw new ArgumentsException("Valeur du parametre -nbEch invalide : " + args[i]);
 			}
 
 			else if(args[i].matches("-ampl")){
-				i++; 
-
-				//Ajouter un test de integer ou pas
-				try {
-					min=Integer.valueOf(args[i]);
-					i++;
-					max=Integer.valueOf(args[i]);
-				}
-				catch (Exception e) {
-					System.out.println("erreur dans les parmètres "); 
-					System.exit(-1);
-				} 
-
-			}
-
-			else throw new ArgumentsException("Option invalide :"+ args[i]);	
+				i++;
+				min=Integer.valueOf(args[i]);
+				i++;
+				max=Integer.valueOf(args[i]);
+				if(max<min)
+					throw new ArgumentsException("Valeur du parametre -ampl invalide : " + args[i]);
+			} 
 		}
-
-
 	}
+
+
+
 
 
 
@@ -282,18 +272,13 @@ public class Simulateur {
 	 * @throws Exception si un problème survient lors de l'exécution
 	 *
 	 */ 
-	public void executelogique() throws Exception {      
-		source.emettre();
-		transmetteurLogique.emettre();	
-	}
 
 	public void executeanalogique() throws Exception {      
 		source.emettre();
 		emetteurAnalogique.emettre();
 		transmetteurAnalogiqueParfait.emettre();
-		//recepteur.emettre();
+		recepteur.emettre();
 	}
-
 
 
 	/** La méthode qui calcule le taux d'erreur binaire en comparant
@@ -301,7 +286,7 @@ public class Simulateur {
 	 *
 	 * @return  La valeur du Taux dErreur Binaire.
 	 */   	   
-	/*
+
 	public float  calculTauxErreurBinaire() {
 
 		Information <Boolean> chaineEmise = source.getInformationEmise();
@@ -314,7 +299,7 @@ public class Simulateur {
 		}
 		return  nbVariablesDifferentes/source.getInformationEmise().nbElements();
 	}
-	 */
+
 
 
 	/** La fonction main instancie un Simulateur à l'aide des
@@ -328,19 +313,16 @@ public class Simulateur {
 		try {
 			simulateur = new Simulateur(args);
 		}
-		catch (Exception e) {
-			System.out.println(e); 
-			System.exit(-1);
+		catch (ArgumentsException e) {
 		} 
 
 		try {
-			//simulateur.executelogique();
 			simulateur.executeanalogique();
 			String s = "java  Simulateur  ";
 			for (int i = 0; i < args.length; i++) { //copier tous les paramètres de simulation
 				s += args[i] + "  ";
 			}
-			//System.out.println(s + "  =>   TEB : " + simulateur.calculTauxErreurBinaire());
+			System.out.println(s + "  =>   TEB : " + simulateur.calculTauxErreurBinaire());
 		}
 		catch (Exception e) {
 			System.out.println(e);

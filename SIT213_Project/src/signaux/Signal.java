@@ -11,7 +11,6 @@ public abstract class Signal<R,E> {
 	protected float min;
 	protected float max;
 	
-	//constructeur simple de Signal
 	public Signal() {
 		signalEntree = new Information<E>();
 	}

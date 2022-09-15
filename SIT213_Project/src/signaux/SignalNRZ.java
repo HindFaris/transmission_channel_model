@@ -16,8 +16,6 @@ public class SignalNRZ extends Signal<Float,Boolean>{
 		signalSortieInformation  = new Information<Float>();
 		signalSortieInformation.add((max+min)/2);
 
-		//boolean premiereElement =  signalEntree.iemeElement(0);
-
 		for(int index = 1; index < nbEchantillon; index++) {
 			if (signalEntree.iemeElement(0) == true) {
 				signalSortieInformation.add(max);
@@ -27,9 +25,9 @@ public class SignalNRZ extends Signal<Float,Boolean>{
 			}
 		}
 
-		for(int Bit = 1; Bit<signalEntree.nbElements();Bit++) {
+		for(int bit = 1; bit<signalEntree.nbElements();bit++) {
 
-			if (signalEntree.iemeElement(Bit) == true) {
+			if (signalEntree.iemeElement(bit) == true) {
 				for(int index = 0; index < nbEchantillon; index++) {
 					signalSortieInformation.add(max);
 				}
@@ -37,7 +35,6 @@ public class SignalNRZ extends Signal<Float,Boolean>{
 			else {
 				for(int index = 0; index < nbEchantillon; index++) {
 					signalSortieInformation.add(min);
-					//System.out.println("min = " + min);
 				}
 			}
 		}

@@ -10,12 +10,9 @@ import signaux.*;
 
 public class Recepteur extends Transmetteur<Float, Boolean> {
 
-
 	private int nbEchantillons;
 	private float min=0f;
 	private float max=1f;
-
-
 
 	public Recepteur(int _nbEchantillons, float min, float max) {
 		this.min=min;
@@ -42,12 +39,16 @@ public class Recepteur extends Transmetteur<Float, Boolean> {
 		int tailleDesBooleens = information.nbElements()/nbEchantillons;
 
 		for(int index = 0 ; index < tailleDesBooleens ; index++){
-			moyenneTemp=0;
+			moyenneTemp=0f;
 			for (int j = 0; j < nbEchantillons; j++) {
-				moyenneTemp += information.iemeElement(j+index*j);
+				moyenneTemp += information.iemeElement(j+index*nbEchantillons);
 			}
-			moyenneTemp = moyenneTemp/nbEchantillons;
+			System.out.println("Somme des valeurs = " + moyenneTemp);
+			
+			moyenneTemp = (float)(moyenneTemp/(float)nbEchantillons);
+			
 			System.out.println(moyenneTemp);
+			
 			if(moyenneTemp >= (max+min)/2) {
 				informationEmise.add(true);
 			}
@@ -70,9 +71,9 @@ public class Recepteur extends Transmetteur<Float, Boolean> {
 
 		for (DestinationInterface <Boolean> destinationConnectee : destinationsConnectees) {
 			destinationConnectee.recevoir(informationEmise);
-		}
-		
 
+				
+		}
 	}
 
 
