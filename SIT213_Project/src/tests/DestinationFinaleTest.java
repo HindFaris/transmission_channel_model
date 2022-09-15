@@ -2,16 +2,14 @@ package tests;
 import static org.junit.jupiter.api.Assertions.*;
 import org.junit.jupiter.api.Test;
 
-import destinations.Destination;
+import destinations.*;
 
 
 public class DestinationFinaleTest {
 	
-	 private String Binary = new String("0111000111");
-	
 	//@Test
 	 public DestinationFinaleTest (String Binary) {
-		Destination DestinationF = new Destination();
+		DestinationFinale DestinationF = new DestinationFinale();
 		//assertEquals(DestinationF.getInformationRecue,);
 	}
 }
