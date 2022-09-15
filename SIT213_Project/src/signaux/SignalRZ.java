@@ -8,6 +8,9 @@ public class SignalRZ extends Signal<Float,Boolean>{
 		super(informationRecue, nbEchantillons, min, max);
 	}
 	
+	/**
+	 * permet de générer le signal analogique en prenant en entrée le signal logique
+	 */
 	public void generer() {
 
 		signalSortieInformation  = new Information<Float>();

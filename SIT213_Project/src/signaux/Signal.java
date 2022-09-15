@@ -11,10 +11,20 @@ public abstract class Signal<R,E> {
 	protected float min;
 	protected float max;
 	
+	/**
+	 * constructeur du signal
+	 */
 	public Signal() {
 		signalEntree = new Information<E>();
 	}
 	
+	/**
+	 * permet d'initialiser le signal avec des paramètres : informationRecue, nb echantillons, max, min
+	 * @param informationRecue
+	 * @param nbEchantillons
+	 * @param min
+	 * @param max
+	 */
 	public Signal (Information<E> informationRecue, int nbEchantillons, float min, float max) {
 		this.min =min;
 		this.max=max;
@@ -22,6 +32,9 @@ public abstract class Signal<R,E> {
 		signalEntree = informationRecue;
 	}
 	
+	/**
+	 * genere le code analogique à partir du code logique
+	 */
 	public abstract void generer();
 	
 	
