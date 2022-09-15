@@ -23,7 +23,7 @@ public class EmetteurAnalogique extends Transmetteur<Boolean, Float>{
 	
 	public  void recevoir(Information <Boolean> information) throws InformationNonConformeException{
 		informationRecue = information;
-		this.emettre();
+		
 	}
 
 	/*
@@ -54,7 +54,6 @@ public class EmetteurAnalogique extends Transmetteur<Boolean, Float>{
 		for (DestinationInterface<Float> transmetteurConnectee : destinationsConnectees) {
 			transmetteurConnectee.recevoir(informationEmise);
 		}
-	
 		 
 	}
 }

@@ -29,7 +29,6 @@ public class Recepteur extends Transmetteur<Float, Boolean> {
 			catch(InformationNonConformeException E) {
 				
 			}
-		this.emettre();
 	}
 
 	public  void dechiffrer(Information <Float> information) throws InformationNonConformeException{
@@ -63,7 +62,6 @@ public class Recepteur extends Transmetteur<Float, Boolean> {
 			System.out.println(informationEmise.iemeElement(index));
 		}
 
-		this.emettre();
 	}
 
 
