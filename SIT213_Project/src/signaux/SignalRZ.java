@@ -14,7 +14,7 @@ public class SignalRZ extends Signal<Float,Boolean>{
 		signalSortieInformation.add((max+min)/2);
 
 		for(int index = 1; index < nbEchantillon; index++) {
-			if(index >= nbEchantillon / 3 && index <= nbEchantillon/3) { 
+			if(index >= nbEchantillon / 3 && index <= 2*nbEchantillon/3) { 
 				if (signalEntree.iemeElement(0) == true) {
 					signalSortieInformation.add(max);
 				}
@@ -30,7 +30,7 @@ public class SignalRZ extends Signal<Float,Boolean>{
 		for(int bit = 1; bit<signalEntree.nbElements();bit++) {
 			
 			for(int index = 0; index < nbEchantillon; index++) {
-				if(index >= nbEchantillon / 3 && index <= nbEchantillon/3) { 
+				if(index >= nbEchantillon / 3 && index <= 2*nbEchantillon/3) { 
 					if (signalEntree.iemeElement(bit) == true) {
 						signalSortieInformation.add(max);
 					}
