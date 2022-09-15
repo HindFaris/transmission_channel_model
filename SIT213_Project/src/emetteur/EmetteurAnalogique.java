@@ -25,7 +25,7 @@ public class EmetteurAnalogique extends Transmetteur<Boolean, Float>{
 		informationRecue = information;
 		
 	}
-
+//
 	/*
 	 * émet l'information construite par le transmetteur
 	 */
