@@ -126,35 +126,24 @@ public class Simulateur {
 
 		}
 
-		if (formSignal.equals("NRZ")) {
-
-			emetteurAnalogique = new EmetteurAnalogique(formSignal, nbEchantillon, min, max);
-			transmetteurAnalogiqueParfait = new TransmetteurAnalogiqueParfait();
-			recepteur = new Recepteur(nbEchantillon,min,max);
-			destination = new DestinationFinale();
+		emetteurAnalogique = new EmetteurAnalogique(formSignal, nbEchantillon, min, max);
+		transmetteurAnalogiqueParfait = new TransmetteurAnalogiqueParfait();
+		recepteur = new Recepteur(nbEchantillon,min,max);
+		destination = new DestinationFinale();
 
 
-			if (affichage) {
-				source.connecter(new SondeLogique("Source", 200));
-				emetteurAnalogique.connecter(new SondeAnalogique("Emetteur Analogique"));
-				transmetteurAnalogiqueParfait.connecter(new SondeAnalogique("Transmetteur Analogique parfait"));
-				recepteur.connecter(new SondeLogique("Recepteur", 200));
-			}
-			source.connecter(emetteurAnalogique);
-			emetteurAnalogique.connecter(transmetteurAnalogiqueParfait);
-			transmetteurAnalogiqueParfait.connecter(recepteur);
-			recepteur.connecter(destination);
-
+		if (affichage) {
+			source.connecter(new SondeLogique("Source", 200));
+			emetteurAnalogique.connecter(new SondeAnalogique("Emetteur Analogique"));
+			transmetteurAnalogiqueParfait.connecter(new SondeAnalogique("Transmetteur Analogique parfait"));
+			recepteur.connecter(new SondeLogique("Recepteur", 200));
 		}
+		source.connecter(emetteurAnalogique);
+		emetteurAnalogique.connecter(transmetteurAnalogiqueParfait);
+		transmetteurAnalogiqueParfait.connecter(recepteur);
+		recepteur.connecter(destination);
 
 
-		else if (formSignal.equals("RZ")){
-			//to do
-		}
-
-		else if (formSignal.equals("NRZT") ){
-			//to do
-		}
 
 
 	}
@@ -220,19 +209,19 @@ public class Simulateur {
 
 			else if(args[i].matches("-form")){
 				i++; 
-				
-					if (args[i].matches("NRZ")) { 
-						formSignal = "NRZ";
-					} 
-					else if (args[i].matches("NRZT")) { 
-						formSignal = "NRZT";
-					}
-					else if (args[i].matches("RZ")) { 
-						formSignal = "RZ";
-					}
-					else 
-						throw new ArgumentsException("Valeur du parametre -form invalide : " + args[i]);
-				
+
+				if (args[i].matches("NRZ")) { 
+					formSignal = "NRZ";
+				} 
+				else if (args[i].matches("NRZT")) { 
+					formSignal = "NRZT";
+				}
+				else if (args[i].matches("RZ")) { 
+					formSignal = "RZ";
+				}
+				else 
+					throw new ArgumentsException("Valeur du parametre -form invalide : " + args[i]);
+
 			}
 
 			else if(args[i].matches("-nbEch")){

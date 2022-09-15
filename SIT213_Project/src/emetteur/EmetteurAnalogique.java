@@ -32,7 +32,7 @@ public class EmetteurAnalogique extends Transmetteur<Boolean, Float>{
 	public void emettre() throws InformationNonConformeException{
 		
 		if(typeEmmeteur.equalsIgnoreCase("RZ")) {
-			SignalNRZ signal = new SignalNRZ(informationRecue, nbEchantillons, min, max);
+			SignalRZ signal = new SignalRZ(informationRecue, nbEchantillons, min, max);
 			signal.generer();
 			informationEmise = signal.getSignalSortieInformation();
 		}
@@ -42,7 +42,7 @@ public class EmetteurAnalogique extends Transmetteur<Boolean, Float>{
 			informationEmise = signal.getSignalSortieInformation();
 		}
 		else if(typeEmmeteur.equalsIgnoreCase("NRZT")) {
-			SignalNRZ signal = new SignalNRZ(informationRecue, nbEchantillons, min, max);
+			SignalNRZT signal = new SignalNRZT(informationRecue, nbEchantillons, min, max);
 			signal.generer();
 			informationEmise = signal.getSignalSortieInformation();
 		}
