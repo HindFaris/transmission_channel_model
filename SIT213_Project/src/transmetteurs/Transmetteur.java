@@ -64,7 +64,11 @@ public abstract  class Transmetteur <R,E> implements  DestinationInterface <R>, 
 	 * @param destination  la destination à connecter
 	 */
 	public void connecter (DestinationInterface <E> destination) {
-		destinationsConnectees.add(destination); 
+		destinationsConnectees.add(destination);
+	}
+	
+	public int getNbDestinationsConnectees() {
+		return destinationsConnectees.size();
 	}
 
 	/**

@@ -255,11 +255,6 @@ public class Simulateur {
 		}
 	}
 
-
-
-
-
-
 	/** La méthode execute effectue un envoi de message par la source
 	 * de la chaîne de transmission du Simulateur.
 	 *
@@ -267,7 +262,7 @@ public class Simulateur {
 	 *
 	 */ 
 
-	public void executeanalogique() throws Exception {      
+	public void execute() throws Exception {      
 		source.emettre();
 		emetteurAnalogique.emettre();
 		transmetteurAnalogiqueParfait.emettre();
@@ -311,7 +306,7 @@ public class Simulateur {
 		} 
 
 		try {
-			simulateur.executeanalogique();
+			simulateur.execute();
 			String s = "java  Simulateur  ";
 			for (int i = 0; i < args.length; i++) { //copier tous les paramètres de simulation
 				s += args[i] + "  ";
@@ -323,7 +318,7 @@ public class Simulateur {
 			e.printStackTrace();
 			System.exit(-2);
 
-		}   
+		} 
 
 	}
 }
