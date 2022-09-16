@@ -66,4 +66,20 @@ public class EmetteurAnalogique extends Transmetteur<Boolean, Float>{
 		}
 		 
 	}
+	
+	public String getTypeEmmeteur() {
+		return typeEmmeteur;
+	}
+
+	public int getNbEchantillons() {
+		return nbEchantillons;
+	}
+
+	public float getMin() {
+		return min;
+	}
+
+	public float getMax() {
+		return max;
+	}
 }

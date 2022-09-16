@@ -24,6 +24,7 @@ public  abstract class Source <T> implements  SourceInterface <T> {
 	 */
 	protected Information <T>  informationGeneree;
 
+
 	/** 
 	 * l'information émise par la source
 	 */
@@ -74,5 +75,9 @@ public  abstract class Source <T> implements  SourceInterface <T> {
 		
 		this.informationEmise = informationGeneree;   	
 		
+	}
+	
+	public Information<T> getInformationGeneree() {
+		return informationGeneree;
 	}
 }

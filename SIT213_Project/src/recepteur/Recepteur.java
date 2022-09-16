@@ -20,13 +20,13 @@ public class Recepteur extends Transmetteur<Float, Boolean> {
 	 * @param _nbEchantillons
 	 * @param min
 	 * @param max
+	 * @param formeSignal
 	 */
 	public Recepteur(int _nbEchantillons, float min, float max, String formSignal) {
 		this.min=min;
 		this.max=max;
 		nbEchantillons=_nbEchantillons;
 		formeSignal = formSignal;
-
 	}
 
 	/**
@@ -93,6 +93,20 @@ public class Recepteur extends Transmetteur<Float, Boolean> {
 		}
 	}
 
+	public int getNbEchantillons() {
+		return nbEchantillons;
+	}
 
+	public float getMin() {
+		return min;
+	}
+
+	public float getMax() {
+		return max;
+	}
+
+	public String getFormeSignal() {
+		return formeSignal;
+	}
 
 }
