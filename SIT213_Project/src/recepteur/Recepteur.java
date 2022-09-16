@@ -13,6 +13,7 @@ public class Recepteur extends Transmetteur<Float, Boolean> {
 	private int nbEchantillons;
 	private float min=0f;
 	private float max=1f;
+	private String formeSignal;
 
 	/**
 	 * permet d'initialiser le Recepteur
@@ -20,11 +21,12 @@ public class Recepteur extends Transmetteur<Float, Boolean> {
 	 * @param min
 	 * @param max
 	 */
-	public Recepteur(int _nbEchantillons, float min, float max) {
+	public Recepteur(int _nbEchantillons, float min, float max, String formSignal) {
 		this.min=min;
 		this.max=max;
 		nbEchantillons=_nbEchantillons;
-		
+		formeSignal = formSignal;
+
 	}
 
 	/**
@@ -35,10 +37,10 @@ public class Recepteur extends Transmetteur<Float, Boolean> {
 		informationRecue = information;
 		try {
 			dechiffrer(informationRecue);
-			}
-			catch(InformationNonConformeException E) {
-				
-			}
+		}
+		catch(InformationNonConformeException E) {
+
+		}
 	}
 
 	/**
@@ -46,9 +48,15 @@ public class Recepteur extends Transmetteur<Float, Boolean> {
 	 * @param information
 	 * @throws InformationNonConformeException
 	 */
-	
+
 	public  void dechiffrer(Information <Float> information) throws InformationNonConformeException{
-		
+
+		float moyenneLimite = (max+min)/2;	//Moyenne limite pour le signal NRZ et NRZT
+
+		if(formeSignal == "RZ") {
+			moyenneLimite = (max-min)*1/3 + min;
+		}
+
 		informationEmise  = new Information<Boolean>(); 
 		float moyenneTemp = 0f;
 		int tailleDesBooleens = information.nbElements()/nbEchantillons;
@@ -58,17 +66,18 @@ public class Recepteur extends Transmetteur<Float, Boolean> {
 			for (int j = 0; j < nbEchantillons; j++) {
 				moyenneTemp += information.iemeElement(j+index*nbEchantillons);
 			}
-			
+
 			moyenneTemp = (float)(moyenneTemp/(float)nbEchantillons);
-			
-			if(moyenneTemp >= (max+min)/2) {
+			System.out.println("Moyenne = " +moyenneTemp);
+
+			if(moyenneTemp >= moyenneLimite) {
 				informationEmise.add(true);
 			}
 			else {
 				informationEmise.add(false);
 			}
 		}
-		
+
 	}
 
 	/**
@@ -80,7 +89,7 @@ public class Recepteur extends Transmetteur<Float, Boolean> {
 		for (DestinationInterface <Boolean> destinationConnectee : destinationsConnectees) {
 			destinationConnectee.recevoir(informationEmise);
 
-				
+
 		}
 	}
 

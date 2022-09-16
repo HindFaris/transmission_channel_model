@@ -132,7 +132,7 @@ public class Simulateur {
 		//permet d'initialiser les éléments de la chaine
 		emetteurAnalogique = new EmetteurAnalogique(formSignal, nbEchantillon, min, max);
 		transmetteurAnalogiqueParfait = new TransmetteurAnalogiqueParfait();
-		recepteur = new Recepteur(nbEchantillon,min,max);
+		recepteur = new Recepteur(nbEchantillon,min,max,formSignal);
 		destination = new DestinationFinale();
 		//permet de connecter les sondes
 		if (affichage) {
@@ -194,7 +194,7 @@ public class Simulateur {
 				i++; 
 				// traiter la valeur associee
 
-				if (args[i].matches("[0,1]{2,}")) { // au moins 7 digits entre 1 et 0
+				if (args[i].matches("[0,1]{7,}")) { // au moins 7 digits entre 1 et 0
 					messageAleatoire = false;
 					nbBitsMess = args[i].length();
 					messageString=args[i];
