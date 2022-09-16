@@ -15,7 +15,7 @@ public class EmetteurAnalogique extends Transmetteur<Boolean, Float>{
 	private float max=1f;
 	
 	/**
-	 * constructeur de l'émetteur analogique initialisé avec différents paramètres
+	 * constructeur de l'emetteur analogique initialise avec differents parametres
 	 * @param _typeEmetteur
 	 * @param _nbEchantillons
 	 * @param min
@@ -29,15 +29,15 @@ public class EmetteurAnalogique extends Transmetteur<Boolean, Float>{
 	}
 	
 	/**
-	 * recevoir l'information booléenne depuis la source
+	 * recevoir l'information booleenne depuis la source
 	 */
 	public  void recevoir(Information <Boolean> information) throws InformationNonConformeException{
 		informationRecue = information;
 		
 	}
 	/**
-	 * emettre permet de générer un signal "RZ" "NRZ" ou "NRZT" selon ce qui a été spécifié dan les arguments
-	 * et ensuite d'envoyer cet information vers le recepteur
+	 * emettre permet de generer un signal "RZ" "NRZ" ou "NRZT" selon ce qui a ete specifie 
+	 * dans les arguments et ensuite d'envoyer cet information vers le recepteur
 	 */
 	public void emettre() throws InformationNonConformeException{
 		
