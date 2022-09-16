@@ -19,7 +19,7 @@ public abstract class Signal<R,E> {
 	}
 	
 	/**
-	 * permet d'initialiser le signal avec des paramètres : informationRecue, nb echantillons, max, min
+	 * permet d'initialiser le signal avec des parametres : informationRecue, nb echantillons, max, min
 	 * @param informationRecue
 	 * @param nbEchantillons
 	 * @param min
@@ -33,7 +33,7 @@ public abstract class Signal<R,E> {
 	}
 	
 	/**
-	 * genere le code analogique à partir du code logique
+	 * genere le code analogique a� partir du code logique
 	 */
 	public abstract void generer();
 	

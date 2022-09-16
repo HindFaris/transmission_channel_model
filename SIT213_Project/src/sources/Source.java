@@ -7,32 +7,32 @@ import java.util.*;
 
 /** 
  * Classe Abstraite d'un composant source d'informations dont les
- * éléments sont de type T
+ * elements sont de type T
  * @author prou
  */
 public  abstract class Source <T> implements  SourceInterface <T> {
 
 	/** 
-	 * la liste des composants destination connectés
+	 * la liste des composants destination connectes
 	 */
 	protected LinkedList <DestinationInterface <T>> destinationsConnectees;
 	
 	protected LinkedList <Transmetteur <Boolean,Float>> transmetteursConnectees;
 
 	/** 
-	 * l'information générée par la source
+	 * l'information generee par la source
 	 */
 	protected Information <T>  informationGeneree;
 
 
 	/** 
-	 * l'information émise par la source
+	 * l'information emise par la source
 	 */
 	protected Information <T>  informationEmise;
 
 	/** 
 	 * un constructeur factorisant les initialisations communes aux
-	 * réalisations de la classe abstraite Source
+	 * realisations de la classe abstraite Source
 	 */
 	public Source () {
 		destinationsConnectees = new LinkedList <DestinationInterface <T>> ();
@@ -41,7 +41,7 @@ public  abstract class Source <T> implements  SourceInterface <T> {
 	}
 
 	/**
-	 * retourne la dernière information émise par la source
+	 * retourne la derniere information emise par la source
 	 * @return une information   
 	 */
 	public Information <T>  getInformationEmise() {
@@ -49,23 +49,23 @@ public  abstract class Source <T> implements  SourceInterface <T> {
 	}
 
 	/**
-	 * connecte une destination à la source
-	 * @param destination  la destination à connecter
+	 * connecte une destination a la source
+	 * @param destination la destination a connecter
 	 */
 	public void connecter (DestinationInterface <T> destination) {
 		destinationsConnectees.add(destination); 
 	}
 
 	/**
-	 * déconnecte une destination de la source
-	 * @param destination  la destination à déconnecter
+	 * deconnecte une destination de la source
+	 * @param destination  la destination a deconnecter
 	 */
 	public void deconnecter (DestinationInterface <T> destination) {
 		destinationsConnectees.remove(destination); 
 	}
 
 	/**
-	 * émet l'information générée
+	 *Emet l'information generee
 	 */
 	public   void emettre() throws InformationNonConformeException {
 
