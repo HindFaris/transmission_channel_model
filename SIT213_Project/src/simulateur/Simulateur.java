@@ -237,9 +237,9 @@ public class Simulateur {
 
 			else if(args[i].matches("-ampl")){
 				i++;
-				min=Integer.valueOf(args[i]);
+				min=Float.valueOf(args[i]);
 				i++;
-				max=Integer.valueOf(args[i]);
+				max=Float.valueOf(args[i]);
 				if(max<min)
 					throw new ArgumentsException("Valeur du parametre -ampl invalide : " + args[i]);
 			} 

@@ -54,7 +54,7 @@ public class Recepteur extends Transmetteur<Float, Boolean> {
 		float moyenneLimite = (max+min)/2;	//Moyenne limite pour le signal NRZ et NRZT
 
 		if(formeSignal == "RZ") {
-			moyenneLimite = (max-min)*1/3 + min;
+			moyenneLimite = (max-min)*1/6 + min;
 		}
 
 		informationEmise  = new Information<Boolean>(); 
