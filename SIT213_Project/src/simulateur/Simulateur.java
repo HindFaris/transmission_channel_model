@@ -194,7 +194,7 @@ public class Simulateur {
 				i++; 
 				// traiter la valeur associee
 
-				if (args[i].matches("[0,1]{7,}")) { // au moins 7 digits entre 1 et 0
+				if (args[i].matches("[0,1]{2,}")) { // au moins 7 digits entre 1 et 0
 					messageAleatoire = false;
 					nbBitsMess = args[i].length();
 					messageString=args[i];
