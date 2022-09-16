@@ -16,6 +16,22 @@ import java.util.*;
  */
 public abstract  class Transmetteur <R,E> implements  DestinationInterface <R>, SourceInterface <E> {
 
+	public LinkedList<DestinationInterface<E>> getDestinationsConnectees() {
+		return destinationsConnectees;
+	}
+
+	public void setDestinationsConnectees(LinkedList<DestinationInterface<E>> destinationsConnectees) {
+		this.destinationsConnectees = destinationsConnectees;
+	}
+
+	public void setInformationRecue(Information<R> informationRecue) {
+		this.informationRecue = informationRecue;
+	}
+
+	public void setInformationEmise(Information<E> informationEmise) {
+		this.informationEmise = informationEmise;
+	}
+
 	/** 
 	 * la liste des composants destination connectés en sortie du transmetteur 
 	 */

@@ -29,6 +29,22 @@ public class Recepteur extends Transmetteur<Float, Boolean> {
 		formeSignal = formSignal;
 	}
 
+	public void setNbEchantillons(int nbEchantillons) {
+		this.nbEchantillons = nbEchantillons;
+	}
+
+	public void setMin(float min) {
+		this.min = min;
+	}
+
+	public void setMax(float max) {
+		this.max = max;
+	}
+
+	public void setFormeSignal(String formeSignal) {
+		this.formeSignal = formeSignal;
+	}
+
 	/**
 	 * permet de recevoir l'nformation float, ensuite fait appel à la méthode déchiffrer pour la transformer en boolean
 	 * @param information

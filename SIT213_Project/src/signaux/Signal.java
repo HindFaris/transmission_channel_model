@@ -9,6 +9,43 @@ public abstract class Signal<R,E> {
 	protected Information<R> signalSortieInformation;
 	protected int nbEchantillon = 30;
 	protected float min;
+	public Information<E> getSignalEntree() {
+		return signalEntree;
+	}
+
+	public void setSignalEntree(Information<E> signalEntree) {
+		this.signalEntree = signalEntree;
+	}
+
+	public int getNbEchantillon() {
+		return nbEchantillon;
+	}
+
+	public void setNbEchantillon(int nbEchantillon) {
+		this.nbEchantillon = nbEchantillon;
+	}
+
+	public float getMin() {
+		return min;
+	}
+
+	public void setMin(float min) {
+		this.min = min;
+	}
+
+	public float getMax() {
+		return max;
+	}
+
+	public void setMax(float max) {
+		this.max = max;
+	}
+
+	public void setSignalSortieInformation(Information<R> signalSortieInformation) {
+		this.signalSortieInformation = signalSortieInformation;
+	}
+
+
 	protected float max;
 	
 	/**

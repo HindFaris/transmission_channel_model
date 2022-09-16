@@ -17,7 +17,43 @@ public class Vue extends JFrame{
     protected  static int yPosition = 0;
     private static int yDecalage = 200;
  
-    public static int getXPosition() {
+    public static LinkedList<Vue> getLesVues() {
+		return lesVues;
+	}
+
+	public static void setLesVues(LinkedList<Vue> lesVues) {
+		Vue.lesVues = lesVues;
+	}
+
+	public static int getxPosition() {
+		return xPosition;
+	}
+
+	public static void setxPosition(int xPosition) {
+		Vue.xPosition = xPosition;
+	}
+
+	public static int getyPosition() {
+		return yPosition;
+	}
+
+	public static void setyPosition(int yPosition) {
+		Vue.yPosition = yPosition;
+	}
+
+	public static int getyDecalage() {
+		return yDecalage;
+	}
+
+	public static void setyDecalage(int yDecalage) {
+		Vue.yDecalage = yDecalage;
+	}
+
+	public static long getSerialversionuid() {
+		return serialVersionUID;
+	}
+
+	public static int getXPosition() {
 	xPosition += 0;
 	return xPosition - 0;
     }  

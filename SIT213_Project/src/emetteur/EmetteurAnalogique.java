@@ -14,6 +14,22 @@ public class EmetteurAnalogique extends Transmetteur<Boolean, Float>{
 	private float min=0f;
 	private float max=1f;
 	
+	public void setTypeEmmeteur(String typeEmmeteur) {
+		this.typeEmmeteur = typeEmmeteur;
+	}
+
+	public void setNbEchantillons(int nbEchantillons) {
+		this.nbEchantillons = nbEchantillons;
+	}
+
+	public void setMin(float min) {
+		this.min = min;
+	}
+
+	public void setMax(float max) {
+		this.max = max;
+	}
+
 	/**
 	 * constructeur de l'émetteur analogique initialisé avec différents paramètres
 	 * @param _typeEmetteur
