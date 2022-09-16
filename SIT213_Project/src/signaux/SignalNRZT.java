@@ -22,10 +22,10 @@ public class SignalNRZT extends Signal<Float,Boolean>{
 		for(int index = 1; index < nbEchantillon/3; index++) {
 
 			if (signalEntree.iemeElement(0) == true) {
-				signalSortieInformation.add(coefficientDirecteur*index);
+				signalSortieInformation.add(coefficientDirecteur*index + (max + min)/2);
 			}
 			else {
-				signalSortieInformation.add(-coefficientDirecteur*index);
+				signalSortieInformation.add(-coefficientDirecteur*index + (max + min)/2);
 			}
 		}
 
@@ -64,13 +64,13 @@ public class SignalNRZT extends Signal<Float,Boolean>{
 					signalSortieInformation.add(max);
 				}
 				else if(signalEntree.iemeElement(bit-1) == true && signalEntree.iemeElement(bit) == false) {
-					signalSortieInformation.add(-coefficientDirecteur*index);
+					signalSortieInformation.add(-coefficientDirecteur*index + (max + min)/2);
 				}
 				else if(signalEntree.iemeElement(bit-1) == false && signalEntree.iemeElement(bit) == false) {
 					signalSortieInformation.add(min);
 				}
 				else if(signalEntree.iemeElement(bit-1) == false && signalEntree.iemeElement(bit) == true) {
-					signalSortieInformation.add(coefficientDirecteur*index);
+					signalSortieInformation.add(coefficientDirecteur*index + (max + min)/2);
 				}
 			}
 
@@ -110,13 +110,13 @@ public class SignalNRZT extends Signal<Float,Boolean>{
 				signalSortieInformation.add(max);
 			}
 			else if (signalEntree.iemeElement(signalEntree.nbElements()-2) == true && signalEntree.iemeElement(signalEntree.nbElements()-1) == false){
-				signalSortieInformation.add(-coefficientDirecteur*index);
+				signalSortieInformation.add(-coefficientDirecteur*index + (max + min)/2);
 			}
 			else if (signalEntree.iemeElement(signalEntree.nbElements()-2) == false && signalEntree.iemeElement(signalEntree.nbElements()-1) == false){
 				signalSortieInformation.add(min);
 			}
 			else if (signalEntree.iemeElement(signalEntree.nbElements()-2) == false && signalEntree.iemeElement(signalEntree.nbElements()-1) == true){
-				signalSortieInformation.add(coefficientDirecteur*index);
+				signalSortieInformation.add(coefficientDirecteur*index + (max + min)/2);
 			}
 		}
 
