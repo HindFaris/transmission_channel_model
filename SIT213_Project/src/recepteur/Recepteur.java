@@ -29,6 +29,22 @@ public class Recepteur extends Transmetteur<Float, Boolean> {
 		formeSignal = formSignal;
 	}
 
+	public void setNbEchantillons(int nbEchantillons) {
+		this.nbEchantillons = nbEchantillons;
+	}
+
+	public void setMin(float min) {
+		this.min = min;
+	}
+
+	public void setMax(float max) {
+		this.max = max;
+	}
+
+	public void setFormeSignal(String formeSignal) {
+		this.formeSignal = formeSignal;
+	}
+
 	/**
 	 * permet de recevoir l'nformation float, ensuite fait appel a la methode dechiffrer 
 	 * pour la transformer en boolean
@@ -55,7 +71,7 @@ public class Recepteur extends Transmetteur<Float, Boolean> {
 		float moyenneLimite = (max+min)/2;	//Moyenne limite pour le signal NRZ et NRZT
 
 		if(formeSignal == "RZ") {
-			moyenneLimite = (max-min)*1/3 + min;
+			moyenneLimite = (max-min)*1/6 + min;
 		}
 
 		informationEmise  = new Information<Boolean>(); 

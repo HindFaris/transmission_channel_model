@@ -1,5 +1,5 @@
 package visualisations;
-	
+
 import information.Information;
 
 /** 
@@ -21,4 +21,5 @@ public class SondeTextuelle <T> extends Sonde <T> {
 	informationRecue = information;
 	System.out.println(nom + " : " + information);
     }
+
 }

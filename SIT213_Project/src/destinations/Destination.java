@@ -13,6 +13,12 @@ public  abstract class Destination <T> implements DestinationInterface <T> {
 	 * l'information recue par la destination
 	 */
 	protected Information <T>  informationRecue;
+	
+	
+
+	public void setInformationRecue(Information<T> informationRecue) {
+		this.informationRecue = informationRecue;
+	}
 
 	/** 
 	 * un constructeur factorisant les initialisations communes aux

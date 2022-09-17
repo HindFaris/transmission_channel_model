@@ -13,7 +13,42 @@ public class VueCourbe  extends Vue {
     private static final long serialVersionUID = 1917L;
    
     private Point2D.Float [] coordonnees;
-    private float yMax = 0;
+    public Point2D.Float[] getCoordonnees() {
+		return coordonnees;
+	}
+
+
+	public void setCoordonnees(Point2D.Float[] coordonnees) {
+		this.coordonnees = coordonnees;
+	}
+
+
+	public float getyMax() {
+		return yMax;
+	}
+
+
+	public void setyMax(float yMax) {
+		this.yMax = yMax;
+	}
+
+
+	public float getyMin() {
+		return yMin;
+	}
+
+
+	public void setyMin(float yMin) {
+		this.yMin = yMin;
+	}
+
+
+	public static long getSerialversionuid() {
+		return serialVersionUID;
+	}
+
+
+	private float yMax = 0;
     private float yMin = 0;
    	
    	

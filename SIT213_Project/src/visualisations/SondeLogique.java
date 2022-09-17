@@ -1,5 +1,5 @@
 package visualisations;
-	
+
 import information.Information;
 
 /** 
@@ -8,6 +8,7 @@ import information.Information;
  * @author prou
  */
 public class SondeLogique extends Sonde <Boolean> {
+
    
     /** le nombre de pixels en largeur pour un element d'information
      * Boolean a afficher dans la fenetre */
@@ -32,6 +33,7 @@ public class SondeLogique extends Sonde <Boolean> {
             table[i] = b;
             i++;
 	}
-      	new VueCourbe (table,  nbPixels, nom); 
-    }
+	new VueCourbe (table,  nbPixels, nom); 
+}
+
 }

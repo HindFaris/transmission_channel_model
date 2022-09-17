@@ -32,6 +32,24 @@ public class VueValeur  extends Vue {
 	setVisible(true);  
 	repaint();
     }
+
+
+
+	public JLabel getjLabel() {
+		return jLabel;
+	}
+
+
+
+	public void setjLabel(JLabel jLabel) {
+		this.jLabel = jLabel;
+	}
+
+
+
+	public static long getSerialversionuid() {
+		return serialVersionUID;
+	}
    
    
    

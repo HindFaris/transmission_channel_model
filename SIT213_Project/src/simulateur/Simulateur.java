@@ -22,7 +22,118 @@ import emetteur.*;
  */
 public class Simulateur {
 
-	/** indique si le nombre d'echantillon a utiliser */
+
+	/** @return le nombre d'echantillon a utiliser */
+	public int getNbEchantillon() {
+		return nbEchantillon;
+	}
+
+	public void setNbEchantillon(int nbEchantillon) {
+		this.nbEchantillon = nbEchantillon;
+	}
+
+	public float getMin() {
+		return min;
+	}
+
+	public void setMin(float min) {
+		this.min = min;
+	}
+
+	public float getMax() {
+		return max;
+	}
+
+	public void setMax(float max) {
+		this.max = max;
+	}
+
+	public String getFormSignal() {
+		return formSignal;
+	}
+
+	public void setFormSignal(String formSignal) {
+		this.formSignal = formSignal;
+	}
+
+	public Integer getSeed() {
+		return seed;
+	}
+
+	public void setSeed(Integer seed) {
+		this.seed = seed;
+	}
+
+	public int getNbBitsMess() {
+		return nbBitsMess;
+	}
+
+	public void setNbBitsMess(int nbBitsMess) {
+		this.nbBitsMess = nbBitsMess;
+	}
+
+	public String getMessageString() {
+		return messageString;
+	}
+
+	public void setMessageString(String messageString) {
+		this.messageString = messageString;
+	}
+
+	public Source<Boolean> getSource() {
+		return source;
+	}
+
+	public void setSource(Source<Boolean> source) {
+		this.source = source;
+	}
+
+	public Transmetteur<Float, Float> getTransmetteurAnalogiqueParfait() {
+		return transmetteurAnalogiqueParfait;
+	}
+
+	public void setTransmetteurAnalogiqueParfait(Transmetteur<Float, Float> transmetteurAnalogiqueParfait) {
+		this.transmetteurAnalogiqueParfait = transmetteurAnalogiqueParfait;
+	}
+
+	public Destination<Boolean> getDestination() {
+		return destination;
+	}
+
+	public void setDestination(Destination<Boolean> destination) {
+		this.destination = destination;
+	}
+
+	public Transmetteur<Boolean, Float> getEmetteurAnalogique() {
+		return emetteurAnalogique;
+	}
+
+	public void setEmetteurAnalogique(Transmetteur<Boolean, Float> emetteurAnalogique) {
+		this.emetteurAnalogique = emetteurAnalogique;
+	}
+
+	public Transmetteur<Float, Boolean> getRecepteur() {
+		return recepteur;
+	}
+
+	public void setRecepteur(Transmetteur<Float, Boolean> recepteur) {
+		this.recepteur = recepteur;
+	}
+
+	public void setAffichage(boolean affichage) {
+		this.affichage = affichage;
+	}
+
+	public void setMessageAleatoire(boolean messageAleatoire) {
+		this.messageAleatoire = messageAleatoire;
+	}
+
+	public void setAleatoireAvecGerme(boolean aleatoireAvecGerme) {
+		this.aleatoireAvecGerme = aleatoireAvecGerme;
+	}
+
+
+	/** indique le nombre d'echantillon a utiliser */
 	private int nbEchantillon=30;
 
 	/** indique le minimum en amplitude*/
@@ -237,9 +348,9 @@ public class Simulateur {
 
 			else if(args[i].matches("-ampl")){
 				i++;
-				min=Integer.valueOf(args[i]);
+				min=Float.valueOf(args[i]);
 				i++;
-				max=Integer.valueOf(args[i]);
+				max=Float.valueOf(args[i]);
 				if(max<min)
 					throw new ArgumentsException("Valeur du parametre -ampl invalide : " + args[i]);
 			} 
