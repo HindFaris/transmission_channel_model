@@ -9,7 +9,7 @@ public class SignalRZ extends Signal{
 	}
 	
 	/**
-	 * permet de générer le signal analogique en prenant en entrée le signal logique
+	 * permet de generer le signal analogique en prenant en entree le signal logique
 	 */
 	public void generer() {
 

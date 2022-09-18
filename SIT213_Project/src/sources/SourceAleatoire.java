@@ -11,11 +11,11 @@ import visualisations.SondeLogique;
 public class SourceAleatoire extends Source{
 
 	/**
-	 * Créé le message correspondant au mot aléatoire
+	 * Cree le message correspondant au mot aleatoire
 	 * @param nbBitsMess
 	 * 			la longueur en nombre de bit du message
 	 * @param seed
-	 * 			la seed permet de rejouer une simulation si elle est différente de 0
+	 * 			la seed permet de rejouer une simulation si elle est differente de 0
 	 */
 	public SourceAleatoire (int nbBitsMess, int seed) {
 		informationGeneree = new Information<Boolean>();

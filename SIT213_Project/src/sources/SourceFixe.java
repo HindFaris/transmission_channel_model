@@ -6,9 +6,9 @@ public class SourceFixe extends Source<Boolean>{
     
     
     /**
-     * Une source qui envoie toujours le m�me message
+     * Une source qui envoie toujours le meme message
      * @param binaryWord
-     * 			la chaine de caractère du mot en binaire à envoyer
+     * 			la chaine de caractere du mot en binaire a envoyer
      */
     public SourceFixe (String binaryWord) {
         informationGeneree = new Information<Boolean>();

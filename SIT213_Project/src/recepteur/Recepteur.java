@@ -46,7 +46,8 @@ public class Recepteur extends Transmetteur<Float, Boolean> {
 	}
 
 	/**
-	 * permet de recevoir l'nformation float, ensuite fait appel à la méthode déchiffrer pour la transformer en boolean
+	 * permet de recevoir l'nformation float, ensuite fait appel a la methode dechiffrer 
+	 * pour la transformer en boolean
 	 * @param information
 	 */
 	public  void recevoir(Information <Float> information) throws InformationNonConformeException{
@@ -60,7 +61,7 @@ public class Recepteur extends Transmetteur<Float, Boolean> {
 	}
 
 	/**
-	 * permet de déchiffrer l'information et de passer 'ue information float à une information boolean
+	 * permet de dechiffrer l'information et de passer une information float a une information boolean
 	 * @param information
 	 * @throws InformationNonConformeException
 	 */
@@ -96,7 +97,7 @@ public class Recepteur extends Transmetteur<Float, Boolean> {
 	}
 
 	/**
-	 * transmet aux différentes destinations
+	 * transmet aux differentes destinations
 	 */
 
 	public void emettre() throws InformationNonConformeException{

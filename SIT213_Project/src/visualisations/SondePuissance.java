@@ -3,19 +3,20 @@ package visualisations;
 import information.Information;
 
 /** 
- * Classe réalisant l'affichage de la puissance d'une information
- * composée d'éléments de type réel (float)
+ * Classe realisant l'affichage de la puissance d'une information
+ * composee d'elements de type reel (float)
  * @author prou
  */
 public class SondePuissance extends Sonde <Float> {
-
-	/**
-	 * pour construire une sonde puissance
-	 * @param nom  le nom de la fenêtre d'affichage
-	 */
-	public SondePuissance(String nom) {
-		super(nom);
-	}
+   
+    /**
+     * pour construire une sonde puissance
+     * @param nom  le nom de la fenetre d'affichage
+     */
+    public SondePuissance(String nom) {
+	super(nom);
+    }
+   	 
 
 	public void recevoir (Information <Float> information) { 
 		informationRecue = information;

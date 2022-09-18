@@ -8,8 +8,8 @@ import visualisations.*;
 import information.*;
 import recepteur.*;
 import emetteur.*;
-/** La classe Simulateur permet de construire et simuler une chaîne de
- * transmission composée d'une Source, d'un nombre variable de
+/** La classe Simulateur permet de construire et simuler une chaine de
+ * transmission composee d'une Source, d'un nombre variable de
  * Transmetteur(s) et d'une Destination.
  * @author cousin
  * @author prou
@@ -17,6 +17,8 @@ import emetteur.*;
  */
 public class Simulateur {
 
+
+	/** @return le nombre d'echantillon a utiliser */
 	public int getNbEchantillon() {
 		return nbEchantillon;
 	}
@@ -125,7 +127,6 @@ public class Simulateur {
 		this.aleatoireAvecGerme = aleatoireAvecGerme;
 	}
 
-
 	public float getSNRParBit() {
 		return SNRParBit;
 	}
@@ -143,34 +144,34 @@ public class Simulateur {
 	}
 
 
-	/** indique le nombre d'échantillon à utiliser */
+	/** indique le nombre d'Ã©chantillon Ã  utiliser */
 	private int nbEchantillon=30;
 
-	/** indique le minimum en emplitude*/
+	/** indique le minimum en amplitude*/
 	private float min=0.0f;
 
-	/** indique le maximum en emplitude*/
+	/** indique le maximum en amplitude*/
 	private float max=1.0f;
 
-	
+	/** indique la forme du signal par defaut*/
 	private String formSignal="RZ";
 
 	/** indique si le Simulateur utilise des sondes d'affichage */
 	private boolean affichage = false;
 
-	/** indique si le Simulateur utilise un message généré de manière aléatoire (message imposé sinon) */
+	/** indique si le Simulateur utilise un message genere de maniere aleatoire (message impose sinon)*/
 	private boolean messageAleatoire = true;
 
-	/** indique si le Simulateur utilise un germe pour initialiser les générateurs aléatoires */
+	/** indique si le Simulateur utilise un germe pour initialiser les generateurs aleatoires */
 	private boolean aleatoireAvecGerme = false;
 
-	/** la valeur de la semence utilisée pour les générateurs aléatoires */
-	private Integer seed = 0; // pas de semence par défaut
+	/** la valeur de la semence utilisee pour les generateurs aleatoires */
+	private Integer seed = 0; // pas de semence par dÃ©faut
 
-	/** la longueur du message aléatoire à transmettre si un message n'est pas imposé */
+	/** la longueur du message aleatoire a transmettre si un message n'est pas impose */
 	private int nbBitsMess = 100;
 
-	/** la chaîne de caractères correspondant à m dans l'argument -mess m */
+	/** la chaine de caracteres correspondant m dans l'argument -mess m */
 	private String messageString = "100";
 
 
@@ -196,25 +197,25 @@ public class Simulateur {
 	private boolean bruitActif = false;
 	
 	/**
-	 * Un simple getter qui renvoie la taille du mot  reçu à la destiation
+	 * Un simple getter qui renvoie la taille du mot  recu a la destiation
 	 * @return int 
-	 * 			la longueur du mot reçu
+	 * 			la longueur du mot recu
 	 */
 	public int getTailleMotDestination(){
 		return destination.getLongueurInformationRecue();
 	}
 
 	/**
-	 * Un simple getter qui renvoie un booléen disant si le message est aléatoire ou non
+	 * Un simple getter qui renvoie un booleen disant si le message est aleatoire ou non
 	 * @return -boolean
-	 * 			vrai si le message est aléatoire. Faux sinon
+	 * 			vrai si le message est aleatoire. Faux sinon
 	 */
 	public boolean getMessageAleatoire() {
 		return messageAleatoire;
 	}
 
 	/**
-	 * Un simple getter qui renvoie un booleéen disant si le message a une germe ou non
+	 * Un simple getter qui renvoie un booleen disant si le message a une germe ou non
 	 * @return -boolean
 	 * 			vrai si le message contient une germe. Faux sinon
 	 */
@@ -223,20 +224,20 @@ public class Simulateur {
 	}
 
 	/**
-	 * Un simple getter qui renvoie un booleéen disant si les sondes sont actives
+	 * Un simple getter qui renvoie un booleen disant si les sondes sont actives
 	 * @return -boolean
 	 * 			vrai si les sondes sont actives. Faux sinon
 	 */
 	public boolean getAffichage() {
 		return affichage;
 	}
-	/** Le constructeur de Simulateur construit une chaîne de
-	 * transmission composée d'une Source <Boolean>, d'une Destination
-	 * <Boolean> et de Transmetteur(s) [voir la méthode
-	 * analyseArguments]...  <br> Les différents composants de la
-	 * chaîne de transmission (Source, Transmetteur(s), Destination,
-	 * Sonde(s) de visualisation) sont créés et connectés.
-	 * @param args le tableau des différents arguments.
+	/** Le constructeur de Simulateur construit une chaine de
+	 * transmission composee d'une Source <Boolean>, d'une Destination
+	 * <Boolean> et de Transmetteur(s) [voir la methode
+	 * analyseArguments]...  <br> Les differents composants de la
+	 * chaine de transmission (Source, Transmetteur(s), Destination,
+	 * Sonde(s) de visualisation) sont cres et connectes.
+	 * @param args le tableau des differents arguments.
 	 *
 	 * @throws ArgumentsException si un des arguments est incorrect
 	 *
@@ -256,17 +257,20 @@ public class Simulateur {
 			source = new SourceAleatoire(nbBitsMess,0);
 
 		}
-		//permet d'initialiser les éléments de la chaine
+		//permet d'initialiser les Ã©lÃ©ments de la chaine
 		emetteurAnalogique = new EmetteurAnalogique(formSignal, nbEchantillon, min, max, SNRParBit, bruitActif);
+    
 		transmetteurAnalogiqueParfait = new TransmetteurAnalogiqueParfait();
 		recepteur = new Recepteur(nbEchantillon,min,max,formSignal);
 		destination = new DestinationFinale();
 		//permet de connecter les sondes
 		
-		//permet de connecter les éléments de la chaine entre eux
+		//permet de connecter les Ã©lÃ©ments de la chaine entre eux
 		if(affichage) {
 			source.connecter(new SondeLogique("Source", 200));
 		}
+
+		//permet de connecter les elements de la chaine entre eux
 		source.connecter(emetteurAnalogique);
 		if(affichage) {
 			emetteurAnalogique.connecter(new SondeAnalogique("Emetteur Analogique"));
@@ -289,22 +293,22 @@ public class Simulateur {
 	}
 
 
-	/** La méthode analyseArguments extrait d'un tableau de chaînes de
-	 * caractères les différentes options de la simulation.  <br>Elle met
-	 * à jour les attributs correspondants du Simulateur.
+	/** La methode analyseArguments extrait d'un tableau de chaines de
+	 * caracteres les differentes options de la simulation.  <br>Elle met
+	 * a jour les attributs correspondants du Simulateur.
 	 *
-	 * @param args le tableau des différents arguments.
+	 * @param args le tableau des differents arguments.
 	 * <br>
-	 * <br>Les arguments autorisés sont : 
+	 * <br>Les arguments autorises sont : 
 	 * <br> 
 	 * <dl>
-	 * <dt> -mess m  </dt><dd> m (String) constitué de 7 ou plus digits à 0 | 1, le message à transmettre</dd>
-	 * <dt> -mess m  </dt><dd> m (int) constitué de 1 à 6 digits, le nombre de bits du message "aléatoire" à transmettre</dd> 
+	 * <dt> -mess m  </dt><dd> m (String) constitue de 7 ou plus digits Ã  0 | 1, le message a transmettre</dd>
+	 * <dt> -mess m  </dt><dd> m (int) constitue de 1 a 6 digits, le nombre de bits du message "aleatoire" z  transmettre</dd> 
 	 * <dt> -s </dt><dd> pour demander l'utilisation des sondes d'affichage</dd>
-	 * <dt> -seed v </dt><dd> v (int) d'initialisation pour les générateurs aléatoires</dd> 
-	 * <dt> -form v </dt><dd> v (String) d'initialiser le type du codage du signal à emettre</dd> 
-	 * <dt> -nbEch v </dt><dd> v (int) choisir le nombre d'échantillon permettront à coder le signal à emettre</dd> 
-	 * <dt> -ampl v </dt><dd> v (int) choisir l'amplitude du signal à emettre</dd> 
+	 * <dt> -seed v </dt><dd> v (int) d'initialisation pour les generateurs aleatoires</dd> 
+	 * <dt> -form v </dt><dd> v (String) d'initialiser le type du codage du signal a emettre</dd> 
+	 * <dt> -nbEch v </dt><dd> v (int) choisir le nombre d'echantillon permettront a coder le signal a emettre</dd> 
+	 * <dt> -ampl v </dt><dd> v (int) choisir l'amplitude du signal a emettre</dd> 
 	 * </dl>
 	 *
 	 * @throws ArgumentsException si un des arguments est incorrect.
@@ -321,7 +325,7 @@ public class Simulateur {
 			else if (args[i].matches("-seed")) {
 				aleatoireAvecGerme = true;
 				i++; 
-				// traiter la valeur associéé
+				// traiter la valeur associee
 				try { 
 					seed = Integer.valueOf(args[i]);
 				}
@@ -339,7 +343,7 @@ public class Simulateur {
 					nbBitsMess = args[i].length();
 					messageString=args[i];
 				} 
-				else if (args[i].matches("[0-9]{1,6}")) { // de 1 à 6 chiffres
+				else if (args[i].matches("[0-9]{1,6}")) { // de 1 a 6 chiffres
 					messageAleatoire = true;
 					nbBitsMess = Integer.valueOf(args[i]);
 					if (nbBitsMess < 1) 
@@ -388,16 +392,16 @@ public class Simulateur {
 				i++;
 				bruitActif = true;
 				if( nbEchantillon <= 0)
-					throw new ArgumentsException("Le SNR par bit doit �tre un nombre strictement positif");
+					throw new ArgumentsException("Le SNR par bit doit être un nombre strictement positif");
 				SNRParBit = Float.valueOf(args[i]);
 			}
 		}
 	}
 
-	/** La méthode execute effectue un envoi de message par la source
-	 * de la chaîne de transmission du Simulateur, en passant
-	 * par les différents éléments de la chaine
-	 * @throws Exception si un problème survient lors de l'exécution
+	/** La methode execute effectue un envoi de message par la source
+	 * de la chaine de transmission du Simulateur, en passant
+	 * par les differents elements de la chaine
+	 * @throws Exception si un probleme survient lors de l'execution
 	 *
 	 */ 
 
@@ -425,8 +429,8 @@ public class Simulateur {
 	}
 
 
-	/** La méthode qui calcule le taux d'erreur binaire en comparant
-	 * les bits du message émis avec ceux du message reçu.
+	/** La methode qui calcule le taux d'erreur binaire en comparant
+	 * les bits du message emis avec ceux du message recu.
 	 * @return  La valeur du Taux dErreur Binaire.
 	 */   	   
 
@@ -444,10 +448,10 @@ public class Simulateur {
 	}
 
 
-	/** La fonction main instancie un Simulateur à l'aide des
-	 *  arguments paramètres et affiche le résultat de l'exécution
+	/** La fonction main instancie un Simulateur a l'aide des
+	 *  arguments parametres et affiche le resultat de l'execution
 	 *  d'une transmission.
-	 *  @param args les différents arguments qui serviront à l'instanciation du Simulateur.
+	 *  @param args les differents arguments qui serviront a l'instanciation du Simulateur.
 	 */
 
 	public static void main(String [] args) { 
@@ -462,7 +466,7 @@ public class Simulateur {
 		try {
 			simulateur.execute();
 			String s = "java  Simulateur  ";
-			for (int i = 0; i < args.length; i++) { //copier tous les paramètres de simulation
+			for (int i = 0; i < args.length; i++) { //copier tous les paramÃ¨tres de simulation
 				s += args[i] + "  ";
 			}
 			System.out.println(s + "  =>   TEB : " + simulateur.calculTauxErreurBinaire());

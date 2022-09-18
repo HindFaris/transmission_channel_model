@@ -12,7 +12,7 @@ public class TransmetteurParfait extends Transmetteur<Boolean, Boolean>{
 	}
 
 	/**
-	 * émet l'information construite par le transmetteur
+	 * emet l'information construite par le transmetteur
 	 */
 	public void emettre() throws InformationNonConformeException{
 
