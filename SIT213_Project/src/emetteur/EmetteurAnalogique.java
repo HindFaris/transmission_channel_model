@@ -2,7 +2,6 @@ package emetteur;
 
 
 import destinations.DestinationInterface;
-import destinations.*;
 import information.*;
 import transmetteurs.*;
 import signaux.*;
@@ -13,6 +12,8 @@ public class EmetteurAnalogique extends Transmetteur<Boolean, Float>{
 	private int nbEchantillons;
 	private float min=0f;
 	private float max=1f;
+	private float SNRParBit;
+	private boolean bruitActif;
 	
 	public void setTypeEmmeteur(String typeEmmeteur) {
 		this.typeEmmeteur = typeEmmeteur;
@@ -37,11 +38,13 @@ public class EmetteurAnalogique extends Transmetteur<Boolean, Float>{
 	 * @param min
 	 * @param max
 	 */
-	public EmetteurAnalogique(String _typeEmetteur, int _nbEchantillons, float min, float max) {
+	public EmetteurAnalogique(String _typeEmetteur, int _nbEchantillons, float min, float max, float SNRParBit, boolean bruitActif) {
 		this.min = min;
 		this.max = max;
 		typeEmmeteur=_typeEmetteur;
 		nbEchantillons=_nbEchantillons;
+		this.SNRParBit = SNRParBit;
+		this.bruitActif = bruitActif;
 	}
 	
 	/**
@@ -58,18 +61,16 @@ public class EmetteurAnalogique extends Transmetteur<Boolean, Float>{
 	public void emettre() throws InformationNonConformeException{
 		
 		if(typeEmmeteur.equalsIgnoreCase("RZ")) {
-			SignalRZ signal = new SignalRZ(informationRecue, nbEchantillons, min, max);
-			signal.generer();
+			
+			SignalRZ signal = new SignalRZ(informationRecue, nbEchantillons, min, max, SNRParBit, bruitActif);
 			informationEmise = signal.getSignalSortieInformation();
 		}
 		else if(typeEmmeteur.equalsIgnoreCase("NRZ")) {
-			SignalNRZ signal = new SignalNRZ(informationRecue, nbEchantillons, min, max);
-			signal.generer();
+			SignalNRZ signal = new SignalNRZ(informationRecue, nbEchantillons, min, max, SNRParBit, bruitActif);
 			informationEmise = signal.getSignalSortieInformation();
 		}
 		else if(typeEmmeteur.equalsIgnoreCase("NRZT")) {
-			SignalNRZT signal = new SignalNRZT(informationRecue, nbEchantillons, min, max);
-			signal.generer();
+			SignalNRZT signal = new SignalNRZT(informationRecue, nbEchantillons, min, max, SNRParBit, bruitActif);
 			informationEmise = signal.getSignalSortieInformation();
 		}
 		else {
@@ -83,6 +84,22 @@ public class EmetteurAnalogique extends Transmetteur<Boolean, Float>{
 		 
 	}
 	
+	public float getSNRParBit() {
+		return SNRParBit;
+	}
+
+	public void setSNRParBit(float sNRParBit) {
+		SNRParBit = sNRParBit;
+	}
+
+	public boolean isBruitActif() {
+		return bruitActif;
+	}
+
+	public void setBruitActif(boolean bruitActif) {
+		this.bruitActif = bruitActif;
+	}
+
 	public String getTypeEmmeteur() {
 		return typeEmmeteur;
 	}

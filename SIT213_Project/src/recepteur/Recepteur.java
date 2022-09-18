@@ -76,15 +76,15 @@ public class Recepteur extends Transmetteur<Float, Boolean> {
 		informationEmise  = new Information<Boolean>(); 
 		float moyenneTemp = 0f;
 		int tailleDesBooleens = information.nbElements()/nbEchantillons;
-
+				
 		for(int index = 0 ; index < tailleDesBooleens ; index++){
 			moyenneTemp=0f;
 			for (int j = 0; j < nbEchantillons; j++) {
-				moyenneTemp += information.iemeElement(j+index*nbEchantillons);
+				moyenneTemp += information.iemeElement(0);
+				information.remove(0);
 			}
 
-			moyenneTemp = (float)(moyenneTemp/(float)nbEchantillons);
-			System.out.println("Moyenne = " +moyenneTemp);
+			moyenneTemp = moyenneTemp/nbEchantillons;
 
 			if(moyenneTemp >= moyenneLimite) {
 				informationEmise.add(true);
@@ -93,7 +93,6 @@ public class Recepteur extends Transmetteur<Float, Boolean> {
 				informationEmise.add(false);
 			}
 		}
-
 	}
 
 	/**

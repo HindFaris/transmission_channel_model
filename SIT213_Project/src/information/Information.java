@@ -99,6 +99,10 @@ public  class Information <T>  implements Iterable <T> {
 		return s;
 	}
 
+	public void remove(int index) {
+		content.remove(index);
+	}
+	
 	/**
 	 * pour utilisation du "for each" 
 	 */
