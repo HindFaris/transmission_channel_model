@@ -4,14 +4,9 @@ import destinations.DestinationFinale;
 import sources.*;
 import transmetteurs.Transmetteur;
 import transmetteurs.TransmetteurAnalogiqueParfait;
-import transmetteurs.TransmetteurParfait;
 import visualisations.*;
 import information.*;
 import recepteur.*;
-import java.nio.charset.CoderMalfunctionError;
-import java.security.KeyStore.TrustedCertificateEntry;
-import java.util.Random;
-import java.util.stream.IntStream;
 import emetteur.*;
 /** La classe Simulateur permet de construire et simuler une chaine de
  * transmission composee d'une Source, d'un nombre variable de
@@ -132,8 +127,24 @@ public class Simulateur {
 		this.aleatoireAvecGerme = aleatoireAvecGerme;
 	}
 
+	public float getSNRParBit() {
+		return SNRParBit;
+	}
 
-	/** indique le nombre d'echantillon a utiliser */
+	public void setSNRParBit(float sNRParBit) {
+		SNRParBit = sNRParBit;
+	}
+
+	public boolean isBruitActif() {
+		return bruitActif;
+	}
+
+	public void setBruitActif(boolean bruitActif) {
+		this.bruitActif = bruitActif;
+	}
+
+
+	/** indique le nombre d'Ã©chantillon Ã  utiliser */
 	private int nbEchantillon=30;
 
 	/** indique le minimum en amplitude*/
@@ -155,7 +166,7 @@ public class Simulateur {
 	private boolean aleatoireAvecGerme = false;
 
 	/** la valeur de la semence utilisee pour les generateurs aleatoires */
-	private Integer seed = 0; // pas de semence par défaut
+	private Integer seed = 0; // pas de semence par dÃ©faut
 
 	/** la longueur du message aleatoire a transmettre si un message n'est pas impose */
 	private int nbBitsMess = 100;
@@ -178,7 +189,13 @@ public class Simulateur {
 
 	/** le  composant Transmetteur parfait logique de la chaine de transmission */
 	private Transmetteur <Float, Boolean >  recepteur = null;
-
+	
+	/**	 Le rapport signal sur bruit par bit*/
+	private float SNRParBit = 0;
+	
+	/** indique si le Simulateur est bruite ou non */
+	private boolean bruitActif = false;
+	
 	/**
 	 * Un simple getter qui renvoie la taille du mot  recu a la destiation
 	 * @return int 
@@ -236,27 +253,43 @@ public class Simulateur {
 		else if(aleatoireAvecGerme == true) {
 			source = new SourceAleatoire(nbBitsMess, seed);
 		}
-		else {
+		else {//inutile ?
 			source = new SourceAleatoire(nbBitsMess,0);
 
 		}
-		//permet d'initialiser les elements de la chaine
-		emetteurAnalogique = new EmetteurAnalogique(formSignal, nbEchantillon, min, max);
+		//permet d'initialiser les Ã©lÃ©ments de la chaine
+		emetteurAnalogique = new EmetteurAnalogique(formSignal, nbEchantillon, min, max, SNRParBit, bruitActif);
+    
 		transmetteurAnalogiqueParfait = new TransmetteurAnalogiqueParfait();
 		recepteur = new Recepteur(nbEchantillon,min,max,formSignal);
 		destination = new DestinationFinale();
 		//permet de connecter les sondes
-		if (affichage) {
+		
+		//permet de connecter les Ã©lÃ©ments de la chaine entre eux
+		if(affichage) {
+			source.connecter(new SondeLogique("Source", 200));
+		}
+
+		//permet de connecter les elements de la chaine entre eux
+		source.connecter(emetteurAnalogique);
+		if(affichage) {
+			emetteurAnalogique.connecter(new SondeAnalogique("Emetteur Analogique"));
+		}
+		emetteurAnalogique.connecter(transmetteurAnalogiqueParfait);
+		if(affichage) {
+			transmetteurAnalogiqueParfait.connecter(new SondeAnalogique("Transmetteur Analogique parfait"));
+		}
+		transmetteurAnalogiqueParfait.connecter(recepteur);
+		if(affichage) {
+			recepteur.connecter(new SondeLogique("Recepteur", 200));
+		}
+		recepteur.connecter(destination);
+		/*if (affichage) {
 			source.connecter(new SondeLogique("Source", 200));
 			emetteurAnalogique.connecter(new SondeAnalogique("Emetteur Analogique"));
 			transmetteurAnalogiqueParfait.connecter(new SondeAnalogique("Transmetteur Analogique parfait"));
 			recepteur.connecter(new SondeLogique("Recepteur", 200));
-		}
-		//permet de connecter les elements de la chaine entre eux
-		source.connecter(emetteurAnalogique);
-		emetteurAnalogique.connecter(transmetteurAnalogiqueParfait);
-		transmetteurAnalogiqueParfait.connecter(recepteur);
-		recepteur.connecter(destination);
+		}*/
 	}
 
 
@@ -269,8 +302,8 @@ public class Simulateur {
 	 * <br>Les arguments autorises sont : 
 	 * <br> 
 	 * <dl>
-	 * <dt> -mess m  </dt><dd> m (String) constitue de 7 ou plus digits à 0 | 1, le message a transmettre</dd>
-	 * <dt> -mess m  </dt><dd> m (int) constitue de 1 a 6 digits, le nombre de bits du message "aleatoire" z� transmettre</dd> 
+	 * <dt> -mess m  </dt><dd> m (String) constitue de 7 ou plus digits Ã  0 | 1, le message a transmettre</dd>
+	 * <dt> -mess m  </dt><dd> m (int) constitue de 1 a 6 digits, le nombre de bits du message "aleatoire" z  transmettre</dd> 
 	 * <dt> -s </dt><dd> pour demander l'utilisation des sondes d'affichage</dd>
 	 * <dt> -seed v </dt><dd> v (int) d'initialisation pour les generateurs aleatoires</dd> 
 	 * <dt> -form v </dt><dd> v (String) d'initialiser le type du codage du signal a emettre</dd> 
@@ -340,7 +373,7 @@ public class Simulateur {
 				i++; 
 				nbEchantillon=Integer.valueOf(args[i]);
 				if(formSignal.equals("NRZT"))
-					if(nbEchantillon%6 != 0)
+					if(nbEchantillon%3 != 0)
 						throw new ArgumentsException("le nombre d'echantillon pour generer un NRZT doit etre multiple de 3 : ");
 				if( nbEchantillon < 6)
 					throw new ArgumentsException("Valeur du parametre -nbEch invalide, il faut rentrer un nombre plus grand que 6 : " + args[i]);
@@ -354,6 +387,14 @@ public class Simulateur {
 				if(max<min)
 					throw new ArgumentsException("Valeur du parametre -ampl invalide : " + args[i]);
 			} 
+			
+			else if(args[i].matches("-snrpb")) {
+				i++;
+				bruitActif = true;
+				if( nbEchantillon <= 0)
+					throw new ArgumentsException("Le SNR par bit doit être un nombre strictement positif");
+				SNRParBit = Float.valueOf(args[i]);
+			}
 		}
 	}
 
@@ -364,11 +405,27 @@ public class Simulateur {
 	 *
 	 */ 
 
-	public void execute() throws Exception {      
+	public void execute() throws Exception {  
+		
+		long debut = System.currentTimeMillis();
 		source.emettre();
+		long fin = System.currentTimeMillis();
+		//System.out.println("il a fallu " + (fin-debut) + " millisecondes pour faire source.emettre");
+		
+		//debut = System.currentTimeMillis();
 		emetteurAnalogique.emettre();
+		//fin = System.currentTimeMillis();
+		//System.out.println("il a fallu " + (fin-debut) + " millisecondes pour faire emetteur.emettre");
+		
+		//debut = System.currentTimeMillis();
 		transmetteurAnalogiqueParfait.emettre();
+		//fin = System.currentTimeMillis();
+		//System.out.println("il a fallu " + (fin-debut) + " millisecondes pour faire tansmetteur.emettre");
+		
+		//debut = System.currentTimeMillis();
 		recepteur.emettre();
+		//fin = System.currentTimeMillis();
+		//System.out.println("il a fallu " + (fin-debut) + " millisecondes pour faire tansmetteur.emettre");
 	}
 
 
@@ -387,7 +444,7 @@ public class Simulateur {
 				nbVariablesDifferentes += 1;
 			}
 		}
-		return  nbVariablesDifferentes/source.getInformationEmise().nbElements();
+		return  (float)nbVariablesDifferentes/source.getInformationEmise().nbElements();
 	}
 
 
@@ -398,7 +455,6 @@ public class Simulateur {
 	 */
 
 	public static void main(String [] args) { 
-
 		Simulateur simulateur = null;
 		try {
 			simulateur = new Simulateur(args);
@@ -410,7 +466,7 @@ public class Simulateur {
 		try {
 			simulateur.execute();
 			String s = "java  Simulateur  ";
-			for (int i = 0; i < args.length; i++) { //copier tous les paramètres de simulation
+			for (int i = 0; i < args.length; i++) { //copier tous les paramÃ¨tres de simulation
 				s += args[i] + "  ";
 			}
 			System.out.println(s + "  =>   TEB : " + simulateur.calculTauxErreurBinaire());
@@ -419,8 +475,6 @@ public class Simulateur {
 			System.out.println(e);
 			e.printStackTrace();
 			System.exit(-2);
-
-		} 
-
+		}
 	}
 }

@@ -18,7 +18,6 @@ public class TransmetteurAnalogiqueParfait extends Transmetteur<Float, Float> {
 	 * emettre l'information float a toutes les destinations connectees
 	 */
 	public void emettre() throws InformationNonConformeException{
-
 		for (DestinationInterface<Float> destinationConnectee : destinationsConnectees) {
 			destinationConnectee.recevoir(informationRecue);
 		}
