@@ -23,128 +23,60 @@ public class Simulateur {
 		return nbEchantillon;
 	}
 
-	public void setNbEchantillon(int nbEchantillon) {
-		this.nbEchantillon = nbEchantillon;
-	}
-
 	public float getMin() {
 		return min;
-	}
-
-	public void setMin(float min) {
-		this.min = min;
 	}
 
 	public float getMax() {
 		return max;
 	}
 
-	public void setMax(float max) {
-		this.max = max;
-	}
-
 	public String getFormSignal() {
 		return formSignal;
-	}
-
-	public void setFormSignal(String formSignal) {
-		this.formSignal = formSignal;
 	}
 
 	public Integer getSeed() {
 		return seed;
 	}
 
-	public void setSeed(Integer seed) {
-		this.seed = seed;
-	}
-
 	public int getNbBitsMess() {
 		return nbBitsMess;
-	}
-
-	public void setNbBitsMess(int nbBitsMess) {
-		this.nbBitsMess = nbBitsMess;
 	}
 
 	public String getMessageString() {
 		return messageString;
 	}
 
-	public void setMessageString(String messageString) {
-		this.messageString = messageString;
-	}
-
 	public Source<Boolean> getSource() {
 		return source;
-	}
-
-	public void setSource(Source<Boolean> source) {
-		this.source = source;
 	}
 
 	public Transmetteur<Float, Float> getTransmetteurAnalogiqueParfait() {
 		return transmetteurAnalogiqueParfait;
 	}
 
-	public void setTransmetteurAnalogiqueParfait(Transmetteur<Float, Float> transmetteurAnalogiqueParfait) {
-		this.transmetteurAnalogiqueParfait = transmetteurAnalogiqueParfait;
-	}
-
 	public Destination<Boolean> getDestination() {
 		return destination;
-	}
-
-	public void setDestination(Destination<Boolean> destination) {
-		this.destination = destination;
 	}
 
 	public Transmetteur<Boolean, Float> getEmetteurAnalogique() {
 		return emetteurAnalogique;
 	}
 
-	public void setEmetteurAnalogique(Transmetteur<Boolean, Float> emetteurAnalogique) {
-		this.emetteurAnalogique = emetteurAnalogique;
-	}
-
 	public Transmetteur<Float, Boolean> getRecepteur() {
 		return recepteur;
-	}
-
-	public void setRecepteur(Transmetteur<Float, Boolean> recepteur) {
-		this.recepteur = recepteur;
-	}
-
-	public void setAffichage(boolean affichage) {
-		this.affichage = affichage;
-	}
-
-	public void setMessageAleatoire(boolean messageAleatoire) {
-		this.messageAleatoire = messageAleatoire;
-	}
-
-	public void setAleatoireAvecGerme(boolean aleatoireAvecGerme) {
-		this.aleatoireAvecGerme = aleatoireAvecGerme;
 	}
 
 	public float getSNRParBit() {
 		return SNRParBit;
 	}
 
-	public void setSNRParBit(float sNRParBit) {
-		SNRParBit = sNRParBit;
-	}
-
-	public boolean isBruitActif() {
+	public boolean getBruitActif() {
 		return bruitActif;
 	}
 
-	public void setBruitActif(boolean bruitActif) {
-		this.bruitActif = bruitActif;
-	}
 
-
-	/** indique le nombre d'Ã©chantillon Ã  utiliser */
+	/** indique le nombre d'echantillon a utiliser */
 	private int nbEchantillon=30;
 
 	/** indique le minimum en amplitude*/
@@ -173,7 +105,6 @@ public class Simulateur {
 
 	/** la chaine de caracteres correspondant m dans l'argument -mess m */
 	private String messageString = "100";
-
 
 	/** le  composant Source de la chaine de transmission */
 	private Source <Boolean>  source = null;
@@ -257,7 +188,7 @@ public class Simulateur {
 			source = new SourceAleatoire(nbBitsMess,0);
 
 		}
-		//permet d'initialiser les Ã©lÃ©ments de la chaine
+		//permet d'initialiser les elements de la chaine
 		emetteurAnalogique = new EmetteurAnalogique(formSignal, nbEchantillon, min, max, SNRParBit, bruitActif);
     
 		transmetteurAnalogiqueParfait = new TransmetteurAnalogiqueParfait();
@@ -265,7 +196,7 @@ public class Simulateur {
 		destination = new DestinationFinale();
 		//permet de connecter les sondes
 		
-		//permet de connecter les Ã©lÃ©ments de la chaine entre eux
+		//permet de connecter les elements de la chaine entre eux
 		if(affichage) {
 			source.connecter(new SondeLogique("Source", 200));
 		}
@@ -303,7 +234,7 @@ public class Simulateur {
 	 * <br> 
 	 * <dl>
 	 * <dt> -mess m  </dt><dd> m (String) constitue de 7 ou plus digits Ã  0 | 1, le message a transmettre</dd>
-	 * <dt> -mess m  </dt><dd> m (int) constitue de 1 a 6 digits, le nombre de bits du message "aleatoire" z  transmettre</dd> 
+	 * <dt> -mess m  </dt><dd> m (int) constitue de 1 a 6 digits, le nombre de bits du message "aleatoire" a transmettre</dd> 
 	 * <dt> -s </dt><dd> pour demander l'utilisation des sondes d'affichage</dd>
 	 * <dt> -seed v </dt><dd> v (int) d'initialisation pour les generateurs aleatoires</dd> 
 	 * <dt> -form v </dt><dd> v (String) d'initialiser le type du codage du signal a emettre</dd> 
@@ -392,7 +323,7 @@ public class Simulateur {
 				i++;
 				bruitActif = true;
 				if( nbEchantillon <= 0)
-					throw new ArgumentsException("Le SNR par bit doit être un nombre strictement positif");
+					throw new ArgumentsException("Le SNR par bit doit etre un nombre strictement positif");
 				SNRParBit = Float.valueOf(args[i]);
 			}
 		}

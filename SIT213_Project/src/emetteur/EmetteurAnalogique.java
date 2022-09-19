@@ -14,22 +14,6 @@ public class EmetteurAnalogique extends Transmetteur<Boolean, Float>{
 	private float max=1f;
 	private float SNRParBit;
 	private boolean bruitActif;
-	
-	public void setTypeEmmeteur(String typeEmmeteur) {
-		this.typeEmmeteur = typeEmmeteur;
-	}
-
-	public void setNbEchantillons(int nbEchantillons) {
-		this.nbEchantillons = nbEchantillons;
-	}
-
-	public void setMin(float min) {
-		this.min = min;
-	}
-
-	public void setMax(float max) {
-		this.max = max;
-	}
 
 	/**
 	 * constructeur de l'emetteur analogique initialise avec differents parametres
@@ -88,19 +72,11 @@ public class EmetteurAnalogique extends Transmetteur<Boolean, Float>{
 		return SNRParBit;
 	}
 
-	public void setSNRParBit(float sNRParBit) {
-		SNRParBit = sNRParBit;
-	}
-
-	public boolean isBruitActif() {
+	public boolean getBruitActif() {
 		return bruitActif;
 	}
-
-	public void setBruitActif(boolean bruitActif) {
-		this.bruitActif = bruitActif;
-	}
-
-	public String getTypeEmmeteur() {
+	
+	public String getTypeEmetteur() {
 		return typeEmmeteur;
 	}
 

@@ -67,11 +67,13 @@ public class Tests {
 			
 			System.out.println("Testing SourceFixe \n");
 			nbTests++;
-			String longBinary = new String("0111000111");
-			String shortBinary = new String("011");
+			//String longBinary = new String("0111000111");
+			//String shortBinary = new String("011");
 			SourceFixeTest T0 = new SourceFixeTest();
-			T0.SourceFixeInitTest(longBinary);
-			T0.SourceFixeLengthTest(shortBinary); 
+			// test : message fixe
+			T0.SourceFixeInitTest("0111000111");
+			// test : message fixe trop court -> Source Aleatoire
+			T0.SourceFixeLengthTest("011"); 
 			/*
 			if(true) { //Ici on mets les conditions du ou des tests que l'on veut mener, tu peux mettre des assertEquals aussi.
 				nbErrors++;
@@ -83,9 +85,14 @@ public class Tests {
 			//int nBitMess = 23;
 			//int seed = 10;
 			SourceAleatoireTest T1 = new SourceAleatoireTest();
+			// tests de la valeur nBitMess
 			T1.SourceAleatoireInitTest(23);
-			T1.SourceAleatoireInitTest((int)0110);
+			T1.SourceAleatoireInitTest(0);
+			T1.SourceAleatoireInitTest((int)0110); //message binaire trop court
+			// tests de la valeur seed
 			T1.SourceAleatoireSeedTest(10);
+			T1.SourceAleatoireSeedTest(0);
+
 			/*
 			if(true) {
 				nbErrors++;
