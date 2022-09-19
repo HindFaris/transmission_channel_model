@@ -7,9 +7,6 @@ import sources.SourceAleatoire;
 
 public class SourceAleatoireTest {
 	
-	private int nBitMess = 23;
-	private int seed = 10; //TODO test seed = 0
-	
 	
 	//@Test
 	public SourceAleatoireTest(int nBitMess, int seed) {

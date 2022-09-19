@@ -8,7 +8,6 @@ import sources.*;
 
 public class SourceFixeTest {
 	
-	 private String Binary = new String("0111000111");
 	 
 	 /* ERREUR -> instanciation linkedlist ? 
 	 protected LinkedList <Boolean> binMess = new LinkedList<Boolean>();
