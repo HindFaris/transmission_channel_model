@@ -108,31 +108,41 @@ public class Tests {
 			float max = 5;
 			float SNRParBit = 0;
 			boolean bruitActif = true;
+			EmetteurTest T2_0 = new EmetteurTest();
+			T2_0.EmetteurInitTest(typeEmetteur, nbEchantillons, min, max, SNRParBit, bruitActif);
+			
+			/*
 			EmetteurTest T2_0 = new EmetteurTest(typeEmetteur, nbEchantillons,min,max, SNRParBit, bruitActif);
 			if(true) {
 				nbErrors++;
 				System.out.println("Err : XXXX");
-			}
+			}*/
 			
 			System.out.println("Testing with a NRZT Signal \n");
 			typeEmetteur = "NRZT";
+			EmetteurTest T2_1 = new EmetteurTest();
+			T2_1.EmetteurInitTest(typeEmetteur, nbEchantillons, min, max, SNRParBit, bruitActif);
+			/*
 			EmetteurTest T2_1 = new EmetteurTest(typeEmetteur, nbEchantillons,min,max,SNRParBit, bruitActif);
 			if(true) {
 				nbErrors++;
 				System.out.println("Err : XXXX");
-			}
+			}*/
 			
 			System.out.println("Testing with a RZ Signal \n");
 			typeEmetteur = "RZ";
+			EmetteurTest T2_2 = new EmetteurTest();
+			T2_2.EmetteurInitTest(typeEmetteur, nbEchantillons, min, max, SNRParBit, bruitActif);
+			/*
 			EmetteurTest T2_2 = new EmetteurTest(typeEmetteur, nbEchantillons,min,max,SNRParBit, bruitActif);
 			if(true) {
 				nbErrors++;
 				System.out.println("Err : XXXX");
-			}
+			}*/
 			
 			System.out.println("Testing DestinationFinale \n");
 			nbTests++;
-			DestinationFinaleTest T3 = new DestinationFinaleTest(longBinary);
+			DestinationFinaleTest T3 = new DestinationFinaleTest("0111000111");
 			if(true) {
 				nbErrors++;
 				System.out.println("Err : XXXX");
