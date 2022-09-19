@@ -71,7 +71,7 @@ public class Tests {
 			String Binary2 = new String("011");
 			SourceFixeTest T0 = new SourceFixeTest();
 			T0.SourceFixeInitTest(Binary);
-			T0.SourceFixeLengthTest(Binary2);
+			T0.SourceFixeLengthTest(Binary2); 
 			/*
 			if(true) { //Ici on mets les conditions du ou des tests que l'on veut mener, tu peux mettre des assertEquals aussi.
 				nbErrors++;
