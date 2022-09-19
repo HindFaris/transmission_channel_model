@@ -24,18 +24,20 @@ public class SourceFixeTest {
 	 */
 	
 	//@Test
-	 public SourceFixeTest (String Binary) {
+	public SourceFixeTest() {}
+	
+	public void SourceFixeInitTest (String Binary) {
 		SourceFixe SourceF = new SourceFixe(Binary);
 		assertEquals(SourceF.getInformationGeneree(),Binary, "L'information generee ne correspond pas au message entre");
 	}
 	 
-	 public boolean SourceFixeLengthTest (String Binary) throws InvalideParameterException {
+	public void SourceFixeLengthTest (String Binary) {
 		 SourceFixe Source = new SourceFixe(Binary);
+		 boolean result;
 		 if (Source.getInformationGeneree().nbElements()<7) {
-			 //comment tester que ca devient une source aleatoire
-			 //comment tester que la source fixe n'est pas creee
-			 return true;
-		 }else return false;	 
-	 }
+			 result =  false;
+		 }else result =  true;
+		 assertEquals(result, false, "La longueur information generee est inferieur a 7");
+	}
 
 }

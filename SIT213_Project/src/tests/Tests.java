@@ -1,5 +1,6 @@
 package tests;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 /**
  * Tests helps to convey information about performed tests
@@ -67,11 +68,15 @@ public class Tests {
 			System.out.println("Testing SourceFixe \n");
 			nbTests++;
 			String Binary = new String("0111000111");
-			SourceFixeTest T0 = new SourceFixeTest(Binary);
+			String Binary2 = new String("011");
+			SourceFixeTest T0 = new SourceFixeTest();
+			T0.SourceFixeInitTest(Binary);
+			T0.SourceFixeLengthTest(Binary2);
+			/*
 			if(true) { //Ici on mets les conditions du ou des tests que l'on veut mener, tu peux mettre des assertEquals aussi.
 				nbErrors++;
 				System.out.println("Err : XXXX");
-			}
+			}*/
 			
 			System.out.println("Testing SourceAleatoire \n");
 			nbTests++;
