@@ -166,7 +166,7 @@ public class Simulateur {
 	private boolean aleatoireAvecGerme = false;
 
 	/** la valeur de la semence utilisee pour les generateurs aleatoires */
-	private Integer seed = 0; // pas de semence par dÃ©faut
+	private Integer seed = 0; // pas de semence par defaut
 
 	/** la longueur du message aleatoire a transmettre si un message n'est pas impose */
 	private int nbBitsMess = 100;

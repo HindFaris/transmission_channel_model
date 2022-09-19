@@ -67,11 +67,11 @@ public class Tests {
 			
 			System.out.println("Testing SourceFixe \n");
 			nbTests++;
-			String Binary = new String("0111000111");
-			String Binary2 = new String("011");
+			String longBinary = new String("0111000111");
+			String shortBinary = new String("011");
 			SourceFixeTest T0 = new SourceFixeTest();
-			T0.SourceFixeInitTest(Binary);
-			T0.SourceFixeLengthTest(Binary2); 
+			T0.SourceFixeInitTest(longBinary);
+			T0.SourceFixeLengthTest(shortBinary); 
 			/*
 			if(true) { //Ici on mets les conditions du ou des tests que l'on veut mener, tu peux mettre des assertEquals aussi.
 				nbErrors++;
