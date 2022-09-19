@@ -80,13 +80,17 @@ public class Tests {
 			
 			System.out.println("Testing SourceAleatoire \n");
 			nbTests++;
-			int nBitMess = 23;
-			int seed = 10;
-			SourceAleatoireTest T1 = new SourceAleatoireTest(nBitMess,seed);
+			//int nBitMess = 23;
+			//int seed = 10;
+			SourceAleatoireTest T1 = new SourceAleatoireTest();
+			T1.SourceAleatoireInitTest(23);
+			T1.SourceAleatoireInitTest((int)0110);
+			T1.SourceAleatoireSeedTest(10);
+			/*
 			if(true) {
 				nbErrors++;
 				System.out.println("Err : XXXX");
-			}
+			}*/
 	
 			System.out.println("Testing Emetteur \n");
 			nbTests++;
@@ -121,7 +125,7 @@ public class Tests {
 			
 			System.out.println("Testing DestinationFinale \n");
 			nbTests++;
-			DestinationFinaleTest T3 = new DestinationFinaleTest(Binary);
+			DestinationFinaleTest T3 = new DestinationFinaleTest(longBinary);
 			if(true) {
 				nbErrors++;
 				System.out.println("Err : XXXX");

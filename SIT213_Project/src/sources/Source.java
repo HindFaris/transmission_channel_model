@@ -91,7 +91,7 @@ public  abstract class Source <T> implements  SourceInterface <T> {
 	/**
 	 *Emet l'information generee
 	 */
-	public   void emettre() throws InformationNonConformeException {
+	public void emettre() throws InformationNonConformeException {
 
 		for (DestinationInterface<T> destinationConnectee : destinationsConnectees) {
 			destinationConnectee.recevoir(informationGeneree);
