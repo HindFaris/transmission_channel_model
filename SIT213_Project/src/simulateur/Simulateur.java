@@ -322,8 +322,6 @@ public class Simulateur {
 			else if(args[i].matches("-snrpb")) {
 				i++;
 				bruitActif = true;
-				if( nbEchantillon <= 0)
-					throw new ArgumentsException("Le SNR par bit doit etre un nombre strictement positif");
 				SNRParBit = Float.valueOf(args[i]);
 			}
 		}

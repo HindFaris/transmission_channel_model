@@ -8,6 +8,7 @@ public abstract class Signal {
 	protected Information<Float> signalSortieInformation;
 	protected int nbEchantillon;
 	protected float min;
+	protected float max;
 	protected float SNRParBit;
 	protected int tailleSignalEntree;
 	protected boolean bruitActif;
@@ -47,9 +48,6 @@ public abstract class Signal {
 	public void setSignalSortieInformation(Information<Float> signalSortieInformation) {
 		this.signalSortieInformation = signalSortieInformation;
 	}
-
-
-	protected float max;
 	
 	/**
 	 * constructeur du signal
@@ -123,9 +121,6 @@ public abstract class Signal {
 	}
 
 	public float ecartType() {
-		if(tailleSignalEntree*nbEchantillon == signalSortieInformation.nbElements()) {
-			System.out.println("Bien joué !");
-		}
 		float ecartType = (float)Math.sqrt(this.puissance()*nbEchantillon/(2*Math.pow(10, SNRParBit/10)));
 		return ecartType;
 	}
