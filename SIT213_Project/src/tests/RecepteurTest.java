@@ -7,17 +7,38 @@ import recepteur.Recepteur;
 
 public class RecepteurTest {
 	
-	private int nbEchantillons = 10000; //TODO test nbEchantillons = 0
-	private float min = -5;
-	private float max = 5;
-	private String form = "RZ";
+	private static int nbTests=0;
+	private static int nbErrors=0;
+
 	
 	//@Test
-	public RecepteurTest(int nbEchantillons, float min, float max, String form) {
-		Recepteur Recepteur = new Recepteur(nbEchantillons, min,  max, form);
-		//asserEquals(Recepteur.getNbEchantillons, int 10000, "La valeur du nombre d'echantillon ne correspond pas");
-		//asserEquals(Recepteur.getMin, int -5, "La valeur de min ne correspond pas");
-		//asserEquals(Recepteur.getMax, int 5, "La valeur de max ne correspond pas");
-		//asserEquals(Recepteur.getForm, "RZ", "Le type ne correspond pas");
+	public RecepteurTest() {
+	}
+
+
+	@Test
+	public void RecepteurInitTest(int nbEchantillons, float min, float max, String form) {
+		nbErrors+=4;
+		Recepteur Recepteur = new Recepteur(nbEchantillons, min, max, form);
+		assertEquals(Recepteur.getNbEchantillons(), nbEchantillons, "La valeur du nombre d'echantillon ne correspond pas");
+		nbErrors--;
+		assertEquals(Recepteur.getMin(), min, "La valeur de min ne correspond pas");
+		nbErrors--;
+		assertEquals(Recepteur.getMax(), max, "La valeur de max ne correspond pas");
+		nbErrors--;
+		assertEquals(Recepteur.getFormeSignal(), form, "Le type ne correspond pas");
+		nbErrors--;
+	}
+	
+	public static Tests testReport() {		
+		Tests tr;
+		RecepteurTest S = new RecepteurTest();
+		
+		S.RecepteurInitTest(10000, -5, 5, "RZ");
+		//Il faudra rajouter d'autres cas de tests
+		//TODO
+		
+		tr = new Tests(nbTests,nbErrors);
+		return tr; 
 	}
 }

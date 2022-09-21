@@ -16,25 +16,11 @@ public  abstract class Source <T> implements  SourceInterface <T> {
 		return destinationsConnectees;
 	}
 
-	public void setDestinationsConnectees(LinkedList<DestinationInterface<T>> destinationsConnectees) {
-		this.destinationsConnectees = destinationsConnectees;
-	}
 
 	public LinkedList<Transmetteur<Boolean, Float>> getTransmetteursConnectees() {
 		return transmetteursConnectees;
 	}
 
-	public void setTransmetteursConnectees(LinkedList<Transmetteur<Boolean, Float>> transmetteursConnectees) {
-		this.transmetteursConnectees = transmetteursConnectees;
-	}
-
-	public void setInformationGeneree(Information<T> informationGeneree) {
-		this.informationGeneree = informationGeneree;
-	}
-
-	public void setInformationEmise(Information<T> informationEmise) {
-		this.informationEmise = informationEmise;
-	}
 
 	/** 
 	 * la liste des composants destination connectes

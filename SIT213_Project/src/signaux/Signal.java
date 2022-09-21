@@ -17,38 +17,18 @@ public abstract class Signal {
 		return signalEntree;
 	}
 
-	public void setSignalEntree(Information<Boolean> signalEntree) {
-		this.signalEntree = signalEntree;
-	}
-
 	public int getNbEchantillon() {
 		return nbEchantillon;
-	}
-
-	public void setNbEchantillon(int nbEchantillon) {
-		this.nbEchantillon = nbEchantillon;
 	}
 
 	public float getMin() {
 		return min;
 	}
 
-	public void setMin(float min) {
-		this.min = min;
-	}
-
 	public float getMax() {
 		return max;
 	}
 
-	public void setMax(float max) {
-		this.max = max;
-	}
-
-	public void setSignalSortieInformation(Information<Float> signalSortieInformation) {
-		this.signalSortieInformation = signalSortieInformation;
-	}
-	
 	/**
 	 * constructeur du signal
 	 */
@@ -100,24 +80,12 @@ public abstract class Signal {
 		return SNRParBit;
 	}
 
-	public void setSNRParBit(float sNRParBit) {
-		SNRParBit = sNRParBit;
-	}
-
 	public int getTailleSignalEntree() {
 		return tailleSignalEntree;
 	}
 
-	public void setTailleSignalEntree(int tailleSignalEntree) {
-		this.tailleSignalEntree = tailleSignalEntree;
-	}
-
 	public boolean isBruitActif() {
 		return bruitActif;
-	}
-
-	public void setBruitActif(boolean bruitActif) {
-		this.bruitActif = bruitActif;
 	}
 
 	public float ecartType() {

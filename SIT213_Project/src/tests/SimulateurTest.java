@@ -4,7 +4,6 @@ import static org.junit.jupiter.api.Assertions.*;
 
 import org.junit.jupiter.api.Test;
 import simulateur.*;
-import transmetteurs.*;
 
 class SimulateurTest {
 
