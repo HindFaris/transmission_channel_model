@@ -1,31 +1,28 @@
 package tests;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
 
 /**
- * Tests helps to convey information about performed tests
+ * La classe definissant les tests, et execute tous les tests de classes individuelles d'affilees.
  * @author Cudennec Gael
  *
  */
 public class Tests {
 	
-	private int nbTests;  // Total number of tests that were run
-	private int nbErrors; // Total number of errors that were detected while running these tests
+	private int nbTests;  // Nombre de tests effectues
+	private int nbErrors; // Nombre total d'erreurs liees aux tests
 	
 	/**
 	 * 
-	 * @param nbTests Total number of tests that were run.
-	 * @param nbErrors Total number of errors that were detected while running these tests. 
-	 * @throws NotTestsException if nbTests and/or nbErrors are not complying with the following constraints :	nbTests and nbErrors should be positive, nbTests should be greater or equal to nbErrors
+	 * @param nbTests Nombre de tests effectues
+	 * @param nbErrors Nombre total d'erreurs liees aux tests
 	 */
-	public Tests (int nbTests, int nbErrors) throws Exception {
-		if ((nbTests<0) || (nbErrors <0) || (nbTests < nbErrors)) throw new Exception("The test values are not correct");
+	public Tests (int nbTests, int nbErrors) {
 		this.nbTests = nbTests;
 		this.nbErrors = nbErrors;
 	}
 	
 	/**
-	 * Get a String representation of a Test
+	 * Retourne une chaine de caracteres decrivant les tests
 	 */
 	public String toString (){
 		String s = "[ Nb of performed tests : " + nbTests + " / nb of detected error(s) : "+ nbErrors + " ]";
@@ -33,8 +30,8 @@ public class Tests {
 	}
 	
 	/**
-	 * Add to the current Tests the results contained in an other Tests 
-	 * @param other another Tests 
+	 * Ajoute au test courant les valeurs du test en parametre
+	 * @param other un autre test
 	 */
 	public void add (Tests other){
 		this.nbTests += other.nbTests;
@@ -42,7 +39,7 @@ public class Tests {
 	}
 	
 	/**
-	 * Two Tests are equals if all their attributes are equals.
+	 * Deux tests sont egaux si leurs valeurs interne sont egales
 	 */
 	public boolean equals (Object o){
 		if (o instanceof Tests){
@@ -55,124 +52,70 @@ public class Tests {
 	
 
 	public static Tests TestReport(){
-		
-		int nbTests = 0; // total number of performed tests 
-		int nbErrors = 0; // total number of failed tests
+		Tests bigTestReport = new Tests(0, 0);
+		Tests tr = new Tests(0, 0);
 		//On peut faire un truc qui compte les erreurs aussi
 		
 		System.out.println("Beginning of a new Test Report...  ");
 		try {
 			
 			System.out.println("Testing each class individually before testing the whole process : \n");
+			System.out.println("\n\n***************************************************************************************************\n");
+			
 			
 			System.out.println("Testing SourceFixe \n");
-			nbTests++;
-			//String longBinary = new String("0111000111");
-			//String shortBinary = new String("011");
-			SourceFixeTest T0 = new SourceFixeTest();
-			// test : message fixe
-			T0.SourceFixeInitTest("0111000111");
-			// test : message fixe trop court -> Source Aleatoire
-			T0.SourceFixeLengthTest("011"); 
-			/*
-			if(true) { //Ici on mets les conditions du ou des tests que l'on veut mener, tu peux mettre des assertEquals aussi.
-				nbErrors++;
-				System.out.println("Err : XXXX");
-			}*/
+			tr = SourceFixeTest.testReport();
+			bigTestReport.add(tr);
+			System.out.println("\n\n***************************************************************************************************\n");
+			
 			
 			System.out.println("Testing SourceAleatoire \n");
-			nbTests++;
-			//int nBitMess = 23;
-			//int seed = 10;
-			SourceAleatoireTest T1 = new SourceAleatoireTest();
-			// tests de la valeur nBitMess
-			T1.SourceAleatoireInitTest(23);
-			T1.SourceAleatoireInitTest(0);
-			T1.SourceAleatoireInitTest((int)0110); //message binaire trop court
-			// tests de la valeur seed
-			T1.SourceAleatoireSeedTest(10);
-			T1.SourceAleatoireSeedTest(0);
-
-			/*
-			if(true) {
-				nbErrors++;
-				System.out.println("Err : XXXX");
-			}*/
-	
+			tr = SourceAleatoireTest.testReport();
+			bigTestReport.add(tr);
+			System.out.println("\n\n***************************************************************************************************\n");
+			
+			
 			System.out.println("Testing Emetteur \n");
-			nbTests++;
 			System.out.println("Testing with a NRZ Signal \n");
-			String typeEmetteur = "NRZ";
-			int nbEchantillons = 10000;
-			float min = -5;
-			float max = 5;
-			float SNRParBit = 0;
-			boolean bruitActif = true;
-			EmetteurTest T2_0 = new EmetteurTest();
-			T2_0.EmetteurInitTest(typeEmetteur, nbEchantillons, min, max, SNRParBit, bruitActif);
+			tr = EmetteurTest.testReport("NRZ");
+			bigTestReport.add(tr);
 			
-			/*
-			EmetteurTest T2_0 = new EmetteurTest(typeEmetteur, nbEchantillons,min,max, SNRParBit, bruitActif);
-			if(true) {
-				nbErrors++;
-				System.out.println("Err : XXXX");
-			}*/
+			System.out.println("\nTesting with a NRZT Signal \n");
+			tr = EmetteurTest.testReport("NRZT");
+			bigTestReport.add(tr);
 			
-			System.out.println("Testing with a NRZT Signal \n");
-			typeEmetteur = "NRZT";
-			EmetteurTest T2_1 = new EmetteurTest();
-			T2_1.EmetteurInitTest(typeEmetteur, nbEchantillons, min, max, SNRParBit, bruitActif);
-			/*
-			EmetteurTest T2_1 = new EmetteurTest(typeEmetteur, nbEchantillons,min,max,SNRParBit, bruitActif);
-			if(true) {
-				nbErrors++;
-				System.out.println("Err : XXXX");
-			}*/
+			System.out.println("\nTesting with a RZ Signal \n");
+			tr = EmetteurTest.testReport("RZ");
+			bigTestReport.add(tr);
+			System.out.println("\n\n***************************************************************************************************\n");
 			
-			System.out.println("Testing with a RZ Signal \n");
-			typeEmetteur = "RZ";
-			EmetteurTest T2_2 = new EmetteurTest();
-			T2_2.EmetteurInitTest(typeEmetteur, nbEchantillons, min, max, SNRParBit, bruitActif);
-			/*
-			EmetteurTest T2_2 = new EmetteurTest(typeEmetteur, nbEchantillons,min,max,SNRParBit, bruitActif);
-			if(true) {
-				nbErrors++;
-				System.out.println("Err : XXXX");
-			}*/
+
+			System.out.println("Testing Recepteur \n");
+			tr = RecepteurTest.testReport();
+			bigTestReport.add(tr);
+			System.out.println("\n\n***************************************************************************************************\n");
+			
 			
 			System.out.println("Testing DestinationFinale \n");
-			nbTests++;
-			DestinationFinaleTest T3 = new DestinationFinaleTest("0111000111");
-			if(true) {
-				nbErrors++;
-				System.out.println("Err : XXXX");
-			}
+			tr = DestinationFinaleTest.testReport();
+			bigTestReport.add(tr);
+			System.out.println("\n\n***************************************************************************************************\n");
+			
+			
 	
-		}
-		
-		
-		
-		
-		catch (Exception e) {
+		}catch (Exception e) {
 			System.out.println("Err : Unexpected exception : " + e);
 			e.printStackTrace();
 			System.exit(1);
 		}
-		// Print a summary of the tests and return test results
-		try{
-			Tests tr = new Tests(nbTests, nbErrors);	
-			System.out.println("InitTest : " + tr);
-			return tr;	
-		}
-		catch (Exception e){ //This shouldn't happen
-			System.out.println("Unexpected error in Tests code - Can't return valuable test results");
-			return null;
-			}
+		
+		System.out.println("Hereby is the big test report : \n" + bigTestReport);
+		return bigTestReport;
 	}
 	
 	/**
-	 * Launches test()
-	 * @param args not used
+	 * Lance test()
+	 * @param args
 	 */
 	public static void main(String[] args) {
 		TestReport();

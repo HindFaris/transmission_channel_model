@@ -18,33 +18,17 @@ public class Bruit {
 	public Information<Float> getSignalSortieInformation() {
 		return signalSortieInformation;
 	}
-
-	public void setSignalSortieInformation(Information<Float> signalSortieInformation) {
-		this.signalSortieInformation = signalSortieInformation;
-	}
-
+	
 	public float getEcartType() {
 		return ecartType;
-	}
-
-	public void setEcartType(float ecartType) {
-		this.ecartType = ecartType;
 	}
 
 	public int getTailleSignalEntree() {
 		return tailleSignalEntree;
 	}
 
-	public void setTailleSignalEntree(int tailleSignalEntree) {
-		this.tailleSignalEntree = tailleSignalEntree;
-	}
-
 	public int getNbEchantillons() {
 		return nbEchantillons;
-	}
-
-	public void setNbEchantillons(int nbEchantillons) {
-		this.nbEchantillons = nbEchantillons;
 	}
 
 	public Bruit(float ecartType, int tailleSignalEntree, int nbEchantillons) {
