@@ -5,15 +5,15 @@ import org.junit.jupiter.api.Test;
 import emetteur.EmetteurAnalogique;
 
 
-public class EmetteurTest {
+public class BruitTest {
 	
 	private static int nbTests=0;
 	private static int nbErrors=0;
 	
-	public EmetteurTest(){}
+	public BruitTest(){}
 	
 	@Test
-	public void EmetteurInitTest(String typeEmetteur, int nbEchantillons, float min, float max, float SNRParBit, boolean bruitActif) {
+	public void BruitInitTest(String typeEmetteur, int nbEchantillons, float min, float max, float SNRParBit, boolean bruitActif) {
 		nbErrors+=6;
 		EmetteurAnalogique Emetteur = new EmetteurAnalogique(typeEmetteur, nbEchantillons, min,  max, SNRParBit, bruitActif);
 		assertEquals(Emetteur.getTypeEmetteur(), typeEmetteur , "Le type emetteur ne correspond pas");
@@ -38,10 +38,10 @@ public class EmetteurTest {
 		float max = 5;
 		float SNRParBit = 0;
 		boolean bruitActif = true;
-		EmetteurTest E = new EmetteurTest();
+		BruitTest E = new BruitTest();
 		
 		nbTests+=6;
-		E.EmetteurInitTest(typeEmetteur, nbEchantillons, min, max, SNRParBit, bruitActif);
+		E.BruitInitTest(typeEmetteur, nbEchantillons, min, max, SNRParBit, bruitActif);
 		
 		
 		tr = new Tests(nbTests,nbErrors);
