@@ -2,13 +2,10 @@ package sources;
 
 import java.util.Random;
 
-import destinations.DestinationFinale;
 import information.Information;
-import simulateur.ArgumentsException;
-import transmetteurs.TransmetteurParfait;
-import visualisations.SondeLogique;
 
-public class SourceAleatoire extends Source{
+
+public class SourceAleatoire extends Source<Boolean>{
 
 	/**
 	 * Cree le message correspondant au mot aleatoire

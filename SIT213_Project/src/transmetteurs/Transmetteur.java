@@ -20,17 +20,6 @@ public abstract  class Transmetteur <R,E> implements  DestinationInterface <R>, 
 		return destinationsConnectees;
 	}
 
-	public void setDestinationsConnectees(LinkedList<DestinationInterface<E>> destinationsConnectees) {
-		this.destinationsConnectees = destinationsConnectees;
-	}
-
-	public void setInformationRecue(Information<R> informationRecue) {
-		this.informationRecue = informationRecue;
-	}
-
-	public void setInformationEmise(Information<E> informationEmise) {
-		this.informationEmise = informationEmise;
-	}
 
 	/** 
 	 * la liste des composants destination connectes en sortie du transmetteur 

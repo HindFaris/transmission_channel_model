@@ -2,10 +2,8 @@ package recepteur;
 
 
 import destinations.DestinationInterface;
-import destinations.*;
 import information.*;
 import transmetteurs.*;
-import signaux.*;
 
 //Réception de l'information
 public class Recepteur extends Transmetteur<Float, Boolean> {
@@ -28,23 +26,7 @@ public class Recepteur extends Transmetteur<Float, Boolean> {
 		nbEchantillons=_nbEchantillons;
 		formeSignal = formSignal;
 	}
-
-	public void setNbEchantillons(int nbEchantillons) {
-		this.nbEchantillons = nbEchantillons;
-	}
-
-	public void setMin(float min) {
-		this.min = min;
-	}
-
-	public void setMax(float max) {
-		this.max = max;
-	}
-
-	public void setFormeSignal(String formeSignal) {
-		this.formeSignal = formeSignal;
-	}
-
+	
 	/**
 	 * permet de recevoir l'nformation float, ensuite fait appel a la methode dechiffrer 
 	 * pour la transformer en boolean

@@ -8,6 +8,7 @@ public abstract class Signal {
 	protected Information<Float> signalSortieInformation;
 	protected int nbEchantillon;
 	protected float min;
+	protected float max;
 	protected float SNRParBit;
 	protected int tailleSignalEntree;
 	protected boolean bruitActif;
@@ -16,41 +17,18 @@ public abstract class Signal {
 		return signalEntree;
 	}
 
-	public void setSignalEntree(Information<Boolean> signalEntree) {
-		this.signalEntree = signalEntree;
-	}
-
 	public int getNbEchantillon() {
 		return nbEchantillon;
-	}
-
-	public void setNbEchantillon(int nbEchantillon) {
-		this.nbEchantillon = nbEchantillon;
 	}
 
 	public float getMin() {
 		return min;
 	}
 
-	public void setMin(float min) {
-		this.min = min;
-	}
-
 	public float getMax() {
 		return max;
 	}
 
-	public void setMax(float max) {
-		this.max = max;
-	}
-
-	public void setSignalSortieInformation(Information<Float> signalSortieInformation) {
-		this.signalSortieInformation = signalSortieInformation;
-	}
-
-
-	protected float max;
-	
 	/**
 	 * constructeur du signal
 	 */
@@ -102,30 +80,15 @@ public abstract class Signal {
 		return SNRParBit;
 	}
 
-	public void setSNRParBit(float sNRParBit) {
-		SNRParBit = sNRParBit;
-	}
-
 	public int getTailleSignalEntree() {
 		return tailleSignalEntree;
-	}
-
-	public void setTailleSignalEntree(int tailleSignalEntree) {
-		this.tailleSignalEntree = tailleSignalEntree;
 	}
 
 	public boolean isBruitActif() {
 		return bruitActif;
 	}
 
-	public void setBruitActif(boolean bruitActif) {
-		this.bruitActif = bruitActif;
-	}
-
 	public float ecartType() {
-		if(tailleSignalEntree*nbEchantillon == signalSortieInformation.nbElements()) {
-			System.out.println("Bien joué !");
-		}
 		float ecartType = (float)Math.sqrt(this.puissance()*nbEchantillon/(2*Math.pow(10, SNRParBit/10)));
 		return ecartType;
 	}
