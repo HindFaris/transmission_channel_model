@@ -2,7 +2,7 @@ package tests;
 import static org.junit.jupiter.api.Assertions.*;
 import org.junit.jupiter.api.Test;
 
-import emetteur.EmetteurAnalogique;
+import signaux.Bruit;
 
 
 public class BruitTest {
@@ -13,35 +13,28 @@ public class BruitTest {
 	public BruitTest(){}
 	
 	@Test
-	public void BruitInitTest(String typeEmetteur, int nbEchantillons, float min, float max, float SNRParBit, boolean bruitActif) {
-		nbErrors+=6;
-		EmetteurAnalogique Emetteur = new EmetteurAnalogique(typeEmetteur, nbEchantillons, min,  max, SNRParBit, bruitActif);
-		assertEquals(Emetteur.getTypeEmetteur(), typeEmetteur , "Le type emetteur ne correspond pas");
+	public void BruitInitTest(float ecartType, int tailleSignalEntree, int nbEchantillons) {
+		nbErrors+=3;
+		Bruit Bruit = new Bruit(ecartType,  tailleSignalEntree,  nbEchantillons);
+		assertEquals(Bruit.getEcartType(), ecartType , "L'ecart type du bruit ne correspond pas");
 		nbErrors--;
-		assertEquals(Emetteur.getNbEchantillons(), nbEchantillons, "La valeur de seed ne correspond pas");
+		assertEquals(Bruit.getTailleSignalEntree(), tailleSignalEntree, "La taille du signal d'entree ne correspond pas");
 		nbErrors--;
-		assertEquals(Emetteur.getMin(), min, "La valeur de min ne correspond pas");
-		nbErrors--;
-		assertEquals(Emetteur.getMax(), max, "La valeur de max ne correspond pas");
-		nbErrors--;
-		assertEquals(Emetteur.getSNRParBit(), SNRParBit, "La valeur du SNR ne correspond pas");
-		nbErrors--;
-		assertEquals(Emetteur.getBruitActif(), bruitActif, "La valeur du bruit actif ne correspond pas");
-		nbErrors--;
+		assertEquals(Bruit.getNbEchantillons(), nbEchantillons, "Le nombre d'echantillon ne correspond pas");
 	}
 	
 	@Test
 	public static Tests testReport(String typeEmetteur) {
 		Tests tr;
+		
+		float ecartType = 5;
+		int tailleSignalEntree = 20;
 		int nbEchantillons = 10000;
-		float min = -5;
-		float max = 5;
-		float SNRParBit = 0;
-		boolean bruitActif = true;
+		
 		BruitTest E = new BruitTest();
 		
-		nbTests+=6;
-		E.BruitInitTest(typeEmetteur, nbEchantillons, min, max, SNRParBit, bruitActif);
+		nbTests+=3;
+		E.BruitInitTest(ecartType, tailleSignalEntree, nbEchantillons);
 		
 		
 		tr = new Tests(nbTests,nbErrors);
