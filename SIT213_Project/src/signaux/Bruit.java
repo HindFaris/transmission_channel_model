@@ -1,5 +1,5 @@
 package signaux;
-//
+//.
 import information.Information;
 
 import java.util.Random;
