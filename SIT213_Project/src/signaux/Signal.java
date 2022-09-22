@@ -9,9 +9,7 @@ public abstract class Signal {
 	protected int nbEchantillon;
 	protected float min;
 	protected float max;
-	protected float SNRParBit;
 	protected int tailleSignalEntree;
-	protected boolean bruitActif;
 	
 	public Information<Boolean> getSignalEntree() {
 		return signalEntree;
@@ -50,49 +48,18 @@ public abstract class Signal {
 		this.nbEchantillon = nbEchantillons;
 		signalEntree = informationRecue;
 		tailleSignalEntree = signalEntree.nbElements();
-		this.SNRParBit = SNRParBit;
-		this.bruitActif = bruitActif;
-		this.generer();
-		if (bruitActif == true) {
-			Bruit bruit = new Bruit(this.ecartType(), tailleSignalEntree, nbEchantillon);
-			for (int index = 0; index < tailleSignalEntree*nbEchantillon; index ++) {
-				signalSortieInformation.setIemeElement(index, signalSortieInformation.iemeElement(index)+bruit.iemeElement(index));
-			}
-		}
-		
+		this.generer();		
 	}
 	
 	/**
 	 * genere le code analogique a  partir du code logique
 	 */
 	public abstract void generer();
-	
-	public float puissance() {
-		float puissance = 0;
-		for (int index = 0; index<tailleSignalEntree*nbEchantillon; index++) {
-			puissance += Math.pow(signalSortieInformation.iemeElement(index), 2);
-		}
-		puissance = (puissance/(float)(tailleSignalEntree*nbEchantillon));
-		return puissance;
-	}
-	
-	public float getSNRParBit() {
-		return SNRParBit;
-	}
 
 	public int getTailleSignalEntree() {
 		return tailleSignalEntree;
 	}
 
-	public boolean isBruitActif() {
-		return bruitActif;
-	}
-
-	public float ecartType() {
-		float ecartType = (float)Math.sqrt(this.puissance()*nbEchantillon/(2*Math.pow(10, SNRParBit/10)));
-		return ecartType;
-	}
-	
 	public Information<Float> getSignalSortieInformation(){
 		return signalSortieInformation;
 	}
