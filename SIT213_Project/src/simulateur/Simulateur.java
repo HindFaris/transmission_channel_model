@@ -3,6 +3,7 @@ import destinations.Destination;
 import destinations.DestinationFinale;
 import sources.*;
 import transmetteurs.Transmetteur;
+import transmetteurs.TransmetteurAnalogiqueBruite;
 import transmetteurs.TransmetteurAnalogiqueParfait;
 import visualisations.*;
 import information.*;
@@ -112,6 +113,9 @@ public class Simulateur {
 	/** le  composant Transmetteur parfait logique de la chaine de transmission */
 	private Transmetteur <Float, Float>  transmetteurAnalogiqueParfait = null;
 
+	/** le  composant Transmetteur bruite logique de la chaine de transmission */
+	private Transmetteur <Float, Float>  transmetteurAnalogiqueBruite = null;
+
 	/** le  composant Destination de la chaine de transmission */
 	private Destination <Boolean>  destination = null;
 
@@ -120,13 +124,13 @@ public class Simulateur {
 
 	/** le  composant Transmetteur parfait logique de la chaine de transmission */
 	private Transmetteur <Float, Boolean >  recepteur = null;
-	
+
 	/**	 Le rapport signal sur bruit par bit*/
 	private float SNRParBit = 0;
-	
+
 	/** indique si le Simulateur est bruite ou non */
 	private boolean bruitActif = false;
-	
+
 	/**
 	 * Un simple getter qui renvoie la taille du mot  recu a la destiation
 	 * @return int 
@@ -190,31 +194,59 @@ public class Simulateur {
 		}
 		//permet d'initialiser les elements de la chaine
 		emetteurAnalogique = new EmetteurAnalogique(formSignal, nbEchantillon, min, max, SNRParBit, bruitActif);
-    
-		transmetteurAnalogiqueParfait = new TransmetteurAnalogiqueParfait();
+		if(bruitActif) {
+			transmetteurAnalogiqueBruite = new TransmetteurAnalogiqueBruite(nbEchantillon, SNRParBit);
+		}
+		else {
+			transmetteurAnalogiqueParfait = new TransmetteurAnalogiqueParfait();
+		}
 		recepteur = new Recepteur(nbEchantillon,min,max,formSignal);
 		destination = new DestinationFinale();
+
 		//permet de connecter les sondes
-		
+
+
 		//permet de connecter les elements de la chaine entre eux
+
+
 		if(affichage) {
 			source.connecter(new SondeLogique("Source", 200));
 		}
-
-		//permet de connecter les elements de la chaine entre eux
 		source.connecter(emetteurAnalogique);
+
 		if(affichage) {
 			emetteurAnalogique.connecter(new SondeAnalogique("Emetteur Analogique"));
 		}
-		emetteurAnalogique.connecter(transmetteurAnalogiqueParfait);
-		if(affichage) {
-			transmetteurAnalogiqueParfait.connecter(new SondeAnalogique("Transmetteur Analogique parfait"));
+
+		if(bruitActif) {
+			emetteurAnalogique.connecter(transmetteurAnalogiqueBruite);
 		}
-		transmetteurAnalogiqueParfait.connecter(recepteur);
+		else {
+			emetteurAnalogique.connecter(transmetteurAnalogiqueParfait);
+		}
+
+		if(affichage) {
+			if(bruitActif) {
+				transmetteurAnalogiqueBruite.connecter(new SondeAnalogique("Transmetteur Analogique bruite"));
+			}
+			else {
+				transmetteurAnalogiqueParfait.connecter(new SondeAnalogique("Transmetteur Analogique parfait"));
+			}
+		}
+
+		if(bruitActif) {
+			transmetteurAnalogiqueBruite.connecter(recepteur);
+		}
+		else {
+			transmetteurAnalogiqueParfait.connecter(recepteur);
+		}
+		
 		if(affichage) {
 			recepteur.connecter(new SondeLogique("Recepteur", 200));
 		}
+		
 		recepteur.connecter(destination);
+
 		/*if (affichage) {
 			source.connecter(new SondeLogique("Source", 200));
 			emetteurAnalogique.connecter(new SondeAnalogique("Emetteur Analogique"));
@@ -318,7 +350,7 @@ public class Simulateur {
 				if(max<min)
 					throw new ArgumentsException("Valeur du parametre -ampl invalide : " + args[i]);
 			} 
-			
+
 			else if(args[i].matches("-snrpb")) {
 				i++;
 				bruitActif = true;
@@ -335,22 +367,27 @@ public class Simulateur {
 	 */ 
 
 	public void execute() throws Exception {  
-		
-		long debut = System.currentTimeMillis();
+
+
 		source.emettre();
-		long fin = System.currentTimeMillis();
+		//long fin = System.currentTimeMillis();
 		//System.out.println("il a fallu " + (fin-debut) + " millisecondes pour faire source.emettre");
-		
+
 		//debut = System.currentTimeMillis();
 		emetteurAnalogique.emettre();
 		//fin = System.currentTimeMillis();
 		//System.out.println("il a fallu " + (fin-debut) + " millisecondes pour faire emetteur.emettre");
-		
+
 		//debut = System.currentTimeMillis();
-		transmetteurAnalogiqueParfait.emettre();
+		if(bruitActif) {
+			transmetteurAnalogiqueBruite.emettre();
+		}
+		else {
+			transmetteurAnalogiqueParfait.emettre();
+		}
 		//fin = System.currentTimeMillis();
 		//System.out.println("il a fallu " + (fin-debut) + " millisecondes pour faire tansmetteur.emettre");
-		
+
 		//debut = System.currentTimeMillis();
 		recepteur.emettre();
 		//fin = System.currentTimeMillis();

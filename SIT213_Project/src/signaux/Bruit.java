@@ -8,8 +8,7 @@ public class Bruit {
 	
 	protected Information<Float> signalSortieInformation;
 	private float ecartType;
-	private int tailleSignalEntree;
-	private int nbEchantillons;
+	private int tailleBruit;
 	
 	public Float iemeElement(int i) {
 		return signalSortieInformation.iemeElement(i);
@@ -23,18 +22,13 @@ public class Bruit {
 		return ecartType;
 	}
 
-	public int getTailleSignalEntree() {
-		return tailleSignalEntree;
+	public int getTailleBruit() {
+		return tailleBruit;
 	}
 
-	public int getNbEchantillons() {
-		return nbEchantillons;
-	}
-
-	public Bruit(float ecartType, int tailleSignalEntree, int nbEchantillons) {
+	public Bruit(float ecartType, int tailleBruit) {
 		this.ecartType = ecartType;
-		this.tailleSignalEntree = tailleSignalEntree;
-		this.nbEchantillons = nbEchantillons;
+		this.tailleBruit = tailleBruit;
 		signalSortieInformation = new Information<Float>();
 		this.generer();
 		
@@ -42,8 +36,10 @@ public class Bruit {
 	
 	public void generer(){
 		Random random = new Random();
-		for(int index = 0; index < tailleSignalEntree*nbEchantillons; index++) {
-			signalSortieInformation.add((float)random.nextGaussian()*ecartType);
+		float rdm = 0;
+		for(int index = 0; index < tailleBruit; index++) {
+			rdm=(float)random.nextGaussian()*ecartType;
+			signalSortieInformation.add(rdm);
 		}
 	}
 }

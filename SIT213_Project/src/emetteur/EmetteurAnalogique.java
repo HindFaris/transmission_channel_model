@@ -58,7 +58,7 @@ public class EmetteurAnalogique extends Transmetteur<Boolean, Float>{
 			informationEmise = signal.getSignalSortieInformation();
 		}
 		else {
-			throw new InformationNonConformeException("Vous devez spécifier RZ, NRZ ou NRZT en"
+			throw new InformationNonConformeException("Vous devez specifier RZ, NRZ ou NRZT en"
 					+ " fonction du type de signal à émmettre");
 		}
 	
