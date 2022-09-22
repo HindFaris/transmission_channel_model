@@ -57,7 +57,7 @@ public class BruitTest {
 		Tests tr;
 		
 		float ecartType = 5;
-		int tailleSignalEntree = 200000;
+		int tailleSignalEntree = 20;
 		int nbEchantillons = 10000;
 		
 		BruitTest E = new BruitTest();
