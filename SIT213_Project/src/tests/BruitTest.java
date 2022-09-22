@@ -21,10 +21,11 @@ public class BruitTest {
 		assertEquals(Bruit.getTailleSignalEntree(), tailleSignalEntree, "La taille du signal d'entree ne correspond pas");
 		nbErrors--;
 		assertEquals(Bruit.getNbEchantillons(), nbEchantillons, "Le nombre d'echantillon ne correspond pas");
+		nbErrors--;
 	}
 	
 	@Test
-	public static Tests testReport(String typeEmetteur) {
+	public static Tests testReport() {
 		Tests tr;
 		
 		float ecartType = 5;

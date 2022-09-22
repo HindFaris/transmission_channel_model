@@ -90,6 +90,16 @@ public class Tests {
 			System.out.println("\n\n***************************************************************************************************\n");
 			
 
+			System.out.println("Testing Signal \n");
+			tr = SignalTest.testReport();
+			bigTestReport.add(tr);
+			System.out.println("\n\n***************************************************************************************************\n");
+			
+			System.out.println("Testing Bruit \n");
+			tr = BruitTest.testReport();
+			bigTestReport.add(tr);
+			System.out.println("\n\n***************************************************************************************************\n");
+			
 			System.out.println("Testing Recepteur \n");
 			tr = RecepteurTest.testReport();
 			bigTestReport.add(tr);
