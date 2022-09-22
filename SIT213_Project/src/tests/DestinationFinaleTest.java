@@ -8,8 +8,12 @@ import destinations.*;
 public class DestinationFinaleTest {
 	
 	//@Test
-	 public DestinationFinaleTest (String Binary) {
-		DestinationFinale DestinationF = new DestinationFinale();
-		//assertEquals(DestinationF.getInformationRecue,);
+	 public DestinationFinaleTest () {
+	}
+	 
+	public void DestinationFinaleInitTest (String Binary) {
+			DestinationFinale DestinationF = new DestinationFinale();
+			assertEquals(DestinationF.getInformationRecue(), Binary, 
+					"L'information recue ne correspond pas a l'information emise");
 	}
 }

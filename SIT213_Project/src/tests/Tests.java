@@ -71,7 +71,7 @@ public class Tests {
 			//String shortBinary = new String("011");
 			SourceFixeTest T0 = new SourceFixeTest();
 			// test : message fixe
-			T0.SourceFixeInitTest("0111000111");
+			T0.SourceFixeInitTest("01100010");
 			// test : message fixe trop court -> Source Aleatoire
 			T0.SourceFixeLengthTest("011"); 
 			/*
@@ -142,16 +142,17 @@ public class Tests {
 			
 			System.out.println("Testing DestinationFinale \n");
 			nbTests++;
-			DestinationFinaleTest T3 = new DestinationFinaleTest("0111000111");
+			DestinationFinaleTest T3 = new DestinationFinaleTest();
+			T3.DestinationFinaleInitTest("0111000111");
+			
+			/*
 			if(true) {
 				nbErrors++;
 				System.out.println("Err : XXXX");
 			}
+			*/
 	
 		}
-		
-		
-		
 		
 		catch (Exception e) {
 			System.out.println("Err : Unexpected exception : " + e);
@@ -167,7 +168,8 @@ public class Tests {
 		catch (Exception e){ //This shouldn't happen
 			System.out.println("Unexpected error in Tests code - Can't return valuable test results");
 			return null;
-			}
+		}
+	
 	}
 	
 	/**

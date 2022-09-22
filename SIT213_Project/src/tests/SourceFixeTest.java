@@ -13,8 +13,16 @@ public class SourceFixeTest {
 	
 	public void SourceFixeInitTest (String Binary) {
 		SourceFixe Source = new SourceFixe(Binary);
-		assertEquals(Source.getInformationGeneree(),Binary, "ERR : L'information generee ne correspond pas au message entre");
-		assertEquals(Source.getInformationGeneree(), Source.getInformationEmise(), "ERR : L'information generee ne correspond pas a l'information emise");
+		LinkedList<Boolean> binaryList = new LinkedList<Boolean>();
+		for (int i = 0; i < Binary.length(); i++) {
+			if (Binary.charAt(i) == '1')
+				binaryList.add(true);
+			else if (Binary.charAt(i) == '0') 
+				binaryList.add(false);
+		}
+		assertEquals(Source.getInformationGeneree(),binaryList, "ERR : L'information generee ne correspond pas au message entre");
+		//besoin de creer une information et de l'emetre 
+		//assertEquals(Source.getInformationGeneree(), Source.getInformationEmise(), "ERR : L'information generee ne correspond pas a l'information emise");
 	}
 	 
 	public void SourceFixeLengthTest (String Binary) {

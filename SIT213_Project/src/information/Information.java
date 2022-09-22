@@ -14,10 +14,6 @@ public  class Information <T>  implements Iterable <T> {
 		return content;
 	}
 
-	public void setContent(LinkedList<T> content) {
-		this.content = content;
-	}
-
 	/**
 	 * pour construire une information vide
 	 */
