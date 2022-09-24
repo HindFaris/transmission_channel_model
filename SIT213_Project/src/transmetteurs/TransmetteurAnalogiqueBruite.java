@@ -9,11 +9,13 @@ public class TransmetteurAnalogiqueBruite extends Transmetteur<Float, Float> {
 
 	private int nbEchantillon;
 	private float SNRParBit;
+	private Integer seed = null;
 	
-	public TransmetteurAnalogiqueBruite(int nbEchantillon, float SNRParBit) {
+	public TransmetteurAnalogiqueBruite(int nbEchantillon, float SNRParBit, Integer seed) {
 		super();
 		this.nbEchantillon = nbEchantillon;
 		this.SNRParBit = SNRParBit;
+		this.seed = seed;
 		informationEmise = new Information<Float>();
 	}
 	
@@ -44,7 +46,7 @@ public class TransmetteurAnalogiqueBruite extends Transmetteur<Float, Float> {
 	}
 	
 	public void emettre() throws InformationNonConformeException{
-		Bruit bruit = new Bruit(this.ecartType(), informationRecue.nbElements());
+		Bruit bruit = new Bruit(this.ecartType(), informationRecue.nbElements(), seed);
 		for(int indice = 0 ; indice < informationRecue.nbElements(); indice++) {
 			informationEmise.add(informationRecue.iemeElement(indice) + bruit.iemeElement(indice));
 		}

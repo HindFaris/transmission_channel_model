@@ -99,7 +99,7 @@ public class Simulateur {
 	private boolean aleatoireAvecGerme = false;
 
 	/** la valeur de la semence utilisee pour les generateurs aleatoires */
-	private Integer seed = 0; // pas de semence par defaut
+	private Integer seed = null; // pas de semence par defaut
 
 	/** la longueur du message aleatoire a transmettre si un message n'est pas impose */
 	private int nbBitsMess = 100;
@@ -195,7 +195,7 @@ public class Simulateur {
 		//permet d'initialiser les elements de la chaine
 		emetteurAnalogique = new EmetteurAnalogique(formSignal, nbEchantillon, min, max, SNRParBit, bruitActif);
 		if(bruitActif) {
-			transmetteurAnalogiqueBruite = new TransmetteurAnalogiqueBruite(nbEchantillon, SNRParBit);
+			transmetteurAnalogiqueBruite = new TransmetteurAnalogiqueBruite(nbEchantillon, SNRParBit, seed);
 		}
 		else {
 			transmetteurAnalogiqueParfait = new TransmetteurAnalogiqueParfait();

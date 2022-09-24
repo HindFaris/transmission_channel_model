@@ -2,6 +2,8 @@ package sources;
 
 import java.util.Random;
 
+import org.hamcrest.core.Is;
+
 import information.Information;
 
 
@@ -14,9 +16,9 @@ public class SourceAleatoire extends Source<Boolean>{
 	 * @param seed
 	 * 			la seed permet de rejouer une simulation si elle est differente de 0
 	 */
-	public SourceAleatoire (int nbBitsMess, int seed) {
+	public SourceAleatoire (int nbBitsMess, Integer seed) {
 		informationGeneree = new Information<Boolean>();
-		if (seed == 0) {
+		if (seed.equals(null)) {
 			Random randomZeroOrOne = new Random();
 			for (int index=0; index < nbBitsMess; index++) {
 				informationGeneree.add(randomZeroOrOne.nextBoolean());
