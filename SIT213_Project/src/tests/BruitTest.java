@@ -1,6 +1,6 @@
 package tests;
 import static org.junit.jupiter.api.Assertions.*;
-
+//
 import java.util.LinkedList;
 
 import org.junit.jupiter.api.Test;
@@ -27,6 +27,7 @@ public class BruitTest {
 		assertEquals(Bruit.getNbEchantillons(), nbEchantillons, "Le nombre d'echantillon ne correspond pas");
 		nbErrors--;
 	}
+<<<<<<< HEAD
 
 	 public LinkedList<LinkedList <Float>> autoCorrelateTest() 
 	 {
@@ -52,6 +53,33 @@ public class BruitTest {
 
 	 }
 
+=======
+	
+	 public LinkedList<LinkedList <Float>> autoCorrelateTest() 
+	 {
+		 Bruit br = new Bruit(4, 8, 50);
+		 LinkedList<Float> sum = new LinkedList <Float> (); 
+		 LinkedList<LinkedList <Float>> output = new LinkedList<LinkedList <Float>> ();
+		 float a = 0;
+		 
+	     for (int n = 0; n < br.getSignalSortieInformation().nbElements(); n++) 
+	     {
+	         for (int i = n; i < br.getSignalSortieInformation().nbElements(); i++) 
+	         {
+	        	a = (float) br.getSignalSortieInformation().iemeElement(i) * (float) br.getSignalSortieInformation().iemeElement(i-n);
+				sum.add(a);
+				
+	         }
+	         output.add(sum);
+	         System.out.println(output);
+
+	         sum.clear();
+	     }
+	     return output;
+
+	 }
+	 
+>>>>>>> branch 'master' of https://github.com/HindFaris/SIT213_Project.git
 	@Test
 	public static Tests testReport() {
 		Tests tr;
@@ -64,9 +92,14 @@ public class BruitTest {
 
 		nbTests+=3;
 		E.BruitInitTest(ecartType, tailleSignalEntree, nbEchantillons);
+<<<<<<< HEAD
 
 		E.autoCorrelateTest();
 
+=======
+		E.autoCorrelateTest();
+		
+>>>>>>> branch 'master' of https://github.com/HindFaris/SIT213_Project.git
 		tr = new Tests(nbTests,nbErrors);
 		return tr; 
 	}
