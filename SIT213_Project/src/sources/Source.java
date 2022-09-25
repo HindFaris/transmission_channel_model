@@ -84,7 +84,6 @@ public  abstract class Source <T> implements  SourceInterface <T> {
 		}
 		
 		this.informationEmise = informationGeneree;   	
-		
 	}
 	
 	public Information<T> getInformationGeneree() {

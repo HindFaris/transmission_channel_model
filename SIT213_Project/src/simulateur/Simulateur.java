@@ -99,7 +99,7 @@ public class Simulateur {
 	private boolean aleatoireAvecGerme = false;
 
 	/** la valeur de la semence utilisee pour les generateurs aleatoires */
-	private Integer seed = 0; // pas de semence par defaut
+	private Integer seed = null; // pas de semence par defaut
 
 	/** la longueur du message aleatoire a transmettre si un message n'est pas impose */
 	private int nbBitsMess = 100;
@@ -195,7 +195,7 @@ public class Simulateur {
 		//permet d'initialiser les elements de la chaine
 		emetteurAnalogique = new EmetteurAnalogique(formSignal, nbEchantillon, min, max, SNRParBit, bruitActif);
 		if(bruitActif) {
-			transmetteurAnalogiqueBruite = new TransmetteurAnalogiqueBruite(nbEchantillon, SNRParBit);
+			transmetteurAnalogiqueBruite = new TransmetteurAnalogiqueBruite(nbEchantillon, SNRParBit, seed);
 		}
 		else {
 			transmetteurAnalogiqueParfait = new TransmetteurAnalogiqueParfait();
@@ -335,9 +335,6 @@ public class Simulateur {
 			else if(args[i].matches("-nbEch")){
 				i++; 
 				nbEchantillon=Integer.valueOf(args[i]);
-				if(formSignal.equals("NRZT"))
-					if(nbEchantillon%3 != 0)
-						throw new ArgumentsException("le nombre d'echantillon pour generer un NRZT doit etre multiple de 3 : ");
 				if( nbEchantillon < 6)
 					throw new ArgumentsException("Valeur du parametre -nbEch invalide, il faut rentrer un nombre plus grand que 6 : " + args[i]);
 			}
@@ -368,17 +365,16 @@ public class Simulateur {
 
 	public void execute() throws Exception {  
 
-		long debut = System.currentTimeMillis();
-
+		//long debut = System.currentTimeMillis();
 		source.emettre();
 		//long fin = System.currentTimeMillis();
 		//System.out.println("il a fallu " + (fin-debut) + " millisecondes pour faire source.emettre");
-
+		System.out.println("fin source");
 		//debut = System.currentTimeMillis();
 		emetteurAnalogique.emettre();
 		//fin = System.currentTimeMillis();
 		//System.out.println("il a fallu " + (fin-debut) + " millisecondes pour faire emetteur.emettre");
-
+		System.out.println("fin emission");
 		//debut = System.currentTimeMillis();
 		if(bruitActif) {
 			transmetteurAnalogiqueBruite.emettre();
@@ -386,13 +382,15 @@ public class Simulateur {
 		else {
 			transmetteurAnalogiqueParfait.emettre();
 		}
+		System.out.println("fin transmission");
 		//fin = System.currentTimeMillis();
 		//System.out.println("il a fallu " + (fin-debut) + " millisecondes pour faire tansmetteur.emettre");
 
 		//debut = System.currentTimeMillis();
 		recepteur.emettre();
-		long fin = System.currentTimeMillis();
-		System.out.println("il a fallu " + (fin-debut) + " millisecondes pour faire emetteur.emettre");
+		System.out.println("fin reception");
+		//long fin = System.currentTimeMillis();
+		//System.out.println("il a fallu " + (fin-debut) + " millisecondes pour faire recepteur.emettre");
 	}
 
 
@@ -405,6 +403,10 @@ public class Simulateur {
 
 		Information <Boolean> chaineEmise = source.getInformationEmise();
 		Information <Boolean> chaineRecue = destination.getInformationRecue();
+		System.out.println("taille cahine emise : " + chaineEmise.nbElements());
+		
+		System.out.println("taille cahine recue : " + chaineRecue.nbElements());
+
 		int nbVariablesDifferentes = 0;
 		for(int indice = 0; indice < source.getInformationEmise().nbElements(); indice++) {
 			if ((chaineEmise.iemeElement(indice) != chaineRecue.iemeElement(indice))) {

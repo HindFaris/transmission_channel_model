@@ -9,6 +9,7 @@ public class Bruit {
 	protected Information<Float> signalSortieInformation;
 	private float ecartType;
 	private int tailleBruit;
+	private Integer seed;
 	
 	/**
 	 * retourne le i eme element du bruit
@@ -49,23 +50,40 @@ public class Bruit {
 	 * @param ecartType l'ecart type de la gaussienne
 	 * @param tailleBruit la longueur du bruit
 	 */
-	public Bruit(float ecartType, int tailleBruit) {
+	
+	public Bruit(float ecartType, int tailleBruit, Integer seed) {
 		this.ecartType = ecartType;
 		this.tailleBruit = tailleBruit;
 		signalSortieInformation = new Information<Float>();
+		this.seed = seed;
 		this.generer();
-		
 	}
 	
 	/**
 	 * genere le bruit blanc gaussien
 	 */
 	public void generer(){
-		Random random = new Random();
-		float rdm = 0;
-		for(int index = 0; index < tailleBruit; index++) {
-			rdm=(float)random.nextGaussian()*ecartType;
-			signalSortieInformation.add(rdm);
+		if(seed == null) {
+			Random random = new Random();
+			float rdm = 0;
+			for(int index = 0; index < tailleBruit; index++) {
+				rdm=(float)random.nextGaussian()*ecartType;
+				signalSortieInformation.add(rdm);
+			}
+			
 		}
+		else {
+			Random random = new Random(seed);
+			float rdm = 0;
+			for(int index = 0; index < tailleBruit; index++) {
+				rdm=(float)random.nextGaussian()*ecartType;
+				signalSortieInformation.add(rdm);
+			}
+		}
+		
+	}
+	
+	public void remove(int index) {
+		signalSortieInformation.remove(index);
 	}
 }
