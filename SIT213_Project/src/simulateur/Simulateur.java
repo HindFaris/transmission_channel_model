@@ -189,7 +189,7 @@ public class Simulateur {
 			source = new SourceAleatoire(nbBitsMess, seed);
 		}
 		else {//inutile ?
-			source = new SourceAleatoire(nbBitsMess,0);
+			source = new SourceAleatoire(nbBitsMess,null);
 
 		}
 		//permet d'initialiser les elements de la chaine
@@ -365,7 +365,7 @@ public class Simulateur {
 
 	public void execute() throws Exception {  
 
-		//long debut = System.currentTimeMillis();
+		long debut = System.currentTimeMillis();
 		source.emettre();
 		//long fin = System.currentTimeMillis();
 		//System.out.println("il a fallu " + (fin-debut) + " millisecondes pour faire source.emettre");
@@ -389,8 +389,8 @@ public class Simulateur {
 		//debut = System.currentTimeMillis();
 		recepteur.emettre();
 		System.out.println("fin reception");
-		//long fin = System.currentTimeMillis();
-		//System.out.println("il a fallu " + (fin-debut) + " millisecondes pour faire recepteur.emettre");
+		long fin = System.currentTimeMillis();
+		System.out.println("il a fallu " + (fin-debut) + " millisecondes pour faire la simulation");
 	}
 
 
@@ -403,15 +403,15 @@ public class Simulateur {
 
 		Information <Boolean> chaineEmise = source.getInformationEmise();
 		Information <Boolean> chaineRecue = destination.getInformationRecue();
-		System.out.println("taille cahine emise : " + chaineEmise.nbElements());
-		
-		System.out.println("taille cahine recue : " + chaineRecue.nbElements());
 
 		int nbVariablesDifferentes = 0;
-		for(int indice = 0; indice < source.getInformationEmise().nbElements(); indice++) {
-			if ((chaineEmise.iemeElement(indice) != chaineRecue.iemeElement(indice))) {
+		int tailleMotBinaire = source.getInformationEmise().nbElements();
+		for(int indice = 0; indice < tailleMotBinaire; indice++) {
+			if ((chaineEmise.iemeElement(0) != chaineRecue.iemeElement(0))) {
 				nbVariablesDifferentes += 1;
 			}
+			chaineEmise.remove(0);
+			chaineRecue.remove(0);
 		}
 		return  (float)nbVariablesDifferentes/source.getInformationEmise().nbElements();
 	}
