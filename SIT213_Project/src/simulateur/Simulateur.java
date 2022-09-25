@@ -368,6 +368,7 @@ public class Simulateur {
 
 	public void execute() throws Exception {  
 
+		long debut = System.currentTimeMillis();
 
 		source.emettre();
 		//long fin = System.currentTimeMillis();
@@ -390,8 +391,8 @@ public class Simulateur {
 
 		//debut = System.currentTimeMillis();
 		recepteur.emettre();
-		//fin = System.currentTimeMillis();
-		//System.out.println("il a fallu " + (fin-debut) + " millisecondes pour faire tansmetteur.emettre");
+		long fin = System.currentTimeMillis();
+		System.out.println("il a fallu " + (fin-debut) + " millisecondes pour faire emetteur.emettre");
 	}
 
 
