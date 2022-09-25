@@ -1,5 +1,7 @@
 package signaux;
 
+import java.util.LinkedList;
+
 import information.Information;
 
 public class SignalNRZT extends Signal{
@@ -13,13 +15,20 @@ public class SignalNRZT extends Signal{
 		float coefficientDirecteur = (max-((max+min)/2))/(nbEchantillon/3);
 		float moyenne = (max+min)/2;
 		signalSortieInformation  = new Information<Float>();
+		LinkedList<Boolean> copieInformationRecue = new LinkedList<Boolean>();
+
+		try {
+			copieInformationRecue = signalEntree.cloneInformation();
+		} catch (Exception e) {
+
+		}
 
 
 		//Le premier bit
 
 		//Les deux premiers tiers des echantillons
-		boolean premierBit = signalEntree.iemeElement(0);
-		boolean deuxiemeBit = signalEntree.iemeElement(1);
+		boolean premierBit = copieInformationRecue.get(0);
+		boolean deuxiemeBit = copieInformationRecue.get(1);
 		signalSortieInformation.add(moyenne);
 
 		if(premierBit == true){
@@ -65,13 +74,12 @@ public class SignalNRZT extends Signal{
 			}
 		}	
 
-
 		//Tous les bits du milieu (hors premier et dernier bit)
 		for(int bit = 1; bit<tailleSignalEntree-1;bit++) {
 
-			Boolean bitPrecedent = signalEntree.iemeElement(bit-1);
-			Boolean bitActuel = signalEntree.iemeElement(bit);
-			Boolean bitSuivant = signalEntree.iemeElement(bit+1);
+			Boolean bitPrecedent = copieInformationRecue.get(0);
+			Boolean bitActuel = copieInformationRecue.get(1);
+			Boolean bitSuivant = copieInformationRecue.get(2);
 
 			//Traitement du premier tiers des echantillons pour un bit donne
 			if(bitPrecedent == true) {
@@ -101,7 +109,7 @@ public class SignalNRZT extends Signal{
 			
 
 			//Traitement du deuxieme tiers des echantillons pour un bit donne
-			if (signalEntree.iemeElement(bit) == true) {
+			if (bitActuel == true) {
 				for(int index = (int)(nbEchantillon/3); index < 2*nbEchantillon/3; index++) {
 					signalSortieInformation.add(max);
 				}
@@ -138,14 +146,14 @@ public class SignalNRZT extends Signal{
 					}
 				}
 			}
+			copieInformationRecue.remove(0);
 		}
 
 
 
 		//Le dernier bit
-
-		boolean avantDernierBit = signalEntree.iemeElement(tailleSignalEntree-2);
-		boolean dernierBit = signalEntree.iemeElement(tailleSignalEntree-1);
+		boolean avantDernierBit = copieInformationRecue.get(0);
+		boolean dernierBit = copieInformationRecue.get(1);
 
 		if(avantDernierBit == true) {
 			if(dernierBit == true) {

@@ -1,5 +1,7 @@
 package signaux;
 
+import java.util.LinkedList;
+
 import information.Information;
 
 public class SignalNRZ extends Signal{
@@ -12,22 +14,29 @@ public class SignalNRZ extends Signal{
 	 * permet de generer le signal analogique en prenant en entree le signal logique
 	 */
 	public void generer() {
-		
+
 		signalSortieInformation  = new Information<Float>();
 		signalSortieInformation.add((max+min)/2);
-		
+		LinkedList<Boolean> copieInformationRecue = new LinkedList<Boolean>();
+
+		try {
+			copieInformationRecue = signalEntree.cloneInformation();
+		} catch (Exception e) {
+
+		}
 		for(int index = 1; index < nbEchantillon; index++) {
-			if (signalEntree.iemeElement(0) == true) {
+			if (copieInformationRecue.get(0) == true) {
 				signalSortieInformation.add(max);
 			}
 			else {
 				signalSortieInformation.add(min);
 			}
 		}
+		copieInformationRecue.remove(0);
 
 		for(int bit = 1; bit<tailleSignalEntree;bit++) {
 
-			if (signalEntree.iemeElement(bit) == true) {
+			if (copieInformationRecue.get(0) == true) {
 				for(int index = 0; index < nbEchantillon; index++) {
 					signalSortieInformation.add(max);
 				}
@@ -37,6 +46,7 @@ public class SignalNRZ extends Signal{
 					signalSortieInformation.add(min);
 				}
 			}
+			copieInformationRecue.remove(0);
 		}
 
 
