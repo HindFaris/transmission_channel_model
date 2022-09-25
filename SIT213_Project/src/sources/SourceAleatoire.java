@@ -1,9 +1,6 @@
 package sources;
 
 import java.util.Random;
-
-import org.hamcrest.core.Is;
-
 import information.Information;
 
 
@@ -18,7 +15,7 @@ public class SourceAleatoire extends Source<Boolean>{
 	 */
 	public SourceAleatoire (int nbBitsMess, Integer seed) {
 		informationGeneree = new Information<Boolean>();
-		if (seed.equals(null)) {
+		if (seed == null) {
 			Random randomZeroOrOne = new Random();
 			for (int index=0; index < nbBitsMess; index++) {
 				informationGeneree.add(randomZeroOrOne.nextBoolean());
@@ -30,7 +27,7 @@ public class SourceAleatoire extends Source<Boolean>{
 			for (int index=0; index < nbBitsMess; index++) {
 				informationGeneree.add(randomZeroOrOne.nextBoolean());
 			}
-		}		
+		}	
 	}
 }
 

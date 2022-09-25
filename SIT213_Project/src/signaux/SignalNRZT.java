@@ -23,18 +23,18 @@ public class SignalNRZT extends Signal{
 		signalSortieInformation.add(moyenne);
 
 		if(premierBit == true){
-			for(int index = 1; index < nbEchantillon/3; index++) {
+			for(int index = 1; index < (nbEchantillon)/3; index++) {
 				signalSortieInformation.add(coefficientDirecteur*index + moyenne);
 			}
-			for(int index = nbEchantillon/3; index < 2*nbEchantillon/3; index++) {
+			for(int index = (nbEchantillon)/3; index < 2*(nbEchantillon)/3; index++) {
 				signalSortieInformation.add(max);
 			}
 		}
 		else {
-			for(int index = 1; index < nbEchantillon/3; index++) {
+			for(int index = 1; index < (nbEchantillon)/3; index++) {
 				signalSortieInformation.add(-coefficientDirecteur*index + moyenne);
 			}
-			for(int index = nbEchantillon/3; index < 2*nbEchantillon/3; index++) {
+			for(int index = (nbEchantillon)/3; index < 2*(nbEchantillon)/3; index++) {
 				signalSortieInformation.add(min);
 			}
 		}
@@ -42,24 +42,24 @@ public class SignalNRZT extends Signal{
 		//Le troisieme tiers des echantillons
 		if (premierBit == true) {
 			if(deuxiemeBit == true) {
-				for(int index = 2*nbEchantillon/3; index < nbEchantillon; index++) {
+				for(int index = 2*(nbEchantillon)/3; index < nbEchantillon; index++) {
 					signalSortieInformation.add(max);
 				}
 			}
 			else {
-				for(int index = 2*nbEchantillon/3; index < nbEchantillon; index++) {
+				for(int index = 2*(nbEchantillon)/3; index < nbEchantillon; index++) {
 					signalSortieInformation.add(-coefficientDirecteur*(index-(2*nbEchantillon/3))+max);
 				}
 			}
 		}
 		else {
 			if (deuxiemeBit == true) {
-				for(int index = 2*nbEchantillon/3; index < nbEchantillon; index++) {
+				for(int index = 2*(nbEchantillon)/3; index < nbEchantillon; index++) {
 					signalSortieInformation.add(coefficientDirecteur*(index-(2*nbEchantillon/3))+min);
 				}
 			}
 			else {
-				for(int index = 2*nbEchantillon/3; index < nbEchantillon; index++) {
+				for(int index = 2*(nbEchantillon)/3; index < nbEchantillon; index++) {
 					signalSortieInformation.add(min);
 				}
 			}
@@ -178,7 +178,7 @@ public class SignalNRZT extends Signal{
 			for(int index = nbEchantillon/3; index < 2*nbEchantillon/3; index++) {
 				signalSortieInformation.add(max);
 			}
-			for(int index = 2*nbEchantillon/3; index <= nbEchantillon; index++) {
+			for(int index = 2*nbEchantillon/3; index < nbEchantillon; index++) {
 				signalSortieInformation.add(-coefficientDirecteur*(index-(2*nbEchantillon/3))+max);
 			}
 		}
@@ -186,7 +186,7 @@ public class SignalNRZT extends Signal{
 			for(int index = nbEchantillon/3; index < 2*nbEchantillon/3; index++) {
 				signalSortieInformation.add(min);
 			}
-			for(int index = 2*nbEchantillon/3; index <= nbEchantillon; index++) {
+			for(int index = 2*nbEchantillon/3; index < nbEchantillon; index++) {
 				signalSortieInformation.add(coefficientDirecteur*(index-(2*nbEchantillon/3))+min);
 			}
 		}

@@ -10,6 +10,18 @@ public  class Information <T>  implements Iterable <T> {
 
 	private LinkedList <T> content;
 
+	public LinkedList<T> cloneInformation() throws Exception{
+		if(content.clone() instanceof LinkedList<?>) {
+			@SuppressWarnings("unchecked")
+			LinkedList<T> test = (LinkedList<T>)content.clone();
+			return test;
+		}
+		else {
+			throw new Exception();
+		}
+		
+	}
+	
 	public LinkedList<T> getContent() {
 		return content;
 	}

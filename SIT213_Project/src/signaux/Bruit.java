@@ -50,12 +50,6 @@ public class Bruit {
 	 * @param ecartType l'ecart type de la gaussienne
 	 * @param tailleBruit la longueur du bruit
 	 */
-	public Bruit(float ecartType, int tailleBruit) {
-		this.ecartType = ecartType;
-		this.tailleBruit = tailleBruit;
-		signalSortieInformation = new Information<Float>();
-		this.generer();
-	}
 	
 	public Bruit(float ecartType, int tailleBruit, Integer seed) {
 		this.ecartType = ecartType;
@@ -76,6 +70,7 @@ public class Bruit {
 				rdm=(float)random.nextGaussian()*ecartType;
 				signalSortieInformation.add(rdm);
 			}
+			
 		}
 		else {
 			Random random = new Random(seed);
@@ -86,5 +81,9 @@ public class Bruit {
 			}
 		}
 		
+	}
+	
+	public void remove(int index) {
+		signalSortieInformation.remove(index);
 	}
 }
