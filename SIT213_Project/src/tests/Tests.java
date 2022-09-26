@@ -111,11 +111,6 @@ public class Tests {
 			System.out.println("\n\n***************************************************************************************************\n");
 			
 			
-			System.out.println("Testing DestinationFinale \n");
-			tr = DestinationFinaleTest.testReport();
-			bigTestReport.add(tr);
-			System.out.println("\n\n***************************************************************************************************\n");
-			
 		}catch (Exception e) {
 			System.out.println("Err : Unexpected exception : " + e);
 			e.printStackTrace();
