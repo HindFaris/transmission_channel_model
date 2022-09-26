@@ -193,7 +193,7 @@ public class Simulateur {
 
 		}
 		//permet d'initialiser les elements de la chaine
-		emetteurAnalogique = new EmetteurAnalogique(formSignal, nbEchantillon, min, max, SNRParBit, bruitActif);
+		emetteurAnalogique = new EmetteurAnalogique(formSignal, nbEchantillon, min, max);
 		if(bruitActif) {
 			transmetteurAnalogiqueBruite = new TransmetteurAnalogiqueBruite(nbEchantillon, SNRParBit, seed);
 		}

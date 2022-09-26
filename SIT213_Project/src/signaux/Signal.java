@@ -42,7 +42,7 @@ public abstract class Signal {
 	 * @param min
 	 * @param max
 	 */
-	public Signal (Information<Boolean> informationRecue, int nbEchantillons, float min, float max, float SNRParBit, boolean bruitActif) {
+	public Signal (Information<Boolean> informationRecue, int nbEchantillons, float min, float max) {
 		this.min =min;
 		this.max=max;
 		this.nbEchantillon = nbEchantillons;

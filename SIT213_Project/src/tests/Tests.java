@@ -77,15 +77,15 @@ public class Tests {
 			
 			System.out.println("Testing Emetteur \n");
 			System.out.println("Testing with a NRZ Signal \n");
-			tr = EmetteurTest.testReport("NRZ");
+			tr = EmetteurAnalogiqueTest.testReport("NRZ");
 			bigTestReport.add(tr);
 			
 			System.out.println("\nTesting with a NRZT Signal \n");
-			tr = EmetteurTest.testReport("NRZT");
+			tr = EmetteurAnalogiqueTest.testReport("NRZT");
 			bigTestReport.add(tr);
 			
 			System.out.println("\nTesting with a RZ Signal \n");
-			tr = EmetteurTest.testReport("RZ");
+			tr = EmetteurAnalogiqueTest.testReport("RZ");
 			bigTestReport.add(tr);
 			System.out.println("\n\n***************************************************************************************************\n");
 			
@@ -97,6 +97,11 @@ public class Tests {
 			
 			System.out.println("Testing Bruit \n");
 			tr = BruitTest.testReport();
+			bigTestReport.add(tr);
+			System.out.println("\n\n***************************************************************************************************\n");
+			
+			System.out.println("Testing TransmetteurAnalogiqueBruite \n");
+			tr = TransmetteurAnalogiqueBruiteTest.testReport();
 			bigTestReport.add(tr);
 			System.out.println("\n\n***************************************************************************************************\n");
 			

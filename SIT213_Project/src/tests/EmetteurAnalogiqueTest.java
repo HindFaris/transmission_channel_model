@@ -5,17 +5,17 @@ import org.junit.jupiter.api.Test;
 import emetteur.EmetteurAnalogique;
 
 
-public class EmetteurTest {
+public class EmetteurAnalogiqueTest {
 	
 	private static int nbTests=0;
 	private static int nbErrors=0;
 	
-	public EmetteurTest(){}
+	public EmetteurAnalogiqueTest(){}
 	
 	@Test
-	public void EmetteurInitTest(String typeEmetteur, int nbEchantillons, float min, float max, float SNRParBit, boolean bruitActif) {
-		nbErrors+=6;
-		EmetteurAnalogique Emetteur = new EmetteurAnalogique(typeEmetteur, nbEchantillons, min,  max, SNRParBit, bruitActif);
+	public void EmetteurAnalogiqueInitTest(String typeEmetteur, int nbEchantillons, float min, float max) {
+		nbErrors+=4;
+		EmetteurAnalogique Emetteur = new EmetteurAnalogique(typeEmetteur, nbEchantillons, min,  max);
 		assertEquals(Emetteur.getTypeEmetteur(), typeEmetteur , "Le type emetteur ne correspond pas");
 		nbErrors--;
 		assertEquals(Emetteur.getNbEchantillons(), nbEchantillons, "La valeur de seed ne correspond pas");
@@ -23,10 +23,6 @@ public class EmetteurTest {
 		assertEquals(Emetteur.getMin(), min, "La valeur de min ne correspond pas");
 		nbErrors--;
 		assertEquals(Emetteur.getMax(), max, "La valeur de max ne correspond pas");
-		nbErrors--;
-		assertEquals(Emetteur.getSNRParBit(), SNRParBit, "La valeur du SNR ne correspond pas");
-		nbErrors--;
-		assertEquals(Emetteur.getBruitActif(), bruitActif, "La valeur du bruit actif ne correspond pas");
 		nbErrors--;
 	}
 	
@@ -36,12 +32,10 @@ public class EmetteurTest {
 		int nbEchantillons = 10000;
 		float min = -5;
 		float max = 5;
-		float SNRParBit = 0;
-		boolean bruitActif = true;
-		EmetteurTest E = new EmetteurTest();
+		EmetteurAnalogiqueTest E = new EmetteurAnalogiqueTest();
 		
-		nbTests+=6;
-		E.EmetteurInitTest(typeEmetteur, nbEchantillons, min, max, SNRParBit, bruitActif);
+		nbTests+=4;
+		E.EmetteurAnalogiqueInitTest(typeEmetteur, nbEchantillons, min, max);
 		
 		
 		tr = new Tests(nbTests,nbErrors);

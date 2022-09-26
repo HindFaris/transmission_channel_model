@@ -45,7 +45,6 @@ public class BruitTest {
 				
 	         }
 	         output.add(sum);
-	         System.out.println(output);
 
 	         sum.clear();
 	     }
