@@ -83,6 +83,10 @@ public class Bruit {
 		
 	}
 	
+	public Integer getSeed() {
+		return seed;
+	}
+
 	public void remove(int index) {
 		signalSortieInformation.remove(index);
 	}
