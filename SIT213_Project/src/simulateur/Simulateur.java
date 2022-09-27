@@ -403,7 +403,7 @@ public class Simulateur {
 
 		Information <Boolean> chaineEmise = source.getInformationEmise();
 		Information <Boolean> chaineRecue = destination.getInformationRecue();
-
+	
 		int nbVariablesDifferentes = 0;
 		int tailleMotBinaire = source.getInformationEmise().nbElements();
 		for(int indice = 0; indice < tailleMotBinaire; indice++) {
@@ -413,7 +413,7 @@ public class Simulateur {
 			chaineEmise.remove(0);
 			chaineRecue.remove(0);
 		}
-		return  (float)nbVariablesDifferentes/source.getInformationEmise().nbElements();
+		return  (float)nbVariablesDifferentes/tailleMotBinaire;
 	}
 
 
