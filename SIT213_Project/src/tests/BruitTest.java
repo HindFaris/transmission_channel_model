@@ -18,14 +18,14 @@ public class BruitTest {
 	public BruitTest(){}
 	
 	@Test
-	public void BruitInitTest(float ecartType, int tailleSignalEntree, int nbEchantillons) {
+	public void BruitInitTest(float ecartType, int tailleBruit, int seed) {
 		nbErrors+=3;
-		Bruit Bruit = new Bruit(ecartType,  tailleSignalEntree,  nbEchantillons);
+		Bruit Bruit = new Bruit(ecartType,  tailleBruit,  seed);
 		assertEquals(Bruit.getEcartType(), ecartType , "L'ecart type du bruit ne correspond pas");
 		nbErrors--;
-		assertEquals(Bruit.getTailleSignalEntree(), tailleSignalEntree, "La taille du signal d'entree ne correspond pas");
+		assertEquals(Bruit.getTailleBruit(), tailleBruit, "La taille du signal d'entree ne correspond pas");
 		nbErrors--;
-		assertEquals(Bruit.getNbEchantillons(), nbEchantillons, "Le nombre d'echantillon ne correspond pas");
+		assertEquals(Bruit.getSeed(), seed, "La valeur de la seed ne correspond pas");
 		nbErrors--;
 	}
 	
