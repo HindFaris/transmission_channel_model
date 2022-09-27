@@ -413,7 +413,7 @@ public class Simulateur {
 			chaineEmise.remove(0);
 			chaineRecue.remove(0);
 		}
-		return  (float)nbVariablesDifferentes/tailleMotBinaire;
+		return  (float)nbVariablesDifferentes/tailleMotBinaire;//test
 	}
 
 
