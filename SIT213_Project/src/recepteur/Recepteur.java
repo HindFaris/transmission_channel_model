@@ -5,7 +5,7 @@ import destinations.DestinationInterface;
 import information.*;
 import transmetteurs.*;
 
-//Réception de l'information
+//Reception de l'information
 public class Recepteur extends Transmetteur<Float, Boolean> {
 
 	private int nbEchantillons;
@@ -28,7 +28,7 @@ public class Recepteur extends Transmetteur<Float, Boolean> {
 	}
 	
 	/**
-	 * permet de recevoir l'nformation float, ensuite fait appel a la methode dechiffrer 
+	 * permet de recevoir l'information float, ensuite fait appel a la methode dechiffrer 
 	 * pour la transformer en boolean
 	 * @param information
 	 */
