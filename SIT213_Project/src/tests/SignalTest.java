@@ -13,8 +13,7 @@ public class SignalTest {
 	private static int nbErrors=0;
 	
 	public SignalTest(){}
-	
-	//tester chaque variable dans une methode de test?(aina)
+
 	@Test
 	public void SignalInitTest(Information<Boolean> informationRecue, int nbEchantillons, float min, float max) {
 		nbErrors+=9;
