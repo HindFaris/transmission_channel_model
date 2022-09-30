@@ -12,6 +12,8 @@ public class RecepteurMultiTrajets extends Transmetteur<Float, Boolean> {
 	private float min=0f;
 	private float max=1f;
 	private String formeSignal;
+	private float alpha;
+	private int tau;
 
 	/**
 	 * permet d'initialiser le Recepteur
@@ -19,12 +21,16 @@ public class RecepteurMultiTrajets extends Transmetteur<Float, Boolean> {
 	 * @param min
 	 * @param max
 	 * @param formeSignal
+	 * @param alpha
+	 * @param tau
 	 */
-	public RecepteurMultiTrajets(int _nbEchantillons, float min, float max, String formSignal) {
-		this.min=min;
-		this.max=max;
-		nbEchantillons=_nbEchantillons;
-		formeSignal = formSignal;
+	public RecepteurMultiTrajets(int nbEchantillons, float min, float max, String formSignal, float alpha, int tau) {
+		this.min = min;
+		this.max = max;
+		this.nbEchantillons = nbEchantillons;
+		this.formeSignal = formSignal;
+		this.alpha = alpha;
+		this.tau = tau;
 	}
 	
 	/**
@@ -79,7 +85,7 @@ public class RecepteurMultiTrajets extends Transmetteur<Float, Boolean> {
 	}
 
 	/**
-	 * transmet aux differentes destinations
+	 * emet aux differentes destinations
 	 */
 
 	public void emettre() throws InformationNonConformeException{
