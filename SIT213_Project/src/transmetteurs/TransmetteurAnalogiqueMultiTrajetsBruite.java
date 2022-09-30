@@ -42,7 +42,7 @@ public class TransmetteurAnalogiqueMultiTrajetsBruite extends Transmetteur<Float
 		
 		Bruit bruit = null;
 		try {
-			bruit = new Bruit(this.ecartType(), informationRecue.nbElements(), seed);
+			bruit = new Bruit(this.ecartType(), informationRecue.nbElements()+tau, seed);
 		} catch (Exception e) {
 		}
 		int tailleInformation = informationRecue.nbElements();
@@ -50,10 +50,11 @@ public class TransmetteurAnalogiqueMultiTrajetsBruite extends Transmetteur<Float
 		int t = this.tau;
 		while (t>0){
 			informationAjoutee.add(0.0f);
+			informationRecue.add(0.0f);
 			t--;
 		}
 		for (int i = 0; i < tailleInformation; i++) {
-			//TODO : revoir la complexité (mauvaise)
+			//TODO : revoir la complexite (mauvaise)
 			informationAjoutee.add(informationRecue.iemeElement(0)*alpha);	
 		}
 		
@@ -67,7 +68,7 @@ public class TransmetteurAnalogiqueMultiTrajetsBruite extends Transmetteur<Float
 			//informationEmise.add(informationRecue.iemeElement(0) + informationAjoutee.iemeElement(0) + bruit.iemeElement(0));
 			//bruit.remove(0);
 		}
-		
+		System.out.println(informationEmise);
 		
 		for (DestinationInterface<Float> destinationConnectee : destinationsConnectees) {
 			destinationConnectee.recevoir(informationEmise);

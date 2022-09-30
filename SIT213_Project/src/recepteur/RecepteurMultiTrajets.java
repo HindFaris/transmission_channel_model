@@ -54,7 +54,7 @@ public class RecepteurMultiTrajets extends Transmetteur<Float, Boolean> {
 	 * @throws InformationNonConformeException
 	 */
 
-	public  void dechiffrer(Information <Float> information) throws InformationNonConformeException{
+	public  void dechiffrer(Information <Float> informationRecue) throws InformationNonConformeException{
 
 		float moyenneLimite = (max+min)/2;	//Moyenne limite pour le signal NRZ et NRZT
 
@@ -64,13 +64,13 @@ public class RecepteurMultiTrajets extends Transmetteur<Float, Boolean> {
 
 		informationEmise  = new Information<Boolean>(); 
 		float moyenneTemp = 0f;
-		int tailleDesBooleens = information.nbElements()/nbEchantillons;
+		int tailleDesBooleens = informationRecue.nbElements()/nbEchantillons;
 				
 		for(int index = 0 ; index < tailleDesBooleens ; index++){
 			moyenneTemp=0f;
 			for (int j = 0; j < nbEchantillons; j++) {
-				moyenneTemp += information.iemeElement(0);
-				information.remove(0);
+				moyenneTemp += informationRecue.iemeElement(0);
+				informationRecue.remove(0);
 			}
 
 			moyenneTemp = moyenneTemp/nbEchantillons;

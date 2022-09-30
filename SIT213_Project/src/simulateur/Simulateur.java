@@ -2,9 +2,7 @@ package simulateur;
 import destinations.Destination;
 import destinations.DestinationFinale;
 import sources.*;
-import transmetteurs.Transmetteur;
-import transmetteurs.TransmetteurAnalogiqueBruite;
-import transmetteurs.TransmetteurAnalogiqueParfait;
+import transmetteurs.*;
 import visualisations.*;
 import information.*;
 import recepteur.*;
@@ -114,6 +112,9 @@ public class Simulateur {
 
 	/** le  composant Transmetteur bruite logique de la chaine de transmission */
 	private Transmetteur <Float, Float>  transmetteurAnalogiqueBruite = null;
+	
+	/** le  composant Transmetteur Multi Trajets bruite logique de la chaine de transmission */
+	private Transmetteur <Float, Float>  transmetteurAnalogiqueMultiTrajetsBruite = null;
 
 	/** le  composant Destination de la chaine de transmission */
 	private Destination <Boolean>  destination = null;
@@ -214,9 +215,16 @@ public class Simulateur {
 		
 		//determination du transmetteur
 		if(bruitActif) {
-			transmetteurAnalogiqueBruite = new TransmetteurAnalogiqueBruite(nbEchantillon, SNRParBit, seed);
-			emetteurAnalogique.connecter(transmetteurAnalogiqueBruite);
-			transmetteurAnalogiqueBruite.connecter(recepteur);
+			if (trajetIndirect) {
+				transmetteurAnalogiqueBruite = new TransmetteurAnalogiqueMultiTrajetsBruite(nbEchantillon, SNRParBit, seed, alpha, tau);
+				emetteurAnalogique.connecter(transmetteurAnalogiqueBruite);
+				transmetteurAnalogiqueBruite.connecter(recepteur);
+			}else {
+				transmetteurAnalogiqueBruite = new TransmetteurAnalogiqueBruite(nbEchantillon, SNRParBit, seed);
+				emetteurAnalogique.connecter(transmetteurAnalogiqueBruite);
+				transmetteurAnalogiqueBruite.connecter(recepteur);
+			}
+			
 		}
 		else {
 			transmetteurAnalogiqueParfait = new TransmetteurAnalogiqueParfait();
@@ -262,7 +270,7 @@ public class Simulateur {
 	public void analyseArguments(String[] args)  throws  ArgumentsException {
 
 		for (int i=0;i<args.length;i++){ // traiter les arguments 1 par 1
-			System.out.println(args[i]);
+			//System.out.println(args[i]);
 			if (args[i].matches("-s")){
 				affichage = true;
 			}
@@ -341,14 +349,14 @@ public class Simulateur {
 				//TODO : gerer les parametres -> jusqu'a 5
 				//recuperation de la valeur d'alpha
 				i++;
-				System.out.println(args[i]);
+				//System.out.println(args[i]);
 				if (0 < Float.valueOf(args[i]) && Float.valueOf(args[i]) < 1) {
 					alpha = Float.valueOf(args[i]);
 				}
 				
 				//recuperation de la valeur de tau
 				i++;
-				System.out.println(args[i]);
+				//System.out.println(args[i]);
 				if (0 < Integer.valueOf(args[i]) && Integer.valueOf(args[i]) < nbEchantillon) {
 					tau = Integer.valueOf(args[i]);
 				}
