@@ -40,20 +40,19 @@ public class TransmetteurAnalogiqueMultiTrajetsBruite extends Transmetteur<Float
 	public void emettre() throws InformationNonConformeException {
 		Information<Float> informationAjoutee = new Information<Float>();
 		
-		/*
 		Bruit bruit = null;
 		try {
 			bruit = new Bruit(this.ecartType(), informationRecue.nbElements(), seed);
 		} catch (Exception e) {
 		}
-		*/
 		int tailleInformation = informationRecue.nbElements();
 		//trajet indirect (s(t) avec retard)
+		int t = this.tau;
+		while (t>0){
+			informationAjoutee.add(0.0f);
+			t--;
+		}
 		for (int i = 0; i < tailleInformation; i++) {
-			while (this.tau>0){
-				informationAjoutee.add(0.0f);
-				this.tau--;
-			}
 			//TODO : revoir la complexité (mauvaise)
 			informationAjoutee.add(informationRecue.iemeElement(0)*alpha);	
 		}
