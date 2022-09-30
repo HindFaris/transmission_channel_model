@@ -55,7 +55,7 @@ public class TransmetteurAnalogiqueMultiTrajetsBruite extends Transmetteur<Float
 		}
 		for (int i = 0; i < tailleInformation; i++) {
 			//TODO : revoir la complexite (mauvaise)
-			informationAjoutee.add(informationRecue.iemeElement(0)*alpha);	
+			informationAjoutee.add(informationRecue.iemeElement(i)*alpha);	
 		}
 		
 		//signal emis par le transmetteur

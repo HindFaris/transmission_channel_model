@@ -216,9 +216,9 @@ public class Simulateur {
 		//determination du transmetteur
 		if(bruitActif) {
 			if (trajetIndirect) {
-				transmetteurAnalogiqueBruite = new TransmetteurAnalogiqueMultiTrajetsBruite(nbEchantillon, SNRParBit, seed, alpha, tau);
-				emetteurAnalogique.connecter(transmetteurAnalogiqueBruite);
-				transmetteurAnalogiqueBruite.connecter(recepteur);
+				transmetteurAnalogiqueMultiTrajetsBruite = new TransmetteurAnalogiqueMultiTrajetsBruite(nbEchantillon, SNRParBit, seed, alpha, tau);
+				emetteurAnalogique.connecter(transmetteurAnalogiqueMultiTrajetsBruite);
+				transmetteurAnalogiqueMultiTrajetsBruite.connecter(recepteur);
 			}else {
 				transmetteurAnalogiqueBruite = new TransmetteurAnalogiqueBruite(nbEchantillon, SNRParBit, seed);
 				emetteurAnalogique.connecter(transmetteurAnalogiqueBruite);
@@ -237,7 +237,11 @@ public class Simulateur {
 			source.connecter(new SondeLogique("Source", 200));
 			emetteurAnalogique.connecter(new SondeAnalogique("Emetteur Analogique"));
 			if (bruitActif) {
-				transmetteurAnalogiqueBruite.connecter(new SondeAnalogique("Transmetteur Analogique bruite"));
+				if (trajetIndirect) {
+					transmetteurAnalogiqueMultiTrajetsBruite.connecter(new SondeAnalogique("Transmetteur Analogique Multi-Trajet bruite"));
+				}else {
+					transmetteurAnalogiqueBruite.connecter(new SondeAnalogique("Transmetteur Analogique bruite"));
+				}
 			} else {
 				transmetteurAnalogiqueParfait.connecter(new SondeAnalogique("Transmetteur Analogique parfait"));
 			}
@@ -385,7 +389,12 @@ public class Simulateur {
 		//System.out.println("fin emission");
 		//debut = System.currentTimeMillis();
 		if(bruitActif) {
-			transmetteurAnalogiqueBruite.emettre();
+			if (trajetIndirect) {
+				transmetteurAnalogiqueMultiTrajetsBruite.emettre();
+			}
+			else {
+				transmetteurAnalogiqueBruite.emettre();
+			}
 		}
 		else {
 			transmetteurAnalogiqueParfait.emettre();
