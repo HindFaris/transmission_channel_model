@@ -1,6 +1,6 @@
 package tests;
-import static org.junit.jupiter.api.Assertions.*;
-import org.junit.jupiter.api.Test;
+import static org.junit.Assert.*;
+import org.junit.Test;
 
 import recepteur.Recepteur;
 
@@ -20,11 +20,11 @@ public class RecepteurTest {
 	public void RecepteurInitTest(int nbEchantillons, float min, float max, String form) {
 		nbErrors+=4;
 		Recepteur Recepteur = new Recepteur(nbEchantillons, min, max, form);
-		assertEquals(Recepteur.getNbEchantillons(), nbEchantillons, "La valeur du nombre d'echantillon ne correspond pas");
+		assertEquals("La valeur du nombre d'echantillon ne correspond pas", Recepteur.getNbEchantillons(), nbEchantillons);
 		nbErrors--;
-		assertEquals(Recepteur.getMin(), min, "La valeur de min ne correspond pas");
+		assertEquals( "La valeur de min ne correspond pas",Recepteur.getMin(), min);
 		nbErrors--;
-		assertEquals(Recepteur.getMax(), max, "La valeur de max ne correspond pas");
+		assertEquals("La valeur de max ne correspond pas",Recepteur.getMax(), max);
 		nbErrors--;
 		assertEquals(Recepteur.getFormeSignal(), form, "Le type ne correspond pas");
 		nbErrors--;

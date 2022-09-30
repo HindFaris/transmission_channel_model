@@ -1,6 +1,6 @@
 package tests;
-import static org.junit.jupiter.api.Assertions.*;
-import org.junit.jupiter.api.Test;
+import static org.junit.Assert.*;
+import org.junit.Test;
 
 import information.InformationNonConformeException;
 import sources.SourceAleatoire;
@@ -24,11 +24,9 @@ public class SourceAleatoireTest {
 			e.printStackTrace();
 		}
 		
-		assertEquals(Source.getInformationGeneree(), Source.getInformationEmise(),
-				"L'information generee ne correspond pas a l'information emise");
+		assertEquals("L'information generee ne correspond pas a l'information emise",Source.getInformationGeneree(), Source.getInformationEmise());
 		nbErrors--;
-		assertEquals(Source.getInformationGeneree().nbElements(), nBitMess,
-				"Le nombre de bit du message de correspond pas");
+		assertEquals("Le nombre de bit du message de correspond pas",Source.getInformationGeneree().nbElements(), nBitMess);
 		nbErrors--;
 	}
 	
@@ -37,8 +35,7 @@ public class SourceAleatoireTest {
 		nbErrors++;
 		SourceAleatoire Source1 = new SourceAleatoire(50, seed);
 		SourceAleatoire Source2 = new SourceAleatoire(50, seed);
-		assertEquals(Source1.getInformationGeneree(), Source2.getInformationGeneree(),
-				"L'information de Source1 ne correspond pas a l'information de Source2 pour la meme seed");
+		assertEquals("L'information de Source1 ne correspond pas a l'information de Source2 pour la meme seed",Source1.getInformationGeneree(), Source2.getInformationGeneree());
 		nbErrors--;
 		//Possibilite de getSeed depuis la classe Source ? -> seed dans Simulateur
 	}
