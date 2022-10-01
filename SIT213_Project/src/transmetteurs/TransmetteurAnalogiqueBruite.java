@@ -9,13 +9,25 @@ import signaux.Bruit;
 
 public class TransmetteurAnalogiqueBruite extends Transmetteur<Float, Float> {
 
-	private int nbEchantillon;
+	private int nbEchantillons;
+	public int getNbEchantillons() {
+		return nbEchantillons;
+	}
+
+	public float getSNRParBit() {
+		return SNRParBit;
+	}
+
+	public Integer getSeed() {
+		return seed;
+	}
+
 	private float SNRParBit;
 	private Integer seed = null;
 	
-	public TransmetteurAnalogiqueBruite(int nbEchantillon, float SNRParBit, Integer seed) {
+	public TransmetteurAnalogiqueBruite(int nbEchantillons, float SNRParBit, Integer seed) {
 		super();
-		this.nbEchantillon = nbEchantillon;
+		this.nbEchantillons = nbEchantillons;
 		this.SNRParBit = SNRParBit;
 		this.seed = seed;
 		informationEmise = new Information<Float>();
@@ -34,7 +46,7 @@ public class TransmetteurAnalogiqueBruite extends Transmetteur<Float, Float> {
 	 */
 	
 	public float ecartType() throws Exception{
-		float ecartType = (float)Math.sqrt(this.puissance()*nbEchantillon/(2*Math.pow(10, SNRParBit/10)));
+		float ecartType = (float)Math.sqrt(this.puissance()*nbEchantillons/(2*Math.pow(10, SNRParBit/10)));
 		return ecartType;
 	}
 	

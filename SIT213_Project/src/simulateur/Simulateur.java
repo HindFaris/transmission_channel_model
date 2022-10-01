@@ -2,9 +2,7 @@ package simulateur;
 import destinations.Destination;
 import destinations.DestinationFinale;
 import sources.*;
-import transmetteurs.Transmetteur;
-import transmetteurs.TransmetteurAnalogiqueBruite;
-import transmetteurs.TransmetteurAnalogiqueParfait;
+import transmetteurs.*;
 import visualisations.*;
 import information.*;
 import recepteur.*;
@@ -17,7 +15,6 @@ import emetteur.*;
  *
  */
 public class Simulateur {
-
 
 	/** @return le nombre d'echantillon a utiliser */
 	public int getNbEchantillon() {
@@ -115,21 +112,33 @@ public class Simulateur {
 
 	/** le  composant Transmetteur bruite logique de la chaine de transmission */
 	private Transmetteur <Float, Float>  transmetteurAnalogiqueBruite = null;
+	
+	/** le  composant Transmetteur Multi Trajets bruite logique de la chaine de transmission */
+	private Transmetteur <Float, Float>  transmetteurAnalogiqueMultiTrajetsBruite = null;
 
 	/** le  composant Destination de la chaine de transmission */
 	private Destination <Boolean>  destination = null;
 
-	/** le  composant Transmetteur parfait logique de la chaine de transmission */
+	/** le  composant emetteur analogique de la chaine de transmission */
 	private Transmetteur <Boolean, Float>  emetteurAnalogique = null;
 
-	/** le  composant Transmetteur parfait logique de la chaine de transmission */
+	/** le  composant recepteur parfait logique de la chaine de transmission */
 	private Transmetteur <Float, Boolean >  recepteur = null;
 
 	/**	 Le rapport signal sur bruit par bit*/
 	private float SNRParBit = 0;
 
-	/** indique si le Simulateur est bruite ou non */
+	/** Indique si le Simulateur est bruite ou non */
 	private boolean bruitActif = false;
+	
+	/** Indique s'il y a des trajets indirects**/
+	private boolean trajetIndirect = false;
+	
+	/** Amplitude du signal indirect **/
+	private float alpha = 0.0f;
+	
+	/** Nb d'echantillon de retard**/
+	private int tau = 0;
 
 	/**
 	 * Un simple getter qui renvoie la taille du mot  recu a la destiation
@@ -180,79 +189,64 @@ public class Simulateur {
 	public  Simulateur(String [] args) throws ArgumentsException {
 
 		analyseArguments(args);
-
-		if(messageAleatoire == false) {
+		
+		//determination de la source
+		if(!messageAleatoire) {
 			source = new SourceFixe(messageString);    		
 		}
-
-		else if(aleatoireAvecGerme == true) {
+		else {
 			source = new SourceAleatoire(nbBitsMess, seed);
 		}
-		else {//inutile ?
-			source = new SourceAleatoire(nbBitsMess,null);
-
+		
+		//determination du recepteur
+		if (trajetIndirect) {
+			recepteur = new RecepteurMultiTrajets(nbEchantillon, min, max, formSignal, alpha, tau);
+		} else {
+			recepteur = new Recepteur(nbEchantillon, min, max, formSignal);
 		}
-		//permet d'initialiser les elements de la chaine
-		emetteurAnalogique = new EmetteurAnalogique(formSignal, nbEchantillon, min, max, SNRParBit, bruitActif);
+		
+		//instanciation des equipements (emetteur, recepteur, destination)
+		emetteurAnalogique = new EmetteurAnalogique(formSignal, nbEchantillon, min, max);
+		destination = new DestinationFinale();
+		
+		//connexion des equipements entre eux
+		source.connecter(emetteurAnalogique);
+		recepteur.connecter(destination);
+		
+		//determination du transmetteur
 		if(bruitActif) {
-			transmetteurAnalogiqueBruite = new TransmetteurAnalogiqueBruite(nbEchantillon, SNRParBit, seed);
+			if (trajetIndirect) {
+				transmetteurAnalogiqueMultiTrajetsBruite = new TransmetteurAnalogiqueMultiTrajetsBruite(nbEchantillon, SNRParBit, seed, alpha, tau);
+				emetteurAnalogique.connecter(transmetteurAnalogiqueMultiTrajetsBruite);
+				transmetteurAnalogiqueMultiTrajetsBruite.connecter(recepteur);
+			}else {
+				transmetteurAnalogiqueBruite = new TransmetteurAnalogiqueBruite(nbEchantillon, SNRParBit, seed);
+				emetteurAnalogique.connecter(transmetteurAnalogiqueBruite);
+				transmetteurAnalogiqueBruite.connecter(recepteur);
+			}
+			
 		}
 		else {
 			transmetteurAnalogiqueParfait = new TransmetteurAnalogiqueParfait();
-		}
-		recepteur = new Recepteur(nbEchantillon,min,max,formSignal);
-		destination = new DestinationFinale();
-
-		//permet de connecter les sondes
-
-
-		//permet de connecter les elements de la chaine entre eux
-
-
-		if(affichage) {
-			source.connecter(new SondeLogique("Source", 200));
-		}
-		source.connecter(emetteurAnalogique);
-
-		if(affichage) {
-			emetteurAnalogique.connecter(new SondeAnalogique("Emetteur Analogique"));
-		}
-
-		if(bruitActif) {
-			emetteurAnalogique.connecter(transmetteurAnalogiqueBruite);
-		}
-		else {
 			emetteurAnalogique.connecter(transmetteurAnalogiqueParfait);
-		}
-
-		if(affichage) {
-			if(bruitActif) {
-				transmetteurAnalogiqueBruite.connecter(new SondeAnalogique("Transmetteur Analogique bruite"));
-			}
-			else {
-				transmetteurAnalogiqueParfait.connecter(new SondeAnalogique("Transmetteur Analogique parfait"));
-			}
-		}
-
-		if(bruitActif) {
-			transmetteurAnalogiqueBruite.connecter(recepteur);
-		}
-		else {
 			transmetteurAnalogiqueParfait.connecter(recepteur);
 		}
-		
-		if(affichage) {
-			recepteur.connecter(new SondeLogique("Recepteur", 200));
-		}
-		
-		recepteur.connecter(destination);
 
-		/*if (affichage) {
+		//ajout des sondes
+		if(affichage) {
 			source.connecter(new SondeLogique("Source", 200));
 			emetteurAnalogique.connecter(new SondeAnalogique("Emetteur Analogique"));
-			transmetteurAnalogiqueParfait.connecter(new SondeAnalogique("Transmetteur Analogique parfait"));
+			if (bruitActif) {
+				if (trajetIndirect) {
+					transmetteurAnalogiqueMultiTrajetsBruite.connecter(new SondeAnalogique("Transmetteur Analogique Multi-Trajet bruite"));
+				}else {
+					transmetteurAnalogiqueBruite.connecter(new SondeAnalogique("Transmetteur Analogique bruite"));
+				}
+			} else {
+				transmetteurAnalogiqueParfait.connecter(new SondeAnalogique("Transmetteur Analogique parfait"));
+			}
 			recepteur.connecter(new SondeLogique("Recepteur", 200));
-		}*/
+		}
 	}
 
 
@@ -280,7 +274,7 @@ public class Simulateur {
 	public void analyseArguments(String[] args)  throws  ArgumentsException {
 
 		for (int i=0;i<args.length;i++){ // traiter les arguments 1 par 1
-
+			//System.out.println(args[i]);
 			if (args[i].matches("-s")){
 				affichage = true;
 			}
@@ -353,6 +347,24 @@ public class Simulateur {
 				bruitActif = true;
 				SNRParBit = Float.valueOf(args[i]);
 			}
+			
+			else if(args[i].matches("-td")) {
+				trajetIndirect = true;
+				//TODO : gerer les parametres -> jusqu'a 5
+				//recuperation de la valeur d'alpha
+				i++;
+				//System.out.println(args[i]);
+				if (0 < Float.valueOf(args[i]) && Float.valueOf(args[i]) < 1) {
+					alpha = Float.valueOf(args[i]);
+				}
+				
+				//recuperation de la valeur de tau
+				i++;
+				//System.out.println(args[i]);
+				if (0 < Integer.valueOf(args[i]) && Integer.valueOf(args[i]) < nbEchantillon) {
+					tau = Integer.valueOf(args[i]);
+				}
+			}
 		}
 	}
 
@@ -377,7 +389,12 @@ public class Simulateur {
 		//System.out.println("fin emission");
 		//debut = System.currentTimeMillis();
 		if(bruitActif) {
-			transmetteurAnalogiqueBruite.emettre();
+			if (trajetIndirect) {
+				transmetteurAnalogiqueMultiTrajetsBruite.emettre();
+			}
+			else {
+				transmetteurAnalogiqueBruite.emettre();
+			}
 		}
 		else {
 			transmetteurAnalogiqueParfait.emettre();
@@ -435,7 +452,7 @@ public class Simulateur {
 		try {
 			simulateur.execute();
 			String s = "java  Simulateur  ";
-			for (int i = 0; i < args.length; i++) { //copier tous les paramÃ¨tres de simulation
+			for (int i = 0; i < args.length; i++) { //copier tous les parametres de simulation
 				s += args[i] + "  ";
 			}
 			System.out.println(s + "  =>   TEB : " + simulateur.calculTauxErreurBinaire());

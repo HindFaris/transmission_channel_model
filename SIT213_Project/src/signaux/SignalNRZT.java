@@ -6,8 +6,8 @@ import information.Information;
 
 public class SignalNRZT extends Signal{
 
-	public SignalNRZT(Information<Boolean> informationRecue, int nbEchantillons, float min, float max, float SNRParBit, boolean bruitActif) {
-		super(informationRecue, nbEchantillons, min, max, SNRParBit, bruitActif);
+	public SignalNRZT(Information<Boolean> informationRecue, int nbEchantillons, float min, float max) {
+		super(informationRecue, nbEchantillons, min, max);
 	}
 
 	public void generer() {
