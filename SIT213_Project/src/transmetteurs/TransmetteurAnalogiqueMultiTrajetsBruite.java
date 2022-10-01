@@ -13,6 +13,8 @@ public class TransmetteurAnalogiqueMultiTrajetsBruite extends Transmetteur<Float
 	private float SNRParBit;
 	private Integer seed = null;
 	private float alpha; //attenuation du second trajet entre 0 et 1
+	
+
 	private int tau; //retard du signal en nombre d'echantillons
 	
 	public TransmetteurAnalogiqueMultiTrajetsBruite(int nbEchantillons, float SNRParBit, Integer seed, float alpha, int tau ) {
@@ -60,19 +62,16 @@ public class TransmetteurAnalogiqueMultiTrajetsBruite extends Transmetteur<Float
 		
 		//signal emis par le transmetteur
 		for(int indice = 0 ; indice < tailleInformation; indice++) {
-			informationEmise.add(informationRecue.iemeElement(0)+ informationAjoutee.iemeElement(0));
+			informationEmise.add(informationRecue.iemeElement(0)+ informationAjoutee.iemeElement(0)+ bruit.iemeElement(0));
 			informationRecue.remove(0);
 			informationAjoutee.remove(0);
-			
-			//TODO : ajouter le bruit (2eme partie)
-			//informationEmise.add(informationRecue.iemeElement(0) + informationAjoutee.iemeElement(0) + bruit.iemeElement(0));
-			//bruit.remove(0);
+			bruit.remove(0);
 		}
 		
 		for (DestinationInterface<Float> destinationConnectee : destinationsConnectees) {
 			destinationConnectee.recevoir(informationEmise);
 		}
-		this.informationEmise = informationRecue; //utile ? -> informationRecue vide (null)
+		this.informationEmise = informationRecue;
 	}
 	
 	public float ecartType() throws Exception{
@@ -107,5 +106,13 @@ public class TransmetteurAnalogiqueMultiTrajetsBruite extends Transmetteur<Float
 
 	public Integer getSeed() {
 		return seed;
+	}
+	
+	public float getAlpha() {
+		return alpha;
+	}
+
+	public int getTau() {
+		return tau;
 	}
 }
