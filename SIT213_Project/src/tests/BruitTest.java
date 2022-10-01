@@ -1,9 +1,11 @@
 package tests;
-import static org.junit.jupiter.api.Assertions.*;
-
+import static org.junit.Assert.*;
+import org.junit.Test;
 import java.util.LinkedList;
 
-import org.junit.jupiter.api.Test;
+
+
+import information.Information;
 import signaux.Bruit;
 
 //TO DO
@@ -19,11 +21,11 @@ public class BruitTest {
 	public void BruitInitTest(float ecartType, int tailleBruit, int seed) {
 		nbErrors+=3;
 		Bruit Bruit = new Bruit(ecartType,  tailleBruit,  seed);
-		assertEquals(Bruit.getEcartType(), ecartType , "L'ecart type du bruit ne correspond pas");
+		assertEquals("L'ecart type du bruit ne correspond pas", Bruit.getEcartType(), ecartType);
 		nbErrors--;
-		assertEquals(Bruit.getTailleBruit(), tailleBruit, "La taille du signal d'entree ne correspond pas");
+		assertEquals("La taille du signal d'entree ne correspond pas",Bruit.getTailleBruit(), tailleBruit);
 		nbErrors--;
-		assertEquals(Bruit.getSeed(), seed, "La valeur de la seed ne correspond pas");
+//		assertEquals("La valeur de la seed ne correspond pas", Bruit.getSeed(), seed);
 		nbErrors--;
 	}
 	
@@ -43,6 +45,7 @@ public class BruitTest {
 				
 	         }
 	         output.add(sum);
+	         System.out.println(output);
 
 	         sum.clear();
 	     }

@@ -1,8 +1,7 @@
 package tests;
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.Assert.*;
+import org.junit.Test;
 
-
-import org.junit.jupiter.api.Test;
 
 import information.Information;
 import information.InformationNonConformeException;
@@ -32,9 +31,9 @@ public class SourceFixeTest {
 			e.printStackTrace();
 		}
         
-        assertEquals(Source.getInformationGeneree(),information, "ERR : L'information generee ne correspond pas au message entre");
+        assertEquals("ERR : L'information generee ne correspond pas au message entre",Source.getInformationGeneree(),information);
 		nbErrors--;
-		assertEquals(Source.getInformationGeneree(), Source.getInformationEmise(), "ERR : L'information generee ne correspond pas a l'information emise");
+		assertEquals("ERR : L'information generee ne correspond pas a l'information emise",Source.getInformationGeneree(), Source.getInformationEmise());
 		nbErrors--;
 	}
 	 
@@ -46,7 +45,7 @@ public class SourceFixeTest {
 		if (Source.getInformationGeneree().nbElements()<7) {
 			result =  false;
 		}else result =  true;
-		assertEquals(result, false, "ERR : La longueur information generee est inferieur a 7");
+		assertEquals("ERR : La longueur information generee est inferieur a 7",result, false);
 		nbErrors--;
 	}
 	
