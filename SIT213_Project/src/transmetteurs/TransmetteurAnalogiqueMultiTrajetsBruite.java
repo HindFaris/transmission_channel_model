@@ -13,8 +13,6 @@ public class TransmetteurAnalogiqueMultiTrajetsBruite extends Transmetteur<Float
 	private float SNRParBit;
 	private Integer seed = null;
 	private float alpha; //attenuation du second trajet entre 0 et 1
-	
-
 	private int tau; //retard du signal en nombre d'echantillons
 	
 	public TransmetteurAnalogiqueMultiTrajetsBruite(int nbEchantillons, float SNRParBit, Integer seed, float alpha, int tau ) {

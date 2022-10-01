@@ -7,7 +7,7 @@ import destinations.DestinationInterface;
 import information.*;
 import transmetteurs.*;
 
-//Réception de l'information
+//Reception de l'information
 public class RecepteurMultiTrajets extends Transmetteur<Float, Boolean> {
 
 	private int nbEchantillons;

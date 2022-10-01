@@ -146,7 +146,7 @@ public class Simulateur {
 			transmetteurAnalogiqueBruite.connecter(recepteur);
 		} else if (trajetIndirect) {
 			//transmetteurAnalogiqueMultiTrajetsParfait = new TransmetteurAnalogiqueMultiTrajetsParfait(nbEchantillon, SNRParBit, seed, alpha, tau);
-			transmetteurAnalogiqueMultiTrajetsParfait = new TransmetteurAnalogiqueMultiTrajetsParfait(alpha, tau);
+			transmetteurAnalogiqueMultiTrajetsParfait = new TransmetteurAnalogiqueMultiTrajetsParfait(alphas, taus);
 			emetteurAnalogique.connecter(transmetteurAnalogiqueMultiTrajetsParfait);
 			transmetteurAnalogiqueMultiTrajetsParfait.connecter(recepteur);	
 		}
@@ -276,9 +276,11 @@ public class Simulateur {
 				trajetIndirect = true;
 				//TODO : gerer les parametres -> jusqu'a 5
 				String argsString = null ;
-				while (i < args.length) {
-					argsString += "\t" +args[i] ;
-					i++;
+				int ind = 0;
+				ind = i;
+				while (ind < args.length) {
+					argsString += "\t" +args[ind] ;
+					ind++;
 				}
 				String regexString = "-ti\t(([0-9]{1,3}\t0.[0-9]\t{0,1}){1,5})";
 				Pattern pattern = Pattern.compile(regexString);
@@ -288,9 +290,6 @@ public class Simulateur {
 					tiArgsString = matcher.group(1);
 		        }
 				String[] tiArgsArray = tiArgsString.split("\t");
-				for (int index = 0; index < tiArgsArray.length; index++) {
-					System.out.println(tiArgsArray[index]);
-				}
 				for (int index=0; index<tiArgsArray.length; index++) {
 					if(0<Float.valueOf(tiArgsArray[index]) && Float.valueOf(tiArgsArray[index]) <= 1) {
 						alphas.add(Float.valueOf(tiArgsArray[index]));
@@ -300,8 +299,6 @@ public class Simulateur {
 						//tau = Integer.valueOf(tiArgsArray[index]);
 					}
 				}
-				System.out.println(alphas);
-				System.out.println(taus);
 			}
 		}
 	}
