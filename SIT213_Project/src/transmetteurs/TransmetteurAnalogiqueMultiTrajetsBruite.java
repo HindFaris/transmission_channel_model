@@ -68,7 +68,6 @@ public class TransmetteurAnalogiqueMultiTrajetsBruite extends Transmetteur<Float
 			//informationEmise.add(informationRecue.iemeElement(0) + informationAjoutee.iemeElement(0) + bruit.iemeElement(0));
 			//bruit.remove(0);
 		}
-		System.out.println(informationEmise);
 		
 		for (DestinationInterface<Float> destinationConnectee : destinationsConnectees) {
 			destinationConnectee.recevoir(informationEmise);

@@ -15,18 +15,14 @@ public class EmetteurTest {
 	@Test
 	public void EmetteurInitTest(String typeEmetteur, int nbEchantillons, float min, float max, float SNRParBit, boolean bruitActif) {
 		nbErrors+=6;
-		EmetteurAnalogique Emetteur = new EmetteurAnalogique(typeEmetteur, nbEchantillons, min,  max, SNRParBit, bruitActif);
+		EmetteurAnalogique Emetteur = new EmetteurAnalogique(typeEmetteur, nbEchantillons, min,  max);
 		assertEquals("Le type emetteur ne correspond pas", Emetteur.getTypeEmetteur(), typeEmetteur );
 		nbErrors--;
 		assertEquals( "La valeur de seed ne correspond pas",Emetteur.getNbEchantillons(), nbEchantillons);
 		nbErrors--;
-		assertEquals("La valeur de min ne correspond pas", (float) Emetteur.getMin(), (float) min);
+		assertEquals("La valeur de min ne correspond pas", Emetteur.getMin(), min);
 		nbErrors--;
 		assertEquals("La valeur de max ne correspond pas",Emetteur.getMax(), max);
-		nbErrors--;
-		assertEquals( "La valeur du SNR ne correspond pas",Emetteur.getSNRParBit(), SNRParBit);
-		nbErrors--;
-		assertEquals("La valeur du bruit actif ne correspond pas", Emetteur.getBruitActif(), bruitActif);
 		nbErrors--;
 	}
 	

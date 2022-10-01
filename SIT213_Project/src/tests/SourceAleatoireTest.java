@@ -24,9 +24,11 @@ public class SourceAleatoireTest {
 			e.printStackTrace();
 		}
 		
-		assertEquals("L'information generee ne correspond pas a l'information emise",Source.getInformationGeneree(), Source.getInformationEmise());
+		assertEquals("L'information generee ne correspond pas a l'information emise", 
+				Source.getInformationGeneree(), Source.getInformationEmise());
 		nbErrors--;
-		assertEquals("Le nombre de bit du message de correspond pas",Source.getInformationGeneree().nbElements(), nBitMess);
+		assertEquals("Le nombre de bit du message de correspond pas", 
+				Source.getInformationGeneree().nbElements(), nBitMess);
 		nbErrors--;
 	}
 	
@@ -35,7 +37,8 @@ public class SourceAleatoireTest {
 		nbErrors++;
 		SourceAleatoire Source1 = new SourceAleatoire(50, seed);
 		SourceAleatoire Source2 = new SourceAleatoire(50, seed);
-		assertEquals("L'information de Source1 ne correspond pas a l'information de Source2 pour la meme seed",Source1.getInformationGeneree(), Source2.getInformationGeneree());
+		assertEquals("L'information de Source1 ne correspond pas a l'information de Source2 pour la meme seed", 
+				Source1.getInformationGeneree(), Source2.getInformationGeneree());
 		nbErrors--;
 		//Possibilite de getSeed depuis la classe Source ? -> seed dans Simulateur
 	}

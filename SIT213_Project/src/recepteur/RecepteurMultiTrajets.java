@@ -81,6 +81,7 @@ public class RecepteurMultiTrajets extends Transmetteur<Float, Boolean> {
 			else {
 				informationEmise.add(false);
 			}
+			
 		}
 	}
 

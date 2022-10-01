@@ -1,6 +1,6 @@
 package tests;
-import static org.junit.jupiter.api.Assertions.*;
-import org.junit.jupiter.api.Test;
+import static org.junit.Assert.*;
+import org.junit.Test;
 
 import emetteur.EmetteurAnalogique;
 
@@ -16,13 +16,13 @@ public class EmetteurAnalogiqueTest {
 	public void EmetteurAnalogiqueInitTest(String typeEmetteur, int nbEchantillons, float min, float max) {
 		nbErrors+=4;
 		EmetteurAnalogique Emetteur = new EmetteurAnalogique(typeEmetteur, nbEchantillons, min,  max);
-		assertEquals(Emetteur.getTypeEmetteur(), typeEmetteur , "Le type emetteur ne correspond pas");
+		assertEquals("Le type emetteur ne correspond pas", Emetteur.getTypeEmetteur(), typeEmetteur );
 		nbErrors--;
-		assertEquals(Emetteur.getNbEchantillons(), nbEchantillons, "La valeur de seed ne correspond pas");
+		assertEquals("La valeur de seed ne correspond pas", Emetteur.getNbEchantillons(), nbEchantillons);
 		nbErrors--;
-		assertEquals(Emetteur.getMin(), min, "La valeur de min ne correspond pas");
+		assertEquals("La valeur de min ne correspond pas", Emetteur.getMin(), min);
 		nbErrors--;
-		assertEquals(Emetteur.getMax(), max, "La valeur de max ne correspond pas");
+		assertEquals("La valeur de max ne correspond pas", Emetteur.getMax(), max);
 		nbErrors--;
 	}
 	

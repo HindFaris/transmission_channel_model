@@ -351,6 +351,12 @@ public class Simulateur {
 			else if(args[i].matches("-td")) {
 				trajetIndirect = true;
 				//TODO : gerer les parametres -> jusqu'a 5
+				//recuperation de la valeur de tau
+				i++;
+				//System.out.println(args[i]);
+				//if (0 < Integer.valueOf(args[i]) && Integer.valueOf(args[i]) < nbEchantillon) {
+				tau = Integer.valueOf(args[i]);
+				//}
 				//recuperation de la valeur d'alpha
 				i++;
 				//System.out.println(args[i]);
@@ -358,12 +364,7 @@ public class Simulateur {
 					alpha = Float.valueOf(args[i]);
 				}
 				
-				//recuperation de la valeur de tau
-				i++;
-				//System.out.println(args[i]);
-				if (0 < Integer.valueOf(args[i]) && Integer.valueOf(args[i]) < nbEchantillon) {
-					tau = Integer.valueOf(args[i]);
-				}
+				
 			}
 		}
 	}
