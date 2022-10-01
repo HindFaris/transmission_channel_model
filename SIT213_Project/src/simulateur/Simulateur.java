@@ -16,64 +16,6 @@ import emetteur.*;
  */
 public class Simulateur {
 
-	/** @return le nombre d'echantillon a utiliser */
-	public int getNbEchantillon() {
-		return nbEchantillon;
-	}
-
-	public float getMin() {
-		return min;
-	}
-
-	public float getMax() {
-		return max;
-	}
-
-	public String getFormSignal() {
-		return formSignal;
-	}
-
-	public Integer getSeed() {
-		return seed;
-	}
-
-	public int getNbBitsMess() {
-		return nbBitsMess;
-	}
-
-	public String getMessageString() {
-		return messageString;
-	}
-
-	public Source<Boolean> getSource() {
-		return source;
-	}
-
-	public Transmetteur<Float, Float> getTransmetteurAnalogiqueParfait() {
-		return transmetteurAnalogiqueParfait;
-	}
-
-	public Destination<Boolean> getDestination() {
-		return destination;
-	}
-
-	public Transmetteur<Boolean, Float> getEmetteurAnalogique() {
-		return emetteurAnalogique;
-	}
-
-	public Transmetteur<Float, Boolean> getRecepteur() {
-		return recepteur;
-	}
-
-	public float getSNRParBit() {
-		return SNRParBit;
-	}
-
-	public boolean getBruitActif() {
-		return bruitActif;
-	}
-
-
 	/** indique le nombre d'echantillon a utiliser */
 	private int nbEchantillon=30;
 
@@ -112,9 +54,12 @@ public class Simulateur {
 
 	/** le  composant Transmetteur bruite logique de la chaine de transmission */
 	private Transmetteur <Float, Float>  transmetteurAnalogiqueBruite = null;
-	
+
 	/** le  composant Transmetteur Multi Trajets bruite logique de la chaine de transmission */
 	private Transmetteur <Float, Float>  transmetteurAnalogiqueMultiTrajetsBruite = null;
+
+	/** le  composant Transmetteur Multi Trajets logique de la chaine de transmission */
+	private Transmetteur <Float, Float>  transmetteurAnalogiqueMultiTrajetsParfait = null;
 
 	/** le  composant Destination de la chaine de transmission */
 	private Destination <Boolean>  destination = null;
@@ -130,51 +75,16 @@ public class Simulateur {
 
 	/** Indique si le Simulateur est bruite ou non */
 	private boolean bruitActif = false;
-	
+
 	/** Indique s'il y a des trajets indirects**/
 	private boolean trajetIndirect = false;
-	
+
 	/** Amplitude du signal indirect **/
 	private float alpha = 0.0f;
-	
+
 	/** Nb d'echantillon de retard**/
 	private int tau = 0;
 
-	/**
-	 * Un simple getter qui renvoie la taille du mot  recu a la destiation
-	 * @return int 
-	 * 			la longueur du mot recu
-	 */
-	public int getTailleMotDestination(){
-		return destination.getLongueurInformationRecue();
-	}
-
-	/**
-	 * Un simple getter qui renvoie un booleen disant si le message est aleatoire ou non
-	 * @return -boolean
-	 * 			vrai si le message est aleatoire. Faux sinon
-	 */
-	public boolean getMessageAleatoire() {
-		return messageAleatoire;
-	}
-
-	/**
-	 * Un simple getter qui renvoie un booleen disant si le message a une germe ou non
-	 * @return -boolean
-	 * 			vrai si le message contient une germe. Faux sinon
-	 */
-	public boolean getAleatoireAvecGerme() {
-		return aleatoireAvecGerme;
-	}
-
-	/**
-	 * Un simple getter qui renvoie un booleen disant si les sondes sont actives
-	 * @return -boolean
-	 * 			vrai si les sondes sont actives. Faux sinon
-	 */
-	public boolean getAffichage() {
-		return affichage;
-	}
 	/** Le constructeur de Simulateur construit une chaine de
 	 * transmission composee d'une Source <Boolean>, d'une Destination
 	 * <Boolean> et de Transmetteur(s) [voir la methode
@@ -189,42 +99,43 @@ public class Simulateur {
 	public  Simulateur(String [] args) throws ArgumentsException {
 
 		analyseArguments(args);
-		
-		//determination de la source
+
+		//instanciation de la source
 		if(!messageAleatoire) {
 			source = new SourceFixe(messageString);    		
 		}
 		else {
 			source = new SourceAleatoire(nbBitsMess, seed);
 		}
-		
-		//determination du recepteur
+
+		//instanciation du recepteur
 		if (trajetIndirect) {
 			recepteur = new RecepteurMultiTrajets(nbEchantillon, min, max, formSignal, alpha, tau);
 		} else {
 			recepteur = new Recepteur(nbEchantillon, min, max, formSignal);
 		}
-		
-		//instanciation des equipements (emetteur, recepteur, destination)
+
+		//instanciation des equipements (emetteur, destination)
 		emetteurAnalogique = new EmetteurAnalogique(formSignal, nbEchantillon, min, max);
 		destination = new DestinationFinale();
-		
+
 		//connexion des equipements entre eux
 		source.connecter(emetteurAnalogique);
 		recepteur.connecter(destination);
-		
-		//determination du transmetteur
-		if(bruitActif) {
-			if (trajetIndirect) {
-				transmetteurAnalogiqueMultiTrajetsBruite = new TransmetteurAnalogiqueMultiTrajetsBruite(nbEchantillon, SNRParBit, seed, alpha, tau);
-				emetteurAnalogique.connecter(transmetteurAnalogiqueMultiTrajetsBruite);
-				transmetteurAnalogiqueMultiTrajetsBruite.connecter(recepteur);
-			}else {
-				transmetteurAnalogiqueBruite = new TransmetteurAnalogiqueBruite(nbEchantillon, SNRParBit, seed);
-				emetteurAnalogique.connecter(transmetteurAnalogiqueBruite);
-				transmetteurAnalogiqueBruite.connecter(recepteur);
-			}
-			
+
+		//instanciation du transmetteur
+		if(bruitActif && trajetIndirect) {
+			transmetteurAnalogiqueMultiTrajetsBruite = new TransmetteurAnalogiqueMultiTrajetsBruite(nbEchantillon, SNRParBit, seed, alpha, tau);
+			emetteurAnalogique.connecter(transmetteurAnalogiqueMultiTrajetsBruite);
+			transmetteurAnalogiqueMultiTrajetsBruite.connecter(recepteur);
+		}else if (bruitActif) {
+			transmetteurAnalogiqueBruite = new TransmetteurAnalogiqueBruite(nbEchantillon, SNRParBit, seed);
+			emetteurAnalogique.connecter(transmetteurAnalogiqueBruite);
+			transmetteurAnalogiqueBruite.connecter(recepteur);
+		} else if (trajetIndirect) {
+			transmetteurAnalogiqueMultiTrajetsParfait = new TransmetteurAnalogiqueMultiTrajetsParfait(nbEchantillon, SNRParBit, seed, alpha, tau);
+			emetteurAnalogique.connecter(transmetteurAnalogiqueMultiTrajetsParfait);
+			transmetteurAnalogiqueMultiTrajetsParfait.connecter(recepteur);	
 		}
 		else {
 			transmetteurAnalogiqueParfait = new TransmetteurAnalogiqueParfait();
@@ -236,12 +147,13 @@ public class Simulateur {
 		if(affichage) {
 			source.connecter(new SondeLogique("Source", 200));
 			emetteurAnalogique.connecter(new SondeAnalogique("Emetteur Analogique"));
-			if (bruitActif) {
-				if (trajetIndirect) {
-					transmetteurAnalogiqueMultiTrajetsBruite.connecter(new SondeAnalogique("Transmetteur Analogique Multi-Trajet bruite"));
-				}else {
-					transmetteurAnalogiqueBruite.connecter(new SondeAnalogique("Transmetteur Analogique bruite"));
-				}
+			if (bruitActif && trajetIndirect) {
+				transmetteurAnalogiqueMultiTrajetsBruite.connecter(new SondeAnalogique("Transmetteur Analogique Multi-Trajet bruite"));
+			}else if (bruitActif){
+				transmetteurAnalogiqueBruite.connecter(new SondeAnalogique("Transmetteur Analogique bruite"));
+			}
+			else if (trajetIndirect) {
+				transmetteurAnalogiqueMultiTrajetsParfait.connecter(new SondeAnalogique("Transmetteur Analogique Multi-Trajet Parfait"));
 			} else {
 				transmetteurAnalogiqueParfait.connecter(new SondeAnalogique("Transmetteur Analogique parfait"));
 			}
@@ -347,24 +259,22 @@ public class Simulateur {
 				bruitActif = true;
 				SNRParBit = Float.valueOf(args[i]);
 			}
-			
-			else if(args[i].matches("-td")) {
+
+			else if(args[i].matches("-ti")) {
 				trajetIndirect = true;
 				//TODO : gerer les parametres -> jusqu'a 5
 				//recuperation de la valeur de tau
 				i++;
-				//System.out.println(args[i]);
 				//if (0 < Integer.valueOf(args[i]) && Integer.valueOf(args[i]) < nbEchantillon) {
 				tau = Integer.valueOf(args[i]);
 				//}
 				//recuperation de la valeur d'alpha
 				i++;
-				//System.out.println(args[i]);
-				if (0 < Float.valueOf(args[i]) && Float.valueOf(args[i]) < 1) {
+				if (0 < Float.valueOf(args[i]) && Float.valueOf(args[i]) <= 1) {
 					alpha = Float.valueOf(args[i]);
 				}
-				
-				
+
+
 			}
 		}
 	}
@@ -377,38 +287,21 @@ public class Simulateur {
 	 */ 
 
 	public void execute() throws Exception {  
-
-		//long debut = System.currentTimeMillis();
 		source.emettre();
-		//long fin = System.currentTimeMillis();
-		//System.out.println("il a fallu " + (fin-debut) + " millisecondes pour faire source.emettre");
-		//System.out.println("fin source");
-		//debut = System.currentTimeMillis();
 		emetteurAnalogique.emettre();
-		//fin = System.currentTimeMillis();
-		//System.out.println("il a fallu " + (fin-debut) + " millisecondes pour faire emetteur.emettre");
-		//System.out.println("fin emission");
-		//debut = System.currentTimeMillis();
-		if(bruitActif) {
-			if (trajetIndirect) {
-				transmetteurAnalogiqueMultiTrajetsBruite.emettre();
-			}
-			else {
+		if(bruitActif && trajetIndirect) {
+			transmetteurAnalogiqueMultiTrajetsBruite.emettre();
+		}
+		else if (trajetIndirect) {
+			transmetteurAnalogiqueMultiTrajetsParfait.emettre();
+		}
+		else if (bruitActif) {
 				transmetteurAnalogiqueBruite.emettre();
-			}
 		}
 		else {
 			transmetteurAnalogiqueParfait.emettre();
 		}
-		//System.out.println("fin transmission");
-		//fin = System.currentTimeMillis();
-		//System.out.println("il a fallu " + (fin-debut) + " millisecondes pour faire tansmetteur.emettre");
-
-		//debut = System.currentTimeMillis();
 		recepteur.emettre();
-		//System.out.println("fin reception");
-		//long fin = System.currentTimeMillis();
-		//System.out.println("il a fallu " + (fin-debut) + " millisecondes pour faire la simulation");
 	}
 
 
@@ -421,7 +314,7 @@ public class Simulateur {
 
 		Information <Boolean> chaineEmise = source.getInformationEmise();
 		Information <Boolean> chaineRecue = destination.getInformationRecue();
-	
+
 		int nbVariablesDifferentes = 0;
 		int tailleMotBinaire = source.getInformationEmise().nbElements();
 		for(int indice = 0; indice < tailleMotBinaire; indice++) {
@@ -464,4 +357,110 @@ public class Simulateur {
 			System.exit(-2);
 		}
 	}
+
+	/** @return le nombre d'echantillon a utiliser */
+	public int getNbEchantillon() {
+		return nbEchantillon;
+	}
+
+	public float getMin() {
+		return min;
+	}
+
+	public float getMax() {
+		return max;
+	}
+
+	public String getFormSignal() {
+		return formSignal;
+	}
+
+	public Integer getSeed() {
+		return seed;
+	}
+
+	public int getNbBitsMess() {
+		return nbBitsMess;
+	}
+
+	public String getMessageString() {
+		return messageString;
+	}
+
+	public Source<Boolean> getSource() {
+		return source;
+	}
+
+	public Transmetteur<Float, Float> getTransmetteurAnalogiqueParfait() {
+		return transmetteurAnalogiqueParfait;
+	}
+
+	public Destination<Boolean> getDestination() {
+		return destination;
+	}
+
+	public Transmetteur<Boolean, Float> getEmetteurAnalogique() {
+		return emetteurAnalogique;
+	}
+
+	public Transmetteur<Float, Boolean> getRecepteur() {
+		return recepteur;
+	}
+
+	public float getSNRParBit() {
+		return SNRParBit;
+	}
+
+	public boolean getBruitActif() {
+		return bruitActif;
+	}
+
+	public boolean getTrajetIndirect() {
+		return trajetIndirect;
+	}
+
+	public float getAlpha() {
+		return alpha;
+	}
+
+	public int getTau() {
+		return tau;
+	}
+	/**
+	 * Un simple getter qui renvoie la taille du mot  recu a la destiation
+	 * @return int 
+	 * 			la longueur du mot recu
+	 */
+	public int getTailleMotDestination(){
+		return destination.getLongueurInformationRecue();
+	}
+
+	/**
+	 * Un simple getter qui renvoie un booleen disant si le message est aleatoire ou non
+	 * @return -boolean
+	 * 			vrai si le message est aleatoire. Faux sinon
+	 */
+	public boolean getMessageAleatoire() {
+		return messageAleatoire;
+	}
+
+	/**
+	 * Un simple getter qui renvoie un booleen disant si le message a une germe ou non
+	 * @return -boolean
+	 * 			vrai si le message contient une germe. Faux sinon
+	 */
+	public boolean getAleatoireAvecGerme() {
+		return aleatoireAvecGerme;
+	}
+
+	/**
+	 * Un simple getter qui renvoie un booleen disant si les sondes sont actives
+	 * @return -boolean
+	 * 			vrai si les sondes sont actives. Faux sinon
+	 */
+	public boolean getAffichage() {
+		return affichage;
+	}
+
+
 }
