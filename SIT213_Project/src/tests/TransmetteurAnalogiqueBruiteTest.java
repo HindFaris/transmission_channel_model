@@ -131,25 +131,4 @@ public class TransmetteurAnalogiqueBruiteTest {
 			e.printStackTrace();
 		}
 	}
-	
-	@Test
-	public static Tests testReport() {
-		Tests tr;		
-		int nbEchantillons = 10;
-		float SNRParBit=20;
-		float max=5;
-		float min=-5;
-		Integer seed=10;
-		TransmetteurAnalogiqueBruiteTest T = new TransmetteurAnalogiqueBruiteTest();
-		
-		nbTests+=15;
-		T.TransmetteurAnalogiqueBruiteInitTest(nbEchantillons, SNRParBit, seed);
-		nbTests+=3;
-		T.TransmetteurAnalogiqueBruiteCalculPuissanceTest(nbEchantillons, min, max, SNRParBit, seed);
-		nbTests+=3;
-		T.TransmetteurAnalogiqueBruiteCalculEcartTypeTest(nbEchantillons, min, max, SNRParBit, seed);
-		
-		tr = new Tests(nbTests,nbErrors);
-		return tr; 
-	}
 }
