@@ -265,7 +265,7 @@ public class Simulateur {
 				SNRParBit = Float.valueOf(args[i]);
 			}
 			
-			else if(args[i].matches("-td")) {
+			else if(args[i].matches("-ti")) {
 				trajetIndirect = true;
 				//TODO : gerer les parametres -> jusqu'a 5
 				//recuperation de la valeur de tau
