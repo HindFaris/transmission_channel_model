@@ -9,17 +9,17 @@ import signaux.Bruit;
 
 public class TransmetteurAnalogiqueMultiTrajetsParfait extends Transmetteur<Float, Float> {
 	
+	/*
 	private int nbEchantillons;
 	private float SNRParBit;
 	private Integer seed = null;
+	*/
 	private float alpha; //attenuation du second trajet entre 0 et 1
 	private int tau; //retard du signal en nombre d'echantillons
 	
-	public TransmetteurAnalogiqueMultiTrajetsParfait(int nbEchantillons, float SNRParBit, Integer seed, float alpha, int tau ) {
+	//public TransmetteurAnalogiqueMultiTrajetsParfait(int nbEchantillons, float SNRParBit, Integer seed, float alpha, int tau ) {
+	public TransmetteurAnalogiqueMultiTrajetsParfait(float alpha, int tau ) {
 		super();
-		this.nbEchantillons = nbEchantillons;
-		this.SNRParBit = SNRParBit;
-		this.seed = seed;
 		this.alpha = alpha;
 		this.tau = tau;
 		informationEmise = new Information<Float>();
@@ -65,11 +65,12 @@ public class TransmetteurAnalogiqueMultiTrajetsParfait extends Transmetteur<Floa
 		}
 		this.informationEmise = informationRecue;
 	}
-	
+	/*
 	public float ecartType() throws Exception{
 		float ecartType = (float)Math.sqrt(this.puissance()*nbEchantillons/(2*Math.pow(10, SNRParBit/10)));
 		return ecartType;
 	}
+	*/
 	
 	public float puissance(){
 		float puissance = 0;
@@ -88,6 +89,7 @@ public class TransmetteurAnalogiqueMultiTrajetsParfait extends Transmetteur<Floa
 		return puissance;
 	}
 	
+	/*
 	public int getNbEchantillons() {
 		return nbEchantillons;
 	}
@@ -99,6 +101,7 @@ public class TransmetteurAnalogiqueMultiTrajetsParfait extends Transmetteur<Floa
 	public Integer getSeed() {
 		return seed;
 	}
+	*/
 	
 	public float getAlpha() {
 		return alpha;

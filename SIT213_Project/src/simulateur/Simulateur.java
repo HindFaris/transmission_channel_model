@@ -1,4 +1,10 @@
 package simulateur;
+import java.util.Iterator;
+import java.util.LinkedList;
+import java.util.regex.MatchResult;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
 import destinations.Destination;
 import destinations.DestinationFinale;
 import sources.*;
@@ -84,6 +90,12 @@ public class Simulateur {
 
 	/** Nb d'echantillon de retard**/
 	private int tau = 0;
+	
+	/** Amplitude du signal indirect **/
+	private LinkedList<Float> alphas = new LinkedList<Float>();
+
+	/** Nb d'echantillon de retard**/
+	private LinkedList<Integer> taus = new LinkedList<Integer>();
 
 	/** Le constructeur de Simulateur construit une chaine de
 	 * transmission composee d'une Source <Boolean>, d'une Destination
@@ -133,7 +145,8 @@ public class Simulateur {
 			emetteurAnalogique.connecter(transmetteurAnalogiqueBruite);
 			transmetteurAnalogiqueBruite.connecter(recepteur);
 		} else if (trajetIndirect) {
-			transmetteurAnalogiqueMultiTrajetsParfait = new TransmetteurAnalogiqueMultiTrajetsParfait(nbEchantillon, SNRParBit, seed, alpha, tau);
+			//transmetteurAnalogiqueMultiTrajetsParfait = new TransmetteurAnalogiqueMultiTrajetsParfait(nbEchantillon, SNRParBit, seed, alpha, tau);
+			transmetteurAnalogiqueMultiTrajetsParfait = new TransmetteurAnalogiqueMultiTrajetsParfait(alpha, tau);
 			emetteurAnalogique.connecter(transmetteurAnalogiqueMultiTrajetsParfait);
 			transmetteurAnalogiqueMultiTrajetsParfait.connecter(recepteur);	
 		}
@@ -186,7 +199,6 @@ public class Simulateur {
 	public void analyseArguments(String[] args)  throws  ArgumentsException {
 
 		for (int i=0;i<args.length;i++){ // traiter les arguments 1 par 1
-			//System.out.println(args[i]);
 			if (args[i].matches("-s")){
 				affichage = true;
 			}
@@ -263,18 +275,33 @@ public class Simulateur {
 			else if(args[i].matches("-ti")) {
 				trajetIndirect = true;
 				//TODO : gerer les parametres -> jusqu'a 5
-				//recuperation de la valeur de tau
-				i++;
-				//if (0 < Integer.valueOf(args[i]) && Integer.valueOf(args[i]) < nbEchantillon) {
-				tau = Integer.valueOf(args[i]);
-				//}
-				//recuperation de la valeur d'alpha
-				i++;
-				if (0 < Float.valueOf(args[i]) && Float.valueOf(args[i]) <= 1) {
-					alpha = Float.valueOf(args[i]);
+				String argsString = null ;
+				while (i < args.length) {
+					argsString += "\t" +args[i] ;
+					i++;
 				}
-
-
+				String regexString = "-ti\t(([0-9]{1,3}\t0.[0-9]\t{0,1}){1,5})";
+				Pattern pattern = Pattern.compile(regexString);
+				MatchResult matcher = pattern.matcher(argsString);
+				String tiArgsString = null;
+				while (((Matcher)matcher).find()) {
+					tiArgsString = matcher.group(1);
+		        }
+				String[] tiArgsArray = tiArgsString.split("\t");
+				for (int index = 0; index < tiArgsArray.length; index++) {
+					System.out.println(tiArgsArray[index]);
+				}
+				for (int index=0; index<tiArgsArray.length; index++) {
+					if(0<Float.valueOf(tiArgsArray[index]) && Float.valueOf(tiArgsArray[index]) <= 1) {
+						alphas.add(Float.valueOf(tiArgsArray[index]));
+						//alpha = Float.valueOf(tiArgsArray[index]);
+					} else {
+						taus.add(Integer.valueOf(tiArgsArray[index]));
+						//tau = Integer.valueOf(tiArgsArray[index]);
+					}
+				}
+				System.out.println(alphas);
+				System.out.println(taus);
 			}
 		}
 	}
