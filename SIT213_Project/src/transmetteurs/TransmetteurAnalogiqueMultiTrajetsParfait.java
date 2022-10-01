@@ -7,17 +7,15 @@ import information.Information;
 import information.InformationNonConformeException;
 import signaux.Bruit;
 
-public class TransmetteurAnalogiqueMultiTrajetsBruite extends Transmetteur<Float, Float> {
+public class TransmetteurAnalogiqueMultiTrajetsParfait extends Transmetteur<Float, Float> {
 	
 	private int nbEchantillons;
 	private float SNRParBit;
 	private Integer seed = null;
 	private float alpha; //attenuation du second trajet entre 0 et 1
-	
-
 	private int tau; //retard du signal en nombre d'echantillons
 	
-	public TransmetteurAnalogiqueMultiTrajetsBruite(int nbEchantillons, float SNRParBit, Integer seed, float alpha, int tau ) {
+	public TransmetteurAnalogiqueMultiTrajetsParfait(int nbEchantillons, float SNRParBit, Integer seed, float alpha, int tau ) {
 		super();
 		this.nbEchantillons = nbEchantillons;
 		this.SNRParBit = SNRParBit;
@@ -26,7 +24,7 @@ public class TransmetteurAnalogiqueMultiTrajetsBruite extends Transmetteur<Float
 		this.tau = tau;
 		informationEmise = new Information<Float>();
 	}
-	
+
 	/**
 	 * recevoir l'information float
 	 */
@@ -42,11 +40,6 @@ public class TransmetteurAnalogiqueMultiTrajetsBruite extends Transmetteur<Float
 	public void emettre() throws InformationNonConformeException {
 		Information<Float> informationAjoutee = new Information<Float>();
 		
-		Bruit bruit = null;
-		try {
-			bruit = new Bruit(this.ecartType(), informationRecue.nbElements()+tau, seed);
-		} catch (Exception e) {
-		}
 		int tailleInformation = informationRecue.nbElements();
 		//trajet indirect (s(t) avec retard)
 		int t = this.tau;
@@ -61,20 +54,16 @@ public class TransmetteurAnalogiqueMultiTrajetsBruite extends Transmetteur<Float
 		}
 		
 		//signal emis par le transmetteur
-		for(int indice = 0 ; indice < tailleInformation; indice++) {
+		for(int indice = 0 ; indice < tailleInformation+tau; indice++) {
 			informationEmise.add(informationRecue.iemeElement(0)+ informationAjoutee.iemeElement(0));
 			informationRecue.remove(0);
 			informationAjoutee.remove(0);
-			
-			//TODO : ajouter le bruit (2eme partie)
-			//informationEmise.add(informationRecue.iemeElement(0) + informationAjoutee.iemeElement(0) + bruit.iemeElement(0));
-			//bruit.remove(0);
 		}
 		
 		for (DestinationInterface<Float> destinationConnectee : destinationsConnectees) {
 			destinationConnectee.recevoir(informationEmise);
 		}
-		this.informationEmise = informationRecue; //utile ? -> informationRecue vide (null)
+		this.informationEmise = informationRecue; 
 	}
 	
 	public float ecartType() throws Exception{
