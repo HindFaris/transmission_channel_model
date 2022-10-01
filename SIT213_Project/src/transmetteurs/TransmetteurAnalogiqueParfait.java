@@ -10,7 +10,6 @@ public class TransmetteurAnalogiqueParfait extends Transmetteur<Float, Float> {
 	 * recevoir l'information float
 	 */
 	public void recevoir(Information <Float> information) throws InformationNonConformeException{
-
 		informationRecue = information;
 	}
 
