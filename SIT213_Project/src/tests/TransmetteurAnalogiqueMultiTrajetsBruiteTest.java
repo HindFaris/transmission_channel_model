@@ -48,4 +48,5 @@ class TransmetteurAnalogiqueMultiTrajetsBruiteTest {
 		transmetteur.setInformationRecue(InfomationRecue);
 		collector.checkThat("La puissance n'est pas la bonne", transmetteur.puissance(),is((float)Math.pow(5,8)));
 	}
+	
 }
