@@ -21,9 +21,9 @@ public class SignalTest {
 		
 		assertEquals("Le nombre d'Echantillons ne correspond pas", nbEchantillons, SignalNRZ.getNbEchantillon() );
 		nbErrors--;
-		//assertEquals("La valeur de min ne correspond pas", min , SignalNRZ.getMin());
+		assertEquals("La valeur de min ne correspond pas", min , SignalNRZ.getMin(), (double)0.0);
 		nbErrors--;
-		//assertEquals("La valeur de max ne correspond pas", max , SignalNRZ.getMax());
+		assertEquals("La valeur de max ne correspond pas", max , SignalNRZ.getMax(), (double)0.0);
 		nbErrors--;
 		
 		
@@ -31,9 +31,9 @@ public class SignalTest {
 		
 		assertEquals("Le nombre d'Echantillons ne correspond pas", nbEchantillons, SignalNRZT.getNbEchantillon());
 		nbErrors--;
-		//assertEquals("La valeur de min ne correspond pas", min , SignalNRZT.getMin());
+		assertEquals("La valeur de min ne correspond pas", min , SignalNRZT.getMin(), (double)0.0);
 		nbErrors--;
-		//assertEquals("La valeur de max ne correspond pas", max, SignalNRZT.getMax());
+		assertEquals("La valeur de max ne correspond pas", max, SignalNRZT.getMax(), (double)0.0);
 		nbErrors--;
 		
 		
@@ -41,9 +41,9 @@ public class SignalTest {
 		
 		assertEquals("Le nombre d'Echantillons ne correspond pas", nbEchantillons, SignalRZ.getNbEchantillon() );
 		nbErrors--;
-		//assertEquals( "La valeur de min ne correspond pas", min, SignalRZ.getMin());
+		assertEquals( "La valeur de min ne correspond pas", min, SignalRZ.getMin(), (double)0.0);
 		nbErrors--;
-		//assertEquals( "La valeur de max ne correspond pas", max, SignalRZ.getMax());
+		assertEquals( "La valeur de max ne correspond pas", max, SignalRZ.getMax(), (double)0.0);
 		nbErrors--;
 	}
 	
