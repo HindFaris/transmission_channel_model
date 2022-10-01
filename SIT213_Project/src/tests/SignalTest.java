@@ -19,29 +19,29 @@ public class SignalTest {
 		nbErrors+=9;
 		Signal SignalNRZ = new SignalNRZ(informationRecue,nbEchantillons, min,  max);
 		
-		assertEquals("Le nombre d'Echantillons ne correspond pas", SignalNRZ.getNbEchantillon(), nbEchantillons );
+		assertEquals("Le nombre d'Echantillons ne correspond pas", nbEchantillons, SignalNRZ.getNbEchantillon() );
 		nbErrors--;
-		assertEquals("La valeur de min ne correspond pas", SignalNRZ.getMin(), min );
+		assertEquals("La valeur de min ne correspond pas", min , SignalNRZ.getMin());
 		nbErrors--;
-		assertEquals("La valeur de max ne correspond pas", SignalNRZ.getMax(), max );
+		assertEquals("La valeur de max ne correspond pas", max , SignalNRZ.getMax());
 		nbErrors--;
 		
 		Signal SignalNRZT = new SignalNRZT(informationRecue,nbEchantillons, min,  max);
 		
-		assertEquals("Le nombre d'Echantillons ne correspond pas", SignalNRZT.getNbEchantillon(), nbEchantillons );
+		assertEquals("Le nombre d'Echantillons ne correspond pas", nbEchantillons, SignalNRZT.getNbEchantillon());
 		nbErrors--;
-		assertEquals("La valeur de min ne correspond pas", SignalNRZT.getMin(), min );
+		assertEquals("La valeur de min ne correspond pas", min , SignalNRZT.getMin());
 		nbErrors--;
-		assertEquals("La valeur de max ne correspond pas", SignalNRZT.getMax(), max);
+		assertEquals("La valeur de max ne correspond pas", max, SignalNRZT.getMax());
 		nbErrors--;
 		
 		Signal SignalRZ = new SignalRZ(informationRecue,nbEchantillons, min,  max);
 		
-		assertEquals("Le nombre d'Echantillons ne correspond pas", SignalRZ.getNbEchantillon(), nbEchantillons );
+		assertEquals("Le nombre d'Echantillons ne correspond pas", nbEchantillons, SignalRZ.getNbEchantillon() );
 		nbErrors--;
-		assertEquals( "La valeur de min ne correspond pas", SignalRZ.getMin(), min);
+		assertEquals( "La valeur de min ne correspond pas", min, SignalRZ.getMin());
 		nbErrors--;
-		assertEquals( "La valeur de max ne correspond pas", SignalRZ.getMax(), max);
+		assertEquals( "La valeur de max ne correspond pas", max, SignalRZ.getMax());
 		nbErrors--;
 		
 	}

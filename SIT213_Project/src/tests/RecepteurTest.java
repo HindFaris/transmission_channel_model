@@ -20,13 +20,13 @@ public class RecepteurTest {
 	public void RecepteurInitTest(int nbEchantillons, float min, float max, String form) {
 		nbErrors+=4;
 		Recepteur Recepteur = new Recepteur(nbEchantillons, min, max, form);
-		assertEquals("La valeur du nombre d'echantillon ne correspond pas", Recepteur.getNbEchantillons(), nbEchantillons);
+		assertEquals("La valeur du nombre d'echantillon ne correspond pas", nbEchantillons, Recepteur.getNbEchantillons());
 		nbErrors--;
-		assertEquals("La valeur de min ne correspond pas", Recepteur.getMin(), min);
+		assertEquals("La valeur de min ne correspond pas", min, Recepteur.getMin());
 		nbErrors--;
-		assertEquals( "La valeur de max ne correspond pas", Recepteur.getMax(), max);
+		assertEquals( "La valeur de max ne correspond pas", max, Recepteur.getMax());
 		nbErrors--;
-		assertEquals("Le type ne correspond pas", Recepteur.getFormeSignal(), form);
+		assertEquals("Le type ne correspond pas", form, Recepteur.getFormeSignal());
 		nbErrors--;
 	}
 	

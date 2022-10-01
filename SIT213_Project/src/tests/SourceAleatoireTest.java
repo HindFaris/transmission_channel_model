@@ -25,10 +25,10 @@ public class SourceAleatoireTest {
 		}
 		
 		assertEquals("L'information generee ne correspond pas a l'information emise", 
-				Source.getInformationGeneree(), Source.getInformationEmise());
+				Source.getInformationEmise(),Source.getInformationGeneree());
 		nbErrors--;
 		assertEquals("Le nombre de bit du message de correspond pas", 
-				Source.getInformationGeneree().nbElements(), nBitMess);
+				nBitMess, Source.getInformationGeneree().nbElements());
 		nbErrors--;
 	}
 	
@@ -46,7 +46,7 @@ public class SourceAleatoireTest {
 	@Test
 	public static Tests testReport() {
 		Tests tr;
-		SourceAleatoireTest S = new SourceAleatoireTest();
+		SourceAleatoireTest S = new SourceAleatoireTest(); 
 		
 		//Tests de la valeur nBitMess
 		nbTests++;

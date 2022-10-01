@@ -20,11 +20,11 @@ public class BruitTest {
 	public void BruitInitTest(float ecartType, int tailleBruit, int seed) {
 		nbErrors+=3;
 		Bruit Bruit = new Bruit(ecartType,  tailleBruit,  seed);
-		assertEquals("L'ecart type du bruit ne correspond pas",(float) Bruit.getEcartType(), (float)ecartType );
+		assertEquals("L'ecart type du bruit ne correspond pas",(float)ecartType, (float) Bruit.getEcartType());
 		nbErrors--;
-		assertEquals("La taille du signal d'entree ne correspond pas",Bruit.getTailleBruit(), tailleBruit);
+		assertEquals("La taille du signal d'entree ne correspond pas", tailleBruit, Bruit.getTailleBruit());
 		nbErrors--;
-		assertEquals("La valeur de la seed ne correspond pas", (int) Bruit.getSeed(),(int) seed);
+		assertEquals("La valeur de la seed ne correspond pas",(int) seed , (int) Bruit.getSeed());
 		nbErrors--;
 	}
 	
