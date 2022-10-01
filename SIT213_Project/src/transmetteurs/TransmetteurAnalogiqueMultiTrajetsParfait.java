@@ -41,7 +41,7 @@ public class TransmetteurAnalogiqueMultiTrajetsParfait extends Transmetteur<Floa
 		Information<Float> informationAjoutee = new Information<Float>();
 		
 		int tailleInformation = informationRecue.nbElements();
-		//trajet indirect (s(t) avec retard)
+		//trajet indirect (alpha*s(t-tau))
 		int t = this.tau;
 		while (t>0){
 			informationAjoutee.add(0.0f);
@@ -52,18 +52,18 @@ public class TransmetteurAnalogiqueMultiTrajetsParfait extends Transmetteur<Floa
 			//TODO : revoir la complexite (mauvaise)
 			informationAjoutee.add(informationRecue.iemeElement(i)*alpha);	
 		}
-		
+
 		//signal emis par le transmetteur
-		for(int indice = 0 ; indice < tailleInformation; indice++) {
+		for(int indice = 0 ; indice < (tailleInformation+tau); indice++) {
 			informationEmise.add(informationRecue.iemeElement(0)+ informationAjoutee.iemeElement(0));
 			informationRecue.remove(0);
 			informationAjoutee.remove(0);
 		}
-		
 		for (DestinationInterface<Float> destinationConnectee : destinationsConnectees) {
 			destinationConnectee.recevoir(informationEmise);
+
 		}
-		this.informationEmise = informationRecue; //utile ? -> informationRecue vide (null)
+		this.informationEmise = informationRecue;
 	}
 	
 	public float ecartType() throws Exception{
@@ -99,4 +99,13 @@ public class TransmetteurAnalogiqueMultiTrajetsParfait extends Transmetteur<Floa
 	public Integer getSeed() {
 		return seed;
 	}
+	
+	public float getAlpha() {
+		return alpha;
+	}
+
+	public int getTau() {
+		return tau;
+	}
+
 }
