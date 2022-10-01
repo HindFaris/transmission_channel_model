@@ -94,5 +94,13 @@ public abstract  class Transmetteur <R,E> implements  DestinationInterface <R>, 
 	/**
 	 * emet l'information construite par le transmetteur
 	 */
-	public  abstract void emettre() throws InformationNonConformeException;   
+	public  abstract void emettre() throws InformationNonConformeException; 
+	
+	public void setInformationEmise(Information<E> informationEmise) {
+		this.informationEmise = informationEmise;
+	}
+	
+	public void setInformationRecue(Information<R> informationRecue) {
+		this.informationRecue = informationRecue;
+	}
 }
