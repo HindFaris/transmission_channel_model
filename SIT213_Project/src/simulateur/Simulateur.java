@@ -146,7 +146,6 @@ public class Simulateur {
 			transmetteurAnalogiqueParfait.connecter(recepteur);
 		}
 		
-
 		//ajout des sondes
 		if(affichage) {
 			source.connecter(new SondeLogique("Source", 200));
@@ -294,18 +293,8 @@ public class Simulateur {
 	 */ 
 
 	public void execute() throws Exception {  
-
-		//long debut = System.currentTimeMillis();
 		source.emettre();
-		//long fin = System.currentTimeMillis();
-		//System.out.println("il a fallu " + (fin-debut) + " millisecondes pour faire source.emettre");
-		//System.out.println("fin source");
-		//debut = System.currentTimeMillis();
 		emetteurAnalogique.emettre();
-		//fin = System.currentTimeMillis();
-		//System.out.println("il a fallu " + (fin-debut) + " millisecondes pour faire emetteur.emettre");
-		//System.out.println("fin emission");
-		//debut = System.currentTimeMillis();
 		if(bruitActif) {
 			if (trajetIndirect) {
 				transmetteurAnalogiqueMultiTrajetsBruite.emettre();
@@ -317,15 +306,7 @@ public class Simulateur {
 		else {
 			transmetteurAnalogiqueParfait.emettre();
 		}
-		//System.out.println("fin transmission");
-		//fin = System.currentTimeMillis();
-		//System.out.println("il a fallu " + (fin-debut) + " millisecondes pour faire tansmetteur.emettre");
-
-		//debut = System.currentTimeMillis();
 		recepteur.emettre();
-		//System.out.println("fin reception");
-		//long fin = System.currentTimeMillis();
-		//System.out.println("il a fallu " + (fin-debut) + " millisecondes pour faire la simulation");
 	}
 
 
