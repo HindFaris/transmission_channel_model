@@ -95,11 +95,17 @@ public class TransmetteurAnalogiqueMultiTrajetsBruite extends Transmetteur<Float
 			}
 		}
 
+		LinkedList<Float> informationRecueCopie = new LinkedList<Float>();
+		try {
+			informationRecueCopie = informationRecue.cloneInformation();
+		} catch (Exception e1) {
+			System.out.println("ERR : Impossible de cloner l'informationRecue dans Transmetteur MultiTrajet Parfait");
+		}
 		//signal emis par le transmetteur
 		for(int indice = 0 ; indice < (tailleInformation+tauMax); indice++) {
-			informationEmise.add(informationRecue.iemeElement(indice)+ informationAjoutee.iemeElement(indice)+ bruit.iemeElement(0));
-			//informationRecue.remove(0);
-			//informationAjoutee.remove(0);
+			informationEmise.add(informationRecueCopie.get(0)+ informationAjoutee.iemeElement(0)+ bruit.iemeElement(0));
+			informationRecue.remove(0);
+			informationAjoutee.remove(0);
 			bruit.remove(0);
 		}
 
