@@ -16,8 +16,8 @@ public class EvolutionTEBEnFonctionDuSNR {
 		
 		System.out.println("Signal NRZ");
 		System.out.println("SNR par bit (dB);Taux d'erreur binaire");
-		for(float indice = -50; indice<=20; indice += 0.5) {
-			Simulateur simulateur =  new Simulateur(new String[] {"-mess","1000", "-form", "NRZ", "-snrpb", String.valueOf(indice)});
+		for(float indice = -15; indice<=20; indice += 0.5) {
+			Simulateur simulateur =  new Simulateur(new String[] {"-mess","999999", "-form", "NRZ", "-snrpb", String.valueOf(indice)});
 			simulateur.execute();
 			System.out.println(Float.toString(indice) + ";" + Float.toString(simulateur.calculTauxErreurBinaire()));
 		}
@@ -25,8 +25,8 @@ public class EvolutionTEBEnFonctionDuSNR {
 		
 		System.out.println("Signal NRZT");
 		System.out.println("SNR par bit (dB);Taux d'erreur binaire");
-		for(float indice = -50; indice<=20; indice += 0.5) {
-			Simulateur simulateur =  new Simulateur(new String[] {"-mess","1000", "-form", "NRZT", "-snrpb", String.valueOf(indice)});
+		for(float indice = -15; indice<=20; indice += 0.5) {
+			Simulateur simulateur =  new Simulateur(new String[] {"-mess","999999", "-form", "NRZT", "-snrpb", String.valueOf(indice)});
 			simulateur.execute();
 			System.out.println(Float.toString(indice) + ";" + Float.toString(simulateur.calculTauxErreurBinaire()));
 		}
@@ -34,8 +34,8 @@ public class EvolutionTEBEnFonctionDuSNR {
 		
 		System.out.println("Signal RZ");
 		System.out.println("SNR par bit (dB);Taux d'erreur binaire");
-		for(float indice = -50; indice<=20; indice += 0.5) {
-			Simulateur simulateur =  new Simulateur(new String[] {"-mess","1000", "-form", "RZ", "-snrpb", String.valueOf(indice)});
+		for(float indice = -15; indice<=20; indice += 0.5) {
+			Simulateur simulateur =  new Simulateur(new String[] {"-mess","999999", "-form", "RZ", "-snrpb", String.valueOf(indice)});
 			simulateur.execute();
 			System.out.println(Float.toString(indice) + ";" + Float.toString(simulateur.calculTauxErreurBinaire()));
 		}
