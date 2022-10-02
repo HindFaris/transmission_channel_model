@@ -142,4 +142,12 @@ public class TransmetteurAnalogiqueMultiTrajetsBruite extends Transmetteur<Float
 	public Integer getSeed() {
 		return seed;
 	}
+	
+	public LinkedList<Float> getAlphas() {
+		return alphas;
+	}
+
+	public LinkedList<Integer> getTaus() {
+		return taus;
+	}
 }

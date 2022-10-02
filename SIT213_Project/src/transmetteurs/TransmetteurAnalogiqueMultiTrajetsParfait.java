@@ -115,4 +115,13 @@ public class TransmetteurAnalogiqueMultiTrajetsParfait extends Transmetteur<Floa
 		puissance = (puissance/(float)(informationRecue.nbElements()));
 		return puissance;
 	}
+	
+
+	public LinkedList<Float> getAlphas() {
+		return alphas;
+	}
+
+	public LinkedList<Integer> getTaus() {
+		return taus;
+	}
 }
