@@ -1,7 +1,6 @@
 package transmetteurs;
 
 import java.util.LinkedList;
-
 import destinations.DestinationInterface;
 import information.*;
 
@@ -115,7 +114,6 @@ public class TransmetteurAnalogiqueMultiTrajetsParfait extends Transmetteur<Floa
 		puissance = (puissance/(float)(informationRecue.nbElements()));
 		return puissance;
 	}
-	
 
 	public LinkedList<Float> getAlphas() {
 		return alphas;
@@ -123,5 +121,6 @@ public class TransmetteurAnalogiqueMultiTrajetsParfait extends Transmetteur<Floa
 
 	public LinkedList<Integer> getTaus() {
 		return taus;
+
 	}
 }

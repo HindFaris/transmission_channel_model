@@ -8,7 +8,7 @@ import sources.*;
 
 public class SourceFixeTest {
 	
-	private static int nbTests=0;
+	private static int nbTests=0; 
 	private static int nbErrors=0;
 	
 	@Test
@@ -30,9 +30,9 @@ public class SourceFixeTest {
 			e.printStackTrace();
 		}
         
-        assertEquals("ERR : L'information generee ne correspond pas au message entre", Source.getInformationGeneree(),information );
+        assertEquals("ERR : L'information generee ne correspond pas au message entre",information, Source.getInformationGeneree() );
 		nbErrors--;
-		assertEquals("ERR : L'information generee ne correspond pas a l'information emise",Source.getInformationGeneree(), Source.getInformationEmise() );
+		assertEquals("ERR : L'information generee ne correspond pas a l'information emise", Source.getInformationEmise(), Source.getInformationGeneree());
 		nbErrors--;
 	}
 	 

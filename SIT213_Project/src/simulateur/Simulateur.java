@@ -142,17 +142,30 @@ public class Simulateur {
 			transmetteurAnalogiqueMultiTrajetsParfait = new TransmetteurAnalogiqueMultiTrajetsParfait(alphas, taus);
 			emetteurAnalogique.connecter(transmetteurAnalogiqueMultiTrajetsParfait);
 			transmetteurAnalogiqueMultiTrajetsParfait.connecter(recepteur);	
+
 		}
-		else {
+		else if(bruitActif) {
+			transmetteurAnalogiqueBruite = new TransmetteurAnalogiqueBruite(nbEchantillon, SNRParBit, seed);
+			emetteurAnalogique.connecter(transmetteurAnalogiqueBruite);
+			transmetteurAnalogiqueBruite.connecter(recepteur);
+		}
+		else if (trajetIndirect) {
+			transmetteurAnalogiqueMultiTrajets = new TransmetteurAnalogiqueMultiTrajetsParfait(nbEchantillon, SNRParBit, seed, alpha, tau);
+			emetteurAnalogique.connecter(transmetteurAnalogiqueMultiTrajets);
+			transmetteurAnalogiqueMultiTrajets.connecter(recepteur);
+		}
+		else{
 			transmetteurAnalogiqueParfait = new TransmetteurAnalogiqueParfait();
 			emetteurAnalogique.connecter(transmetteurAnalogiqueParfait);
 			transmetteurAnalogiqueParfait.connecter(recepteur);
 		}
+		
 
 		//ajout des sondes
 		if(affichage) {
 			source.connecter(new SondeLogique("Source", 200));
 			emetteurAnalogique.connecter(new SondeAnalogique("Emetteur Analogique"));
+      
 			if (bruitActif && trajetIndirect) {
 				transmetteurAnalogiqueMultiTrajetsBruite.connecter(new SondeAnalogique("Transmetteur Analogique Multi-Trajet bruite"));
 			}else if (bruitActif){
@@ -163,6 +176,7 @@ public class Simulateur {
 			} else {
 				transmetteurAnalogiqueParfait.connecter(new SondeAnalogique("Transmetteur Analogique parfait"));
 			}
+			
 			recepteur.connecter(new SondeLogique("Recepteur", 200));
 		}
 	}
@@ -264,7 +278,7 @@ public class Simulateur {
 				bruitActif = true;
 				SNRParBit = Float.valueOf(args[i]);
 			}
-
+      
 			else if(args[i].matches("-ti")) {
 				trajetIndirect = true;
 
@@ -304,8 +318,10 @@ public class Simulateur {
 	 */ 
 
 	public void execute() throws Exception {  
+
 		source.emettre();
 		emetteurAnalogique.emettre();
+    
 		if(bruitActif && trajetIndirect) {
 			transmetteurAnalogiqueMultiTrajetsBruite.emettre();
 		}
@@ -318,6 +334,7 @@ public class Simulateur {
 		else {
 			transmetteurAnalogiqueParfait.emettre();
 		}
+    
 		recepteur.emettre();
 	}
 
@@ -351,7 +368,7 @@ public class Simulateur {
 	 *  @param args les differents arguments qui serviront a l'instanciation du Simulateur.
 	 */
 
-	public static void main(String [] args) { 
+	public static void main(String [] args) {
 		Simulateur simulateur = null;
 		try {
 			simulateur = new Simulateur(args);
@@ -431,7 +448,7 @@ public class Simulateur {
 	public boolean getBruitActif() {
 		return bruitActif;
 	}
-
+  
 	public boolean getTrajetIndirect() {
 		return trajetIndirect;
 	}
@@ -478,7 +495,4 @@ public class Simulateur {
 	public LinkedList<Integer> getTaus() {
 		return taus;
 	}
-
-
-
 }

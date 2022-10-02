@@ -107,6 +107,15 @@ public class RecepteurMultiTrajets extends Transmetteur<Float, Boolean> {
 	public String getFormeSignal() {
 		return formeSignal;
 	}
+	
+	public float getAlpha() {
+		return alpha;
+	}
+
+	public int getTau() {
+		return tau;
+	}
+
 
 
 }

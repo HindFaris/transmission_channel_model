@@ -19,31 +19,32 @@ public class SignalTest {
 		nbErrors+=9;
 		Signal SignalNRZ = new SignalNRZ(informationRecue,nbEchantillons, min,  max);
 		
-		assertEquals("Le nombre d'Echantillons ne correspond pas", SignalNRZ.getNbEchantillon(), nbEchantillons );
+		assertEquals("Le nombre d'Echantillons ne correspond pas", nbEchantillons, SignalNRZ.getNbEchantillon() );
 		nbErrors--;
-		assertEquals("La valeur de min ne correspond pas", SignalNRZ.getMin(), min, 0.0f );
+		assertEquals("La valeur de min ne correspond pas", min , SignalNRZ.getMin(), (double)0.0);
 		nbErrors--;
-		assertEquals("La valeur de max ne correspond pas", SignalNRZ.getMax(), max, 0.0f );
+		assertEquals("La valeur de max ne correspond pas", max , SignalNRZ.getMax(), (double)0.0);
 		nbErrors--;
+		
 		
 		Signal SignalNRZT = new SignalNRZT(informationRecue,nbEchantillons, min,  max);
 		
-		assertEquals("Le nombre d'Echantillons ne correspond pas", SignalNRZT.getNbEchantillon(), nbEchantillons );
+		assertEquals("Le nombre d'Echantillons ne correspond pas", nbEchantillons, SignalNRZT.getNbEchantillon());
 		nbErrors--;
-		assertEquals("La valeur de min ne correspond pas", SignalNRZT.getMin(), min, 0.0f );
+		assertEquals("La valeur de min ne correspond pas", min , SignalNRZT.getMin(), (double)0.0);
 		nbErrors--;
-		assertEquals("La valeur de max ne correspond pas", SignalNRZT.getMax(), max, 0.0f);
+		assertEquals("La valeur de max ne correspond pas", max, SignalNRZT.getMax(), (double)0.0);
 		nbErrors--;
+		
 		
 		Signal SignalRZ = new SignalRZ(informationRecue,nbEchantillons, min,  max);
 		
-		assertEquals("Le nombre d'Echantillons ne correspond pas", SignalRZ.getNbEchantillon(), nbEchantillons );
+		assertEquals("Le nombre d'Echantillons ne correspond pas", nbEchantillons, SignalRZ.getNbEchantillon() );
 		nbErrors--;
-		assertEquals( "La valeur de min ne correspond pas", SignalRZ.getMin(), min, 0.0f);
+		assertEquals( "La valeur de min ne correspond pas", min, SignalRZ.getMin(), (double)0.0);
 		nbErrors--;
-		assertEquals( "La valeur de max ne correspond pas", SignalRZ.getMax(), max, 0.0f);
+		assertEquals( "La valeur de max ne correspond pas", max, SignalRZ.getMax(), (double)0.0);
 		nbErrors--;
-		
 	}
 	
 	@Test
