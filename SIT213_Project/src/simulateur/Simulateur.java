@@ -275,7 +275,7 @@ public class Simulateur {
 					argsString += "\t" +args[ind] ;
 					ind++;
 				}
-				String regexString = "-ti\t(([0-9]{1,5}\t0.[0-9]\t{0,1}){1,5})";
+				String regexString = "-ti\t(([0-9]{1,6}\t0.[0-9]\t{0,1}){1,5})";
 				Pattern pattern = Pattern.compile(regexString);
 				MatchResult matcher = pattern.matcher(argsString);
 				String tiArgsString = null;
@@ -306,7 +306,6 @@ public class Simulateur {
 	public void execute() throws Exception {  
 		source.emettre();
 		emetteurAnalogique.emettre();
-		long startTrans = System.currentTimeMillis();
 		if(bruitActif && trajetIndirect) {
 			transmetteurAnalogiqueMultiTrajetsBruite.emettre();
 		}
@@ -319,9 +318,7 @@ public class Simulateur {
 		else {
 			transmetteurAnalogiqueParfait.emettre();
 		}
-		long endTrans = System.currentTimeMillis();
 		recepteur.emettre();
-		System.out.println("transTime = "+(endTrans-startTrans));
 	}
 
 
@@ -356,7 +353,6 @@ public class Simulateur {
 
 	public static void main(String [] args) { 
 		Simulateur simulateur = null;
-		long start = System.currentTimeMillis();
 		try {
 			simulateur = new Simulateur(args);
 		}
@@ -377,8 +373,6 @@ public class Simulateur {
 			e.printStackTrace();
 			System.exit(-2);
 		}
-		long end = System.currentTimeMillis();
-		System.out.println(end-start);
 	}
 
 	/** @return le nombre d'echantillon a utiliser */
