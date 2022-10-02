@@ -1,5 +1,4 @@
 package simulateur;
-import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.regex.MatchResult;
 import java.util.regex.Matcher;
@@ -13,6 +12,7 @@ import visualisations.*;
 import information.*;
 import recepteur.*;
 import emetteur.*;
+
 /** La classe Simulateur permet de construire et simuler une chaine de
  * transmission composee d'une Source, d'un nombre variable de
  * Transmetteur(s) et d'une Destination.
