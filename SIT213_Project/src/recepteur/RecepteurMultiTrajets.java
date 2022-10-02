@@ -28,7 +28,7 @@ public class RecepteurMultiTrajets extends Transmetteur<Float, Boolean> {
 		this.nbEchantillons = nbEchantillons;
 		this.formeSignal = formSignal;
 	}
-	
+
 	/**
 	 * permet de recevoir l'nformation float, ensuite fait appel a la methode dechiffrer 
 	 * pour la transformer en boolean
@@ -47,20 +47,22 @@ public class RecepteurMultiTrajets extends Transmetteur<Float, Boolean> {
 
 	public  void dechiffrer(Information <Float> informationRecue){
 
-		float moyenneLimite;	//Moyenne limite pour le signal NRZ et NRZT
-		if(formeSignal == "RZ") moyenneLimite = (max-min)*1/6 + min;
-		else moyenneLimite = (max+min)/2;
-
-		informationEmise  = new Information<Boolean>(); 
-		float moyenneTemp = 0f;
-		int tailleDesBooleens = informationRecue.nbElements()/nbEchantillons;
+		float moyenneLimite;	
+		if(formeSignal == "RZ") moyenneLimite = (max-min)*1/6 + min; //Moyenne limite pour le signal RZ
+		else moyenneLimite = (max+min)/2;//Moyenne limite pour le signal NRZ et NRZT
 		
 		LinkedList<Float> infoRecue = null; 
 		try {
 			infoRecue = informationRecue.cloneInformation();
 		} catch (Exception e) {
 			System.out.println("Clone info recept multi trajet");
-		}		
+		}
+
+		informationEmise  = new Information<Boolean>();
+		float moyenneTemp = 0f;
+		int tailleDesBooleens = infoRecue.size()/nbEchantillons;
+
+				
 		for(int index = 0 ; index < tailleDesBooleens ; index++){
 			moyenneTemp=0f;
 			for (int j = 0; j < nbEchantillons; j++) {
@@ -75,7 +77,7 @@ public class RecepteurMultiTrajets extends Transmetteur<Float, Boolean> {
 			else {
 				informationEmise.add(false);
 			}
-			
+
 		}
 	}
 

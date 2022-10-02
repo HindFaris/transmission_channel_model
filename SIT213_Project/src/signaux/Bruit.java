@@ -5,12 +5,12 @@ import information.Information;
 import java.util.Random;
 
 public class Bruit {
-	
+
 	protected Information<Float> signalSortieInformation;
 	private float ecartType;
 	private int tailleBruit;
 	private Integer seed;
-	
+
 	/**
 	 * retourne le i eme element du bruit
 	 * @param i indice de l'element recherche
@@ -27,7 +27,7 @@ public class Bruit {
 	public Information<Float> getSignalSortieInformation() {
 		return signalSortieInformation;
 	}
-	
+
 	/**
 	 * un getter donnant l'ecart type de la gaussienne
 	 * @return l'ecart type
@@ -50,7 +50,7 @@ public class Bruit {
 	 * @param ecartType l'ecart type de la gaussienne
 	 * @param tailleBruit la longueur du bruit
 	 */
-	
+
 	public Bruit(float ecartType, int tailleBruit, Integer seed) {
 		this.ecartType = ecartType;
 		this.tailleBruit = tailleBruit;
@@ -58,7 +58,7 @@ public class Bruit {
 		this.seed = seed;
 		this.generer();
 	}
-	
+
 	/**
 	 * genere le bruit blanc gaussien
 	 */
@@ -70,7 +70,7 @@ public class Bruit {
 				rdm=(float)random.nextGaussian()*ecartType;
 				signalSortieInformation.add(rdm);
 			}
-			
+
 		}
 		else {
 			Random random = new Random(seed);
@@ -80,9 +80,9 @@ public class Bruit {
 				signalSortieInformation.add(rdm);
 			}
 		}
-		
+
 	}
-	
+
 	public Integer getSeed() {
 		return seed;
 	}

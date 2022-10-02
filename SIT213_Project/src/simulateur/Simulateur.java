@@ -84,10 +84,10 @@ public class Simulateur {
 
 	/** Indique s'il y a des trajets indirects**/
 	private boolean trajetIndirect = false;
-	
+
 	/** Amplitudes des signaux indirects **/
 	private LinkedList<Float> alphas = new LinkedList<Float>();
-	
+
 	/** Nb d'echantillon de retard des signaux indirects**/
 	private LinkedList<Integer> taus = new LinkedList<Integer>();
 
@@ -139,7 +139,6 @@ public class Simulateur {
 			emetteurAnalogique.connecter(transmetteurAnalogiqueBruite);
 			transmetteurAnalogiqueBruite.connecter(recepteur);
 		} else if (trajetIndirect) {
-			//transmetteurAnalogiqueMultiTrajetsParfait = new TransmetteurAnalogiqueMultiTrajetsParfait(nbEchantillon, SNRParBit, seed, alpha, tau);
 			transmetteurAnalogiqueMultiTrajetsParfait = new TransmetteurAnalogiqueMultiTrajetsParfait(alphas, taus);
 			emetteurAnalogique.connecter(transmetteurAnalogiqueMultiTrajetsParfait);
 			transmetteurAnalogiqueMultiTrajetsParfait.connecter(recepteur);	
@@ -268,7 +267,7 @@ public class Simulateur {
 
 			else if(args[i].matches("-ti")) {
 				trajetIndirect = true;
-				//TODO : gerer les parametres -> jusqu'a 5
+
 				String argsString = null ;
 				int ind = 0;
 				ind = i;
@@ -276,13 +275,13 @@ public class Simulateur {
 					argsString += "\t" +args[ind] ;
 					ind++;
 				}
-				String regexString = "-ti\t(([0-9]{1,3}\t0.[0-9]\t{0,1}){1,5})";
+				String regexString = "-ti\t(([0-9]{1,5}\t0.[0-9]\t{0,1}){1,5})";
 				Pattern pattern = Pattern.compile(regexString);
 				MatchResult matcher = pattern.matcher(argsString);
 				String tiArgsString = null;
 				while (((Matcher)matcher).find()) {
 					tiArgsString = matcher.group(1);
-		        }
+				}
 				String[] tiArgsArray = tiArgsString.split("\t");
 				for (int index=0; index<tiArgsArray.length; index++) {
 					if(0<Float.valueOf(tiArgsArray[index]) && Float.valueOf(tiArgsArray[index]) <= 1) {
@@ -307,6 +306,7 @@ public class Simulateur {
 	public void execute() throws Exception {  
 		source.emettre();
 		emetteurAnalogique.emettre();
+		long startTrans = System.currentTimeMillis();
 		if(bruitActif && trajetIndirect) {
 			transmetteurAnalogiqueMultiTrajetsBruite.emettre();
 		}
@@ -314,12 +314,14 @@ public class Simulateur {
 			transmetteurAnalogiqueMultiTrajetsParfait.emettre();
 		}
 		else if (bruitActif) {
-				transmetteurAnalogiqueBruite.emettre();
+			transmetteurAnalogiqueBruite.emettre();
 		}
 		else {
 			transmetteurAnalogiqueParfait.emettre();
 		}
+		long endTrans = System.currentTimeMillis();
 		recepteur.emettre();
+		System.out.println("transTime = "+(endTrans-startTrans));
 	}
 
 
@@ -354,6 +356,7 @@ public class Simulateur {
 
 	public static void main(String [] args) { 
 		Simulateur simulateur = null;
+		long start = System.currentTimeMillis();
 		try {
 			simulateur = new Simulateur(args);
 		}
@@ -374,6 +377,8 @@ public class Simulateur {
 			e.printStackTrace();
 			System.exit(-2);
 		}
+		long end = System.currentTimeMillis();
+		System.out.println(end-start);
 	}
 
 	/** @return le nombre d'echantillon a utiliser */
@@ -471,7 +476,7 @@ public class Simulateur {
 	public boolean getAffichage() {
 		return affichage;
 	}
-	
+
 	public LinkedList<Float> getAlphas() {
 		return alphas;
 	}
