@@ -1,7 +1,7 @@
 package tests;
 
-import static org.junit.jupiter.api.Assertions.*;
-import org.junit.jupiter.api.Test;
+import static org.junit.Assert.*;
+import org.junit.Test;
 
 import emetteur.*;
 import sources.SourceFixe;
@@ -21,11 +21,11 @@ public class TransmetteurAnalogiqueBruiteTest {
 	public void TransmetteurAnalogiqueBruiteInitTest(int nbEchantillons, float SNRParBit, Integer seed) {
 		nbErrors+=3;
 		TransmetteurAnalogiqueBruite Tr = new TransmetteurAnalogiqueBruite(nbEchantillons,  SNRParBit,  seed);
-		assertEquals(Tr.getNbEchantillons(), nbEchantillons , "Le nombre d'echantillons ne correspond pas");
+		assertEquals("Le nombre d'echantillons ne correspond pas",Tr.getNbEchantillons(), nbEchantillons);
 		nbErrors--;
-		assertEquals(Tr.getSNRParBit(), SNRParBit, "La valeur du SNR par Bit ne correspond pas");
+		assertEquals("La valeur du SNR par Bit ne correspond pas",Tr.getSNRParBit(), SNRParBit);
 		nbErrors--;
-		assertEquals(Tr.getSeed(), seed, "La valeur de la seed ne correspond pas");
+		assertEquals("La valeur de la seed ne correspond pas",Tr.getSeed(), seed);
 		nbErrors--;
 	}
 
