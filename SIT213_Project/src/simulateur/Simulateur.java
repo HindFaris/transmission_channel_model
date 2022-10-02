@@ -150,9 +150,9 @@ public class Simulateur {
 			transmetteurAnalogiqueBruite.connecter(recepteur);
 		}
 		else if (trajetIndirect) {
-			transmetteurAnalogiqueMultiTrajets = new TransmetteurAnalogiqueMultiTrajetsParfait(nbEchantillon, SNRParBit, seed, alpha, tau);
-			emetteurAnalogique.connecter(transmetteurAnalogiqueMultiTrajets);
-			transmetteurAnalogiqueMultiTrajets.connecter(recepteur);
+			transmetteurAnalogiqueMultiTrajetsParfait = new TransmetteurAnalogiqueMultiTrajetsParfait(alphas, taus);
+			emetteurAnalogique.connecter(transmetteurAnalogiqueMultiTrajetsParfait);
+			transmetteurAnalogiqueMultiTrajetsParfait.connecter(recepteur);
 		}
 		else{
 			transmetteurAnalogiqueParfait = new TransmetteurAnalogiqueParfait();

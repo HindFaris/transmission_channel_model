@@ -9,10 +9,10 @@ public class TransmetteurAnalogiqueMultiTrajetsParfait extends Transmetteur<Floa
 	private LinkedList<Float> alphas = new LinkedList<Float>(); //attenuation du second trajet entre 0 et 1
 	private LinkedList<Integer> taus = new LinkedList<Integer>(); //retard du signal en nombre d'echantillons
 
-	public TransmetteurAnalogiqueMultiTrajetsParfait(LinkedList<Float> alpha, LinkedList<Integer> tau ) {
+	public TransmetteurAnalogiqueMultiTrajetsParfait(LinkedList<Float> alphas, LinkedList<Integer> taus ) {
 		super();
-		this.alphas = alpha;
-		this.taus = tau;
+		this.alphas = alphas;
+		this.taus = taus;
 		informationEmise = new Information<Float>();
 	}
 
