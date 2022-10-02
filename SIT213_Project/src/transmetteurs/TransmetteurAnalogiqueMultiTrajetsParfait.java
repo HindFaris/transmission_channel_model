@@ -72,14 +72,16 @@ public class TransmetteurAnalogiqueMultiTrajetsParfait extends Transmetteur<Floa
 				infoRecue.remove(0);
 			}
 			
+
 			for (int i = 0; i < information.nbElements(); i++) {
 				float var = informationAjoutee.iemeElement(0)+information.iemeElement(0);
 				information.remove(0);
 				informationAjoutee.remove(0);
 				informationAjoutee.add(var);
 			}
+			
 		}
-
+		
 		//signal emis par le transmetteur		
 		for(int indice = 0 ; indice < (tailleInformation+tauMax); indice++) {
 			informationEmise.add(informationRecue.iemeElement(0)+ informationAjoutee.iemeElement(0));
