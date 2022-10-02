@@ -142,7 +142,6 @@ public class Simulateur {
 			transmetteurAnalogiqueMultiTrajetsParfait = new TransmetteurAnalogiqueMultiTrajetsParfait(alphas, taus);
 			emetteurAnalogique.connecter(transmetteurAnalogiqueMultiTrajetsParfait);
 			transmetteurAnalogiqueMultiTrajetsParfait.connecter(recepteur);	
-
 		}
 		else if(bruitActif) {
 			transmetteurAnalogiqueBruite = new TransmetteurAnalogiqueBruite(nbEchantillon, SNRParBit, seed);
@@ -300,12 +299,11 @@ public class Simulateur {
 				for (int index=0; index<tiArgsArray.length; index++) {
 					if(0<Float.valueOf(tiArgsArray[index]) && Float.valueOf(tiArgsArray[index]) <= 1) {
 						alphas.add(Float.valueOf(tiArgsArray[index]));
-						//alpha = Float.valueOf(tiArgsArray[index]);
 					} else {
 						taus.add(Integer.valueOf(tiArgsArray[index]));
-						//tau = Integer.valueOf(tiArgsArray[index]);
 					}
 				}
+				//System.out.println(alphas+"\n"+taus);
 			}
 		}
 	}

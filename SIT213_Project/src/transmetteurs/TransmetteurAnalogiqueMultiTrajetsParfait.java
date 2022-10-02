@@ -27,6 +27,7 @@ public class TransmetteurAnalogiqueMultiTrajetsParfait extends Transmetteur<Floa
 	 * emettre l'information float a toutes les destinations connectees
 	 */
 
+	@SuppressWarnings("null")
 	public void emettre() {
 		Information<Float> informationAjoutee = new Information<Float>();
 		int tailleInformation = informationRecue.nbElements();
@@ -47,7 +48,7 @@ public class TransmetteurAnalogiqueMultiTrajetsParfait extends Transmetteur<Floa
 		}
 
 		//trajet indirect (alpha*s(t-tau))
-		Information<Float> information;
+		Information<Float> information ;
 		LinkedList<Float> infoRecue = null;
 		
 		for (int index = 0; index < taus.size(); index++) {
@@ -71,17 +72,18 @@ public class TransmetteurAnalogiqueMultiTrajetsParfait extends Transmetteur<Floa
 				information.add(infoRecue.get(0)*alpha);
 				infoRecue.remove(0);
 			}
-			
 
 			for (int i = 0; i < information.nbElements(); i++) {
-				float var = informationAjoutee.iemeElement(0)+information.iemeElement(0);
-				information.remove(0);
-				informationAjoutee.remove(0);
-				informationAjoutee.add(var);
+				float var = informationAjoutee.iemeElement(i)+information.iemeElement(i);
+				//information.remove(0);
+				//informationAjoutee.remove(0);
+				//informationAjoutee.add(var);
+				informationAjoutee.setIemeElement(i, var);
 			}
 			
+			
 		}
-		
+
 		//signal emis par le transmetteur		
 		for(int indice = 0 ; indice < (tailleInformation+tauMax); indice++) {
 			informationEmise.add(informationRecue.iemeElement(0)+ informationAjoutee.iemeElement(0));

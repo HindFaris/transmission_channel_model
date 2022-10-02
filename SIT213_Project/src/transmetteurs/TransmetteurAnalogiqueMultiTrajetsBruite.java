@@ -97,9 +97,9 @@ public class TransmetteurAnalogiqueMultiTrajetsBruite extends Transmetteur<Float
 
 		//signal emis par le transmetteur
 		for(int indice = 0 ; indice < (tailleInformation+tauMax); indice++) {
-			informationEmise.add(informationRecue.iemeElement(0)+ informationAjoutee.iemeElement(0)+ bruit.iemeElement(0));
-			informationRecue.remove(0);
-			informationAjoutee.remove(0);
+			informationEmise.add(informationRecue.iemeElement(indice)+ informationAjoutee.iemeElement(indice)+ bruit.iemeElement(0));
+			//informationRecue.remove(0);
+			//informationAjoutee.remove(0);
 			bruit.remove(0);
 		}
 
