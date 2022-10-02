@@ -1,6 +1,8 @@
 package recepteur;
 
 
+import java.util.LinkedList;
+
 import destinations.DestinationInterface;
 import information.*;
 import transmetteurs.*;
@@ -34,12 +36,7 @@ public class Recepteur extends Transmetteur<Float, Boolean> {
 	 */
 	public  void recevoir(Information <Float> information) throws InformationNonConformeException{
 		informationRecue = information;
-		try {
-			dechiffrer(informationRecue);
-		}
-		catch(InformationNonConformeException E) {
-
-		}
+		dechiffrer();
 	}
 
 	/**
@@ -48,8 +45,13 @@ public class Recepteur extends Transmetteur<Float, Boolean> {
 	 * @throws InformationNonConformeException
 	 */
 
-	public  void dechiffrer(Information <Float> information) throws InformationNonConformeException{
-
+	public  void dechiffrer() throws InformationNonConformeException{
+		LinkedList<Float> information = null; 
+		try {
+			information = informationRecue.cloneInformation();
+		} catch (Exception e) {
+			System.out.println("Err : impossible de cloner informationRecue dans recepteur");
+		}
 		float moyenneLimite = (max+min)/2;	//Moyenne limite pour le signal NRZ et NRZT
 
 		if(formeSignal == "RZ") {
@@ -58,12 +60,14 @@ public class Recepteur extends Transmetteur<Float, Boolean> {
 
 		informationEmise  = new Information<Boolean>(); 
 		float moyenneTemp = 0f;
-		int tailleDesBooleens = information.nbElements()/nbEchantillons;
+		int tailleDesBooleens = information.size()/nbEchantillons;
+		
+		
 				
 		for(int index = 0 ; index < tailleDesBooleens ; index++){
 			moyenneTemp=0f;
 			for (int j = 0; j < nbEchantillons; j++) {
-				moyenneTemp += information.iemeElement(0);
+				moyenneTemp += information.get(0);
 				information.remove(0);
 			}
 

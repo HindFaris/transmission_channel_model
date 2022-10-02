@@ -1,19 +1,19 @@
 package recepteur;
 
 
+import java.util.LinkedList;
+
 import destinations.DestinationInterface;
 import information.*;
 import transmetteurs.*;
 
-//Réception de l'information
+//Reception de l'information
 public class RecepteurMultiTrajets extends Transmetteur<Float, Boolean> {
 
 	private int nbEchantillons;
 	private float min=0f;
 	private float max=1f;
 	private String formeSignal;
-	private float alpha;
-	private int tau;
 
 	/**
 	 * permet d'initialiser le Recepteur
@@ -21,58 +21,54 @@ public class RecepteurMultiTrajets extends Transmetteur<Float, Boolean> {
 	 * @param min
 	 * @param max
 	 * @param formeSignal
-	 * @param alpha
-	 * @param tau
 	 */
-	public RecepteurMultiTrajets(int nbEchantillons, float min, float max, String formSignal, float alpha, int tau) {
+	public RecepteurMultiTrajets(int nbEchantillons, float min, float max, String formSignal) {
 		this.min = min;
 		this.max = max;
 		this.nbEchantillons = nbEchantillons;
 		this.formeSignal = formSignal;
-		this.alpha = alpha;
-		this.tau = tau;
 	}
-	
+
 	/**
 	 * permet de recevoir l'nformation float, ensuite fait appel a la methode dechiffrer 
 	 * pour la transformer en boolean
 	 * @param information
 	 */
-	public  void recevoir(Information <Float> information) throws InformationNonConformeException{
+	public  void recevoir(Information <Float> information){
 		informationRecue = information;
-		try {
-			dechiffrer(informationRecue);
-		}
-		catch(InformationNonConformeException E) {
-
-		}
+		dechiffrer(informationRecue);
 	}
 
 	/**
 	 * permet de dechiffrer l'information et de passer une information float a une information boolean
 	 * @param information
-	 * @throws InformationNonConformeException
+	 * @throws Exception 
 	 */
 
-	public  void dechiffrer(Information <Float> informationRecue) throws InformationNonConformeException{
+	public  void dechiffrer(Information <Float> informationRecue){
 
-		float moyenneLimite = (max+min)/2;	//Moyenne limite pour le signal NRZ et NRZT
-
-		if(formeSignal == "RZ") {
-			moyenneLimite = (max-min)*1/6 + min;
+		float moyenneLimite;	
+		if(formeSignal == "RZ") moyenneLimite = (max-min)*1/6 + min; //Moyenne limite pour le signal RZ
+		else moyenneLimite = (max+min)/2;//Moyenne limite pour le signal NRZ et NRZT
+		
+		LinkedList<Float> infoRecue = null; 
+		try {
+			infoRecue = informationRecue.cloneInformation();
+		} catch (Exception e) {
+			System.out.println("Clone info recept multi trajet");
 		}
 
-		informationEmise  = new Information<Boolean>(); 
+		informationEmise  = new Information<Boolean>();
 		float moyenneTemp = 0f;
-		int tailleDesBooleens = informationRecue.nbElements()/nbEchantillons;
+		int tailleDesBooleens = infoRecue.size()/nbEchantillons;
+
 				
 		for(int index = 0 ; index < tailleDesBooleens ; index++){
 			moyenneTemp=0f;
 			for (int j = 0; j < nbEchantillons; j++) {
-				moyenneTemp += informationRecue.iemeElement(0);
-				informationRecue.remove(0);
+				moyenneTemp += infoRecue.get(0);
+				infoRecue.remove(0);
 			}
-
 			moyenneTemp = moyenneTemp/nbEchantillons;
 
 			if(moyenneTemp >= moyenneLimite) {
@@ -81,7 +77,7 @@ public class RecepteurMultiTrajets extends Transmetteur<Float, Boolean> {
 			else {
 				informationEmise.add(false);
 			}
-			
+
 		}
 	}
 
@@ -119,6 +115,7 @@ public class RecepteurMultiTrajets extends Transmetteur<Float, Boolean> {
 	public int getTau() {
 		return tau;
 	}
+
 
 
 }
