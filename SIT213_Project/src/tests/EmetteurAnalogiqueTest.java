@@ -20,9 +20,9 @@ public class EmetteurAnalogiqueTest {
 		nbErrors--;
 		assertEquals("La valeur de seed ne correspond pas", Emetteur.getNbEchantillons(), nbEchantillons);
 		nbErrors--;
-		assertEquals("La valeur de min ne correspond pas", Emetteur.getMin(), min);
+		assertEquals("La valeur de min ne correspond pas", Emetteur.getMin(), min, 0.0f);
 		nbErrors--;
-		assertEquals("La valeur de max ne correspond pas", Emetteur.getMax(), max);
+		assertEquals("La valeur de max ne correspond pas", Emetteur.getMax(), max, 0.0f);
 		nbErrors--;
 	}
 	

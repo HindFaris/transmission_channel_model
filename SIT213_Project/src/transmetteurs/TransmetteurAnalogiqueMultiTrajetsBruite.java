@@ -12,16 +12,18 @@ public class TransmetteurAnalogiqueMultiTrajetsBruite extends Transmetteur<Float
 	private int nbEchantillons;
 	private float SNRParBit;
 	private Integer seed = null;
-	private float alpha; //attenuation du second trajet entre 0 et 1
-	private int tau; //retard du signal en nombre d'echantillons
+	// private float alpha; 
+	// private int tau; 
+	private LinkedList<Float> alphas = new LinkedList<Float>(); //attenuation du second trajet entre 0 et 1
+	private LinkedList<Integer> taus = new LinkedList<Integer>(); //retard du signal en nombre d'echantillons
 	
-	public TransmetteurAnalogiqueMultiTrajetsBruite(int nbEchantillons, float SNRParBit, Integer seed, float alpha, int tau ) {
+	public TransmetteurAnalogiqueMultiTrajetsBruite(int nbEchantillons, float SNRParBit, Integer seed, LinkedList<Float> alphas, LinkedList<Integer> taus ) {
 		super();
 		this.nbEchantillons = nbEchantillons;
 		this.SNRParBit = SNRParBit;
 		this.seed = seed;
-		this.alpha = alpha;
-		this.tau = tau;
+		this.alphas = alphas;
+		this.taus = taus;
 		informationEmise = new Information<Float>();
 	}
 	
@@ -38,29 +40,48 @@ public class TransmetteurAnalogiqueMultiTrajetsBruite extends Transmetteur<Float
 	 */
 	
 	public void emettre() throws InformationNonConformeException {
-		Information<Float> informationAjoutee = new Information<Float>();
-		
-		Bruit bruit = null;
-		try {
-			bruit = new Bruit(this.ecartType(), informationRecue.nbElements()+tau, seed);
-		} catch (Exception e) {
-		}
-		int tailleInformation = informationRecue.nbElements();
-		//trajet indirect (s(t) avec retard)
-		int t = this.tau;
-		while (t>0){
-			informationAjoutee.add(0.0f);
-			informationRecue.add(0.0f);
-			t--;
-		}
-		for (int i = 0; i < tailleInformation; i++) {
-			//TODO : revoir la complexite (mauvaise)
-			informationAjoutee.add(informationRecue.iemeElement(i)*alpha);	
-		}
+		//TODO : revoir la complexite (mauvaise)
+				Information<Float> informationAjoutee = new Information<Float>();
+				Bruit bruit = null;
+				try {
+					bruit = new Bruit(this.ecartType(), informationRecue.nbElements(), seed);
+				} catch (Exception e) {
+				}
+				int tailleInformation = informationRecue.nbElements();
+				int tauMax = 0;
+				for (int index = 0; index < taus.size(); index++) {
+					if (tauMax < Integer.valueOf(taus.get(index))) {
+						tauMax= Integer.valueOf(taus.get(index));
+					}
+				}
+				for (int index = 0; index < tailleInformation+tauMax; index++) {
+					informationAjoutee.add(0.0f);
+				}
+				
+				//trajet indirect (alpha*s(t-tau))
+				for (int index = 0; index < taus.size(); index++) {
+					Information<Float> information = new Information<Float>();
+					int tau = taus.get(index);
+					float alpha = alphas.get(index);
+					
+					while (tau>0){
+						information.add(0.0f);
+						tau--;
+					}
+
+					for (int i = 0; i < tailleInformation; i++) {
+						information.add(informationRecue.iemeElement(i)*alpha);	
+					}
+					for (int i = 0; i < information.nbElements(); i++) {
+						float var = informationAjoutee.iemeElement( i)+information.iemeElement(i);
+						informationAjoutee.setIemeElement(i, var);
+					}
+				}
 		
 		//signal emis par le transmetteur
 		for(int indice = 0 ; indice < tailleInformation; indice++) {
 			informationEmise.add(informationRecue.iemeElement(0)+ informationAjoutee.iemeElement(0)+ bruit.iemeElement(0));
+			//informationEmise.add(informationRecue.iemeElement(0)+ informationAjoutee.iemeElement(0));
 			informationRecue.remove(0);
 			informationAjoutee.remove(0);
 			bruit.remove(0);
@@ -105,7 +126,7 @@ public class TransmetteurAnalogiqueMultiTrajetsBruite extends Transmetteur<Float
 	public Integer getSeed() {
 		return seed;
 	}
-	
+	/*
 	public float getAlpha() {
 		return alpha;
 	}
@@ -113,4 +134,5 @@ public class TransmetteurAnalogiqueMultiTrajetsBruite extends Transmetteur<Float
 	public int getTau() {
 		return tau;
 	}
+	*/
 }

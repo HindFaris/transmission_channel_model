@@ -22,9 +22,9 @@ public class RecepteurTest {
 		Recepteur Recepteur = new Recepteur(nbEchantillons, min, max, form);
 		assertEquals("La valeur du nombre d'echantillon ne correspond pas", Recepteur.getNbEchantillons(), nbEchantillons);
 		nbErrors--;
-		assertEquals("La valeur de min ne correspond pas", Recepteur.getMin(), min);
+		assertEquals("La valeur de min ne correspond pas", Recepteur.getMin(), min, 0.0f);
 		nbErrors--;
-		assertEquals( "La valeur de max ne correspond pas", Recepteur.getMax(), max);
+		assertEquals( "La valeur de max ne correspond pas", Recepteur.getMax(), max, 0.0f);
 		nbErrors--;
 		assertEquals("Le type ne correspond pas", Recepteur.getFormeSignal(), form);
 		nbErrors--;

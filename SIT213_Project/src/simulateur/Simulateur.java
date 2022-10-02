@@ -84,17 +84,11 @@ public class Simulateur {
 
 	/** Indique s'il y a des trajets indirects**/
 	private boolean trajetIndirect = false;
-
-	/** Amplitude du signal indirect **/
-	private float alpha = 0.0f;
-
-	/** Nb d'echantillon de retard**/
-	private int tau = 0;
 	
-	/** Amplitude du signal indirect **/
+	/** Amplitudes des signaux indirects **/
 	private LinkedList<Float> alphas = new LinkedList<Float>();
-
-	/** Nb d'echantillon de retard**/
+	
+	/** Nb d'echantillon de retard des signaux indirects**/
 	private LinkedList<Integer> taus = new LinkedList<Integer>();
 
 	/** Le constructeur de Simulateur construit une chaine de
@@ -122,7 +116,7 @@ public class Simulateur {
 
 		//instanciation du recepteur
 		if (trajetIndirect) {
-			recepteur = new RecepteurMultiTrajets(nbEchantillon, min, max, formSignal, alpha, tau);
+			recepteur = new RecepteurMultiTrajets(nbEchantillon, min, max, formSignal);
 		} else {
 			recepteur = new Recepteur(nbEchantillon, min, max, formSignal);
 		}
@@ -137,7 +131,7 @@ public class Simulateur {
 
 		//instanciation du transmetteur
 		if(bruitActif && trajetIndirect) {
-			transmetteurAnalogiqueMultiTrajetsBruite = new TransmetteurAnalogiqueMultiTrajetsBruite(nbEchantillon, SNRParBit, seed, alpha, tau);
+			transmetteurAnalogiqueMultiTrajetsBruite = new TransmetteurAnalogiqueMultiTrajetsBruite(nbEchantillon, SNRParBit, seed, alphas, taus);
 			emetteurAnalogique.connecter(transmetteurAnalogiqueMultiTrajetsBruite);
 			transmetteurAnalogiqueMultiTrajetsBruite.connecter(recepteur);
 		}else if (bruitActif) {
@@ -442,14 +436,6 @@ public class Simulateur {
 	public boolean getTrajetIndirect() {
 		return trajetIndirect;
 	}
-
-	public float getAlpha() {
-		return alpha;
-	}
-
-	public int getTau() {
-		return tau;
-	}
 	/**
 	 * Un simple getter qui renvoie la taille du mot  recu a la destiation
 	 * @return int 
@@ -485,6 +471,15 @@ public class Simulateur {
 	public boolean getAffichage() {
 		return affichage;
 	}
+	
+	public LinkedList<Float> getAlphas() {
+		return alphas;
+	}
+
+	public LinkedList<Integer> getTaus() {
+		return taus;
+	}
+
 
 
 }

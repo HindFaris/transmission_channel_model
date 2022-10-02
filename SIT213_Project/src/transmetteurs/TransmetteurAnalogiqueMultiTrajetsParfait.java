@@ -1,5 +1,6 @@
 package transmetteurs;
 
+import java.security.Identity;
 import java.util.LinkedList;
 
 import destinations.DestinationInterface;
@@ -62,7 +63,7 @@ public class TransmetteurAnalogiqueMultiTrajetsParfait extends Transmetteur<Floa
 				information.add(informationRecue.iemeElement(i)*alpha);	
 			}
 			for (int i = 0; i < information.nbElements(); i++) {
-				float var = informationAjoutee.iemeElement(i)+information.iemeElement(i);
+				float var = informationAjoutee.iemeElement( i)+information.iemeElement(i);
 				informationAjoutee.setIemeElement(i, var);
 			}
 		}

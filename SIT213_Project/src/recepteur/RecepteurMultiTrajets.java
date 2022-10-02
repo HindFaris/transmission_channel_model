@@ -14,8 +14,6 @@ public class RecepteurMultiTrajets extends Transmetteur<Float, Boolean> {
 	private float min=0f;
 	private float max=1f;
 	private String formeSignal;
-	private float alpha;
-	private int tau;
 
 	/**
 	 * permet d'initialiser le Recepteur
@@ -23,16 +21,12 @@ public class RecepteurMultiTrajets extends Transmetteur<Float, Boolean> {
 	 * @param min
 	 * @param max
 	 * @param formeSignal
-	 * @param alpha
-	 * @param tau
 	 */
-	public RecepteurMultiTrajets(int nbEchantillons, float min, float max, String formSignal, float alpha, int tau) {
+	public RecepteurMultiTrajets(int nbEchantillons, float min, float max, String formSignal) {
 		this.min = min;
 		this.max = max;
 		this.nbEchantillons = nbEchantillons;
 		this.formeSignal = formSignal;
-		this.alpha = alpha;
-		this.tau = tau;
 	}
 	
 	/**
@@ -61,11 +55,10 @@ public class RecepteurMultiTrajets extends Transmetteur<Float, Boolean> {
 		float moyenneTemp = 0f;
 		int tailleDesBooleens = informationRecue.nbElements()/nbEchantillons;
 		
-		LinkedList<Float> infoRecue = null;
+		LinkedList<Float> infoRecue = null; 
 		try {
 			infoRecue = informationRecue.cloneInformation();
 		} catch (Exception e) {
-			// TODO Auto-generated catch block
 			System.out.println("Clone info recept multi trajet");
 		}		
 		for(int index = 0 ; index < tailleDesBooleens ; index++){
@@ -111,14 +104,6 @@ public class RecepteurMultiTrajets extends Transmetteur<Float, Boolean> {
 
 	public String getFormeSignal() {
 		return formeSignal;
-	}
-	
-	public float getAlpha() {
-		return alpha;
-	}
-
-	public int getTau() {
-		return tau;
 	}
 
 
