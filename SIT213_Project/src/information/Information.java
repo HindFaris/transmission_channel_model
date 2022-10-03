@@ -75,6 +75,11 @@ public  class Information <T>  implements Iterable <T> {
 		this.content.add(valeur);
 	}
 
+	public void add(T valeur1, T valeur2, T valeur3) {
+		this.content.add(valeur1);
+		this.content.add(valeur2);
+		this.content.add(valeur3);
+	}
 
 	/**
 	 * pour comparer l'information courante avec une autre information
