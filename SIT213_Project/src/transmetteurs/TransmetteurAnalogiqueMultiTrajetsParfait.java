@@ -85,7 +85,7 @@ public class TransmetteurAnalogiqueMultiTrajetsParfait extends Transmetteur<Floa
 				informationAjouteeCopie.remove(0);
 				//informationAjoutee.add(var);
 				informationAjoutee.setIemeElement(i, var);
-			}
+			} 
 			
 			
 		}
