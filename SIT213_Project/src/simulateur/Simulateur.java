@@ -300,7 +300,7 @@ public class Simulateur {
 					argsString += "\t" +args[ind] ;
 					ind++;
 				}
-				String regexString = "-ti\t(([0-9]{1,6}\t0.[0-9]{1,6}\t{0,1}){1,5})";
+				String regexString = "-ti\t(([0-9]{1,6}\t([0][.][0-9]{1,6}|0|[1][.][0]{1,6}|[1])\t{0,1}){1,5})";
 				Pattern pattern = Pattern.compile(regexString);
 				MatchResult matcher = pattern.matcher(argsString);
 				String tiArgsString = null;
@@ -309,7 +309,7 @@ public class Simulateur {
 				}
 				String[] tiArgsArray = tiArgsString.split("\t");
 				for (int index=0; index<tiArgsArray.length; index++) {
-					if(0<Float.valueOf(tiArgsArray[index]) && Float.valueOf(tiArgsArray[index]) <= 1) {
+					if(0f<= Float.valueOf(tiArgsArray[index]) && Float.valueOf(tiArgsArray[index]) <= 1f) {
 						alphas.add(Float.valueOf(tiArgsArray[index]));
 					} else {
 						taus.add(Integer.valueOf(tiArgsArray[index]));
