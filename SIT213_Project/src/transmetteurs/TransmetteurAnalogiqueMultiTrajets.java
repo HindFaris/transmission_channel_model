@@ -1,6 +1,9 @@
 package transmetteurs;
 
 import java.util.LinkedList;
+
+import javax.management.ConstructorParameters;
+
 import destinations.DestinationInterface;
 import information.*;
 import signaux.Bruit;
@@ -92,8 +95,7 @@ public class TransmetteurAnalogiqueMultiTrajets extends Transmetteur<Float, Floa
 				float var = informationAjouteeCopie.get(0)+information.iemeElement(0);
 				information.remove(0);
 				informationAjouteeCopie.remove(0);
-				//informationAjoutee.add(var);
-				informationAjoutee.setIemeElement(i, var);
+				informationAjoutee.add(var);
 			} 
 
 
