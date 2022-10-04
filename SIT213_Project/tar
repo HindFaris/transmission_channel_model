@@ -1,3 +1,3 @@
-!#/bin/bash
-
+#!/bin/bash
+./cleanAll
 tar -czvf B4_DIROU_CUDENNEC_DEKERSABIEC_FARIS_DERRIEN.tar.gz README bin docs src cleanAll compile genDoc runTests simulateur

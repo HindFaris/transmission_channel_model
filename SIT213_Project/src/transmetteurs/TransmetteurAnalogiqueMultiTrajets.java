@@ -2,7 +2,6 @@ package transmetteurs;
 
 import java.util.LinkedList;
 
-import javax.management.ConstructorParameters;
 
 import destinations.DestinationInterface;
 import information.*;
