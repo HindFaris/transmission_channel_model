@@ -5,21 +5,23 @@ import destinations.DestinationInterface;
 import information.*;
 import signaux.Bruit;
 
-public class TransmetteurAnalogiqueMultiTrajetsBruite extends Transmetteur<Float, Float> {
+public class TransmetteurAnalogiqueMultiTrajets extends Transmetteur<Float, Float> {
 
 	private int nbEchantillons;
 	private float SNRParBit;
 	private Integer seed = null;
 	private LinkedList<Float> alphas = new LinkedList<Float>(); //attenuation du second trajet entre 0 et 1
 	private LinkedList<Integer> taus = new LinkedList<Integer>(); //retard du signal en nombre d'echantillons
+	private boolean bruitActif;
 
-	public TransmetteurAnalogiqueMultiTrajetsBruite(int nbEchantillons, float SNRParBit, Integer seed, LinkedList<Float> alphas, LinkedList<Integer> taus ) {
+	public TransmetteurAnalogiqueMultiTrajets(int nbEchantillons, float SNRParBit, Integer seed, LinkedList<Float> alphas, LinkedList<Integer> taus, boolean bruitActif) {
 		super();
 		this.nbEchantillons = nbEchantillons;
 		this.SNRParBit = SNRParBit;
 		this.seed = seed;
 		this.alphas = alphas;
 		this.taus = taus;
+		this.bruitActif = bruitActif;
 		informationEmise = new Information<Float>();
 	}
 
@@ -39,13 +41,13 @@ public class TransmetteurAnalogiqueMultiTrajetsBruite extends Transmetteur<Float
 		Information<Float> informationAjoutee = new Information<Float>();
 		int tailleInformation = informationRecue.nbElements();
 		int tauMax = 0;
-		
+
 		for (int index = 0; index < taus.size(); index++) {
 			if (tauMax < Integer.valueOf(taus.get(index))) {
 				tauMax= Integer.valueOf(taus.get(index));
 			}
 		}
-		
+
 		for (int index = 0; index < tailleInformation; index++) {
 			informationAjoutee.add(0.0f);
 		}
@@ -53,27 +55,20 @@ public class TransmetteurAnalogiqueMultiTrajetsBruite extends Transmetteur<Float
 			informationRecue.add(0.0f);
 			informationAjoutee.add(0.0f);
 		}
-		
-		Bruit bruit = null;
-		try {
-			bruit = new Bruit(this.ecartType(), tailleInformation+tauMax, seed);
-		} catch (Exception e) {
-			System.out.println("Err : Impossible de creer le bruit dans Transmetteur MultiTrajet Bruite");
-		}
 
 		//trajet indirect (alpha*s(t-tau))
 		Information<Float> information ;
 		LinkedList<Float> infoRecue = null;
-		
+
 		for (int index = 0; index < taus.size(); index++) {
 			information = new Information<Float>();
-			
+
 			try {
 				infoRecue = informationRecue.cloneInformation();
 			} catch (Exception e1) {
 				System.out.println("ERR : Impossible de cloner l'informationRecue dans Transmetteur MultiTrajet Parfait");
 			}
-			
+
 			int tau = taus.get(index);
 			float alpha = alphas.get(index);
 
@@ -81,14 +76,14 @@ public class TransmetteurAnalogiqueMultiTrajetsBruite extends Transmetteur<Float
 				information.add(0.0f);
 				tau--;
 			}
-			
+
 			for (int i = 0; i < tailleInformation; i++) {
 				information.add(infoRecue.get(0)*alpha);
 				infoRecue.remove(0);
 			}
 			LinkedList<Float> informationAjouteeCopie = new LinkedList<Float>();
 			try {
-				 informationAjouteeCopie = informationAjoutee.cloneInformation();
+				informationAjouteeCopie = informationAjoutee.cloneInformation();
 			} catch (Exception e1) {
 				System.out.println("ERR : Impossible de cloner l'informationRecue dans Transmetteur MultiTrajet Parfait");
 			}
@@ -100,18 +95,34 @@ public class TransmetteurAnalogiqueMultiTrajetsBruite extends Transmetteur<Float
 				//informationAjoutee.add(var);
 				informationAjoutee.setIemeElement(i, var);
 			} 
-			
-			
+
+
 		}
 
-		//signal emis par le transmetteur		
-		for(int indice = 0 ; indice < (tailleInformation+tauMax); indice++) {
-			informationEmise.add(informationRecue.iemeElement(0)+ informationAjoutee.iemeElement(0)+ bruit.iemeElement(0) );
-			informationRecue.remove(0);
-			informationAjoutee.remove(0);
-			bruit.remove(0);
+		//signal emis par le transmetteur	
+		if(bruitActif) {
+			
+			Bruit bruit = null;
+			try {
+				bruit = new Bruit(this.ecartType(), tailleInformation+tauMax, seed);
+			} catch (Exception e) {
+				System.out.println("Err : Impossible de creer le bruit dans Transmetteur MultiTrajet Bruite");
+			}
+			
+			for(int indice = 0 ; indice < (tailleInformation+tauMax); indice++) {
+				informationEmise.add(informationRecue.iemeElement(0)+ informationAjoutee.iemeElement(0)+ bruit.iemeElement(0) );
+				informationRecue.remove(0);
+				informationAjoutee.remove(0);
+				bruit.remove(0);
+			}
 		}
-
+		else {
+			for(int indice = 0 ; indice < (tailleInformation+tauMax); indice++) {
+				informationEmise.add(informationRecue.iemeElement(0)+ informationAjoutee.iemeElement(0));
+				informationRecue.remove(0);
+				informationAjoutee.remove(0);
+			}
+		}
 		for (DestinationInterface<Float> destinationConnectee : destinationsConnectees) {
 			try {
 				destinationConnectee.recevoir(informationEmise);
@@ -139,7 +150,7 @@ public class TransmetteurAnalogiqueMultiTrajetsBruite extends Transmetteur<Float
 		puissance = (puissance/(float)(informationRecue.nbElements()));
 		return puissance;
 	}
-	
+
 	public float ecartType() throws Exception{
 		float ecartType = (float)Math.sqrt(this.puissance()*nbEchantillons/(2*Math.pow(10, SNRParBit/10)));
 		return ecartType;
