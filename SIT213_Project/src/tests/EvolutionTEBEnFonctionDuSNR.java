@@ -25,7 +25,7 @@ public class EvolutionTEBEnFonctionDuSNR {
 			simulateurRZ.execute();
 			System.out.println(Float.toString(indice) + ";" + Float.toString(simulateurNRZ.calculTauxErreurBinaire()) + ";" + 
 					Float.toString(simulateurNRZT.calculTauxErreurBinaire()) + ";" + Float.toString(simulateurRZ.calculTauxErreurBinaire()));
-		}
+		}//
 		myConsole.close();
 	}
 }
