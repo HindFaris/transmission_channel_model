@@ -1,5 +1,6 @@
 package simulateur;
 import java.util.LinkedList;
+import decodage.*;
 import java.util.regex.MatchResult;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -91,6 +92,15 @@ public class Simulateur {
 	/** Nb d'echantillon de retard des signaux indirects**/
 	private LinkedList<Integer> taus = new LinkedList<Integer>();
 
+	/**	Indique si le simulateur utilise ou non un codeur à l'emission et un decodeur a la reception **/
+	private boolean codage = false;
+
+	/** le  codeur de la chaine de transmission */
+	private Codeur codeur = null;
+
+	/** le  decodeur de la chaine de transmission */
+	private Decodeur decodeur = null;
+
 	/** Le constructeur de Simulateur construit une chaine de
 	 * transmission composee d'une Source <Boolean>, d'une Destination
 	 * <Boolean> et de Transmetteur(s) [voir la methode
@@ -125,9 +135,23 @@ public class Simulateur {
 		emetteurAnalogique = new EmetteurAnalogique(formSignal, nbEchantillon, min, max);
 		destination = new DestinationFinale();
 
+		//instanciation des codeurs et decodeurs si necessaires
+		if(codage) {
+			codeur = new Codeur();
+			decodeur = new Decodeur();
+		}
+
 		//connexion des equipements entre eux
-		source.connecter(emetteurAnalogique);
-		recepteur.connecter(destination);
+		if(codage) {
+			source.connecter(codeur);
+			codeur.connecter(emetteurAnalogique);
+			recepteur.connecter(decodeur);
+			decodeur.connecter(destination);
+		}
+		else {
+			source.connecter(emetteurAnalogique);
+			recepteur.connecter(destination);
+		}
 
 		//instanciation du transmetteur
 		if(bruitActif && trajetIndirect) {
@@ -143,28 +167,18 @@ public class Simulateur {
 			emetteurAnalogique.connecter(transmetteurAnalogiqueMultiTrajetsParfait);
 			transmetteurAnalogiqueMultiTrajetsParfait.connecter(recepteur);	
 		}
-		else if(bruitActif) {
-			transmetteurAnalogiqueBruite = new TransmetteurAnalogiqueBruite(nbEchantillon, SNRParBit, seed);
-			emetteurAnalogique.connecter(transmetteurAnalogiqueBruite);
-			transmetteurAnalogiqueBruite.connecter(recepteur);
-		}
-		else if (trajetIndirect) {
-			transmetteurAnalogiqueMultiTrajetsParfait = new TransmetteurAnalogiqueMultiTrajetsParfait(alphas, taus);
-			emetteurAnalogique.connecter(transmetteurAnalogiqueMultiTrajetsParfait);
-			transmetteurAnalogiqueMultiTrajetsParfait.connecter(recepteur);
-		}
 		else{
 			transmetteurAnalogiqueParfait = new TransmetteurAnalogiqueParfait();
 			emetteurAnalogique.connecter(transmetteurAnalogiqueParfait);
 			transmetteurAnalogiqueParfait.connecter(recepteur);
 		}
-		
+
 
 		//ajout des sondes
 		if(affichage) {
 			source.connecter(new SondeLogique("Source", 200));
 			emetteurAnalogique.connecter(new SondeAnalogique("Emetteur Analogique"));
-      
+
 			if (bruitActif && trajetIndirect) {
 				transmetteurAnalogiqueMultiTrajetsBruite.connecter(new SondeAnalogique("Transmetteur Analogique Multi-Trajet bruite"));
 			}else if (bruitActif){
@@ -175,8 +189,13 @@ public class Simulateur {
 			} else {
 				transmetteurAnalogiqueParfait.connecter(new SondeAnalogique("Transmetteur Analogique parfait"));
 			}
-			
-			recepteur.connecter(new SondeLogique("Recepteur", 200));
+
+			if(codage) {
+				decodeur.connecter(new SondeLogique("Decodeur", 200));
+			}
+			else {
+				recepteur.connecter(new SondeLogique("Recepteur", 200));
+			}
 		}
 	}
 
@@ -277,7 +296,7 @@ public class Simulateur {
 				bruitActif = true;
 				SNRParBit = Float.valueOf(args[i]);
 			}
-      
+
 			else if(args[i].matches("-ti")) {
 				trajetIndirect = true;
 
@@ -305,6 +324,9 @@ public class Simulateur {
 				}
 				//System.out.println(alphas+"\n"+taus);
 			}
+			else if(args[i].matches("-codeur")) {
+				codage = true;
+			}
 		}
 	}
 
@@ -318,8 +340,12 @@ public class Simulateur {
 	public void execute() throws Exception {  
 
 		source.emettre();
+		if(codage) {
+			codeur.emettre();
+		}
+		
 		emetteurAnalogique.emettre();
-    
+
 		if(bruitActif && trajetIndirect) {
 			transmetteurAnalogiqueMultiTrajetsBruite.emettre();
 		}
@@ -332,8 +358,12 @@ public class Simulateur {
 		else {
 			transmetteurAnalogiqueParfait.emettre();
 		}
-    
+
 		recepteur.emettre();
+		
+		if(codage) {
+			decodeur.emettre();
+		}
 	}
 
 
@@ -348,15 +378,16 @@ public class Simulateur {
 		Information <Boolean> chaineRecue = destination.getInformationRecue();
 
 		int nbVariablesDifferentes = 0;
-		int tailleMotBinaire = source.getInformationEmise().nbElements();
-		for(int indice = 0; indice < tailleMotBinaire; indice++) {
+		final int TAILLEMOTBINAIRE = source.getInformationEmise().nbElements();
+		for(int indice = 0; indice < TAILLEMOTBINAIRE; indice++) {
 			if ((chaineEmise.iemeElement(0) != chaineRecue.iemeElement(0))) {
+				System.out.println("source : " + chaineEmise.iemeElement(0) + " destination : " + chaineRecue.iemeElement(0));
 				nbVariablesDifferentes += 1;
 			}
 			chaineEmise.remove(0);
 			chaineRecue.remove(0);
 		}
-		return  (float)nbVariablesDifferentes/tailleMotBinaire;//test
+		return  (float)nbVariablesDifferentes/TAILLEMOTBINAIRE;//test
 	}
 
 
@@ -446,7 +477,7 @@ public class Simulateur {
 	public boolean getBruitActif() {
 		return bruitActif;
 	}
-  
+
 	public boolean getTrajetIndirect() {
 		return trajetIndirect;
 	}

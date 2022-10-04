@@ -1,10 +1,11 @@
 package decodage;
 
+import destinations.DestinationInterface;
 import information.Information;
 import information.InformationNonConformeException;
 import transmetteurs.Transmetteur;
 
-public class decodeur extends Transmetteur<Boolean, Boolean>{
+public class Decodeur extends Transmetteur<Boolean, Boolean>{
 
 	@Override
 	public void recevoir(Information<Boolean> information) throws InformationNonConformeException {
@@ -13,6 +14,7 @@ public class decodeur extends Transmetteur<Boolean, Boolean>{
 
 	@Override
 	public void emettre() throws InformationNonConformeException {
+		informationEmise = new Information<Boolean>();
 		final int TAILLEINFORMATIONAEMETTRE = informationRecue.nbElements()/3;
 		boolean informationelement1;
 		boolean informationelement2;
@@ -40,6 +42,12 @@ public class decodeur extends Transmetteur<Boolean, Boolean>{
 			informationRecue.remove(0);
 			informationRecue.remove(0);
 		}
+		
+		for (DestinationInterface<Boolean> destinationConnectee : destinationsConnectees) {
+			destinationConnectee.recevoir(informationEmise);
+		}
+		
+		this.informationEmise = informationRecue;
 	}
 	
 }
