@@ -51,9 +51,6 @@ public class TransmetteurAnalogiqueMultiTrajets extends Transmetteur<Float, Floa
 			}
 		}
 
-		for (int index = 0; index < tailleInformation; index++) {
-			informationAjoutee.add(0.0f);
-		}
 		for(int index = 0; index < tauMax; index++) {
 			informationRecue.add(0.0f);
 			informationAjoutee.add(0.0f);
@@ -87,6 +84,9 @@ public class TransmetteurAnalogiqueMultiTrajets extends Transmetteur<Float, Floa
 			LinkedList<Float> informationAjouteeCopie = new LinkedList<Float>();
 			try {
 				informationAjouteeCopie = informationAjoutee.cloneInformation();
+				for (int i = 0; i < tailleInformation; i++) {
+					informationAjouteeCopie.add(0.0f);
+				}
 			} catch (Exception e1) {
 				System.out.println("ERR : Impossible de cloner l'informationRecue dans Transmetteur MultiTrajet Parfait");
 			}
@@ -95,7 +95,7 @@ public class TransmetteurAnalogiqueMultiTrajets extends Transmetteur<Float, Floa
 				float var = informationAjouteeCopie.get(0)+information.iemeElement(0);
 				information.remove(0);
 				informationAjouteeCopie.remove(0);
-				informationAjoutee.setIemeElement(i, var);
+				informationAjoutee.add(var);
 			} 
 
 
