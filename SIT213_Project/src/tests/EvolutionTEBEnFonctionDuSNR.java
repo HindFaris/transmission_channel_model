@@ -21,9 +21,9 @@ public class EvolutionTEBEnFonctionDuSNR {
 			simulateur1.execute();
 			Simulateur simulateur2 =  new Simulateur(new String[] {"-mess","10000", "-form", "NRZ", "-snrpb", String.valueOf(indice), "-codeur"});
 			simulateur2.execute();
-			Simulateur simulateur3 =  new Simulateur(new String[] {"-mess","10000", "-form", "NRZ", "-snrpb", String.valueOf(indice), "-ti", "", "0.7", "25", "0.4"});
+			Simulateur simulateur3 =  new Simulateur(new String[] {"-mess","10000", "-form", "NRZ", "-snrpb", String.valueOf(indice), "-ti", "15", "0.7", "25", "0.5"});
 			simulateur3.execute();
-			Simulateur simulateur4 =  new Simulateur(new String[] {"-mess","10000", "-form", "NRZ", "-snrpb", String.valueOf(indice), "-ti", "15", "0.7", "25", "0.4", "-codeur"});
+			Simulateur simulateur4 =  new Simulateur(new String[] {"-mess","10000", "-form", "NRZ", "-snrpb", String.valueOf(indice), "-ti", "15", "0.7", "25", "0.5", "-codeur"});
 			simulateur4.execute();
 			System.out.println(Float.toString(indice) + ";" + Float.toString(simulateur1.calculTauxErreurBinaire()) + ";" + 
 					Float.toString(simulateur2.calculTauxErreurBinaire()) + ";" + Float.toString(simulateur3.calculTauxErreurBinaire())
