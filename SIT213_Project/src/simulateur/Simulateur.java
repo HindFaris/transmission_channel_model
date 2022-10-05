@@ -308,14 +308,16 @@ public class Simulateur {
 					tiArgsString = matcher.group(1);
 				}
 				String[] tiArgsArray = tiArgsString.split("\t");
+				int compteur = 0;
 				for (int index=0; index<tiArgsArray.length; index++) {
-					if(0f<= Float.valueOf(tiArgsArray[index]) && Float.valueOf(tiArgsArray[index]) <= 1f) {
+					compteur++;
+					if(compteur%2 == 0) {
 						alphas.add(Float.valueOf(tiArgsArray[index]));
 					} else {
 						taus.add(Integer.valueOf(tiArgsArray[index]));
 					}
 				}
-				//System.out.println(alphas+"\n"+taus);
+				System.out.println(alphas+"\n"+taus);
 			}
 			else if(args[i].matches("-codeur")) {
 				codage = true;
