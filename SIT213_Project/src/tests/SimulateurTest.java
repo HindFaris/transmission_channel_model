@@ -8,7 +8,7 @@ import simulateur.*;
 class SimulateurTest {
 
 	@Test
-	void testCalculTauxErreurBinaire() throws Exception{
+	public void testCalculTauxErreurBinaire() throws Exception{
 
 		//transmetteurLogique
 		Simulateur simulateur =  new Simulateur(new String[] {"-mess","1010010001"});
@@ -19,7 +19,7 @@ class SimulateurTest {
 	}
 
 	@Test
-	void testAnalyseArguments()  throws  ArgumentsException {
+	public void testAnalyseArguments()  throws  ArgumentsException {
 		Simulateur simulateur1 =  new Simulateur(new String[] {"-mess","1010010001", "-s"});
 		assertEquals("Le message est detecte comme aleatoire alors qu'il ne le devrait pas", false, simulateur1.getMessageAleatoire());
 		assertEquals( "L'afficheur n'est pas actif alors qu'il devrait l'etre", true, simulateur1.getAffichage());
@@ -42,7 +42,7 @@ class SimulateurTest {
 	}
 	
 	@Test
-	void testExecute() throws Exception{
+	public void testExecute() throws Exception{
 		Simulateur simulateur1 =  new Simulateur(new String[] {"-mess","1010010001"});
 		simulateur1.execute();
 		assertEquals( "Le mot recue ne peu pas etre bon car il ne fait pas la bonne taille", 10, simulateur1.getTailleMotDestination());

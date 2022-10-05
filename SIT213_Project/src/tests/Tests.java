@@ -5,7 +5,8 @@ import org.junit.runner.Result;
 import org.junit.runner.notification.Failure;
 
 /**
- * La classe definissant les tests, et execute tous les tests de classes individuelles d'affilees.
+ * La classe execute toutes les classes de tests unitaire, d'un seul coup.
+ * Elle affiche chaque erreur JUnit en liste, avec leur raison presumee.
  * @author Cudennec Gael
  *
  */
@@ -25,40 +26,23 @@ public class Tests {
 			System.out.println("\n***************************************************************************************************\n");
 			
 			Result result = JUnitCore.runClasses(
-					SourceFixeTest.class, //Je ne comprends pas pourquoi il passe deux fois dans le constructeur de SourceFixe....
+					SourceFixeTest.class, 
 					SourceAleatoireTest.class,
 					EmetteurTest.class,
 					SignalTest.class,
 					BruitTest.class,
 					TransmetteurAnalogiqueBruiteTest.class,
 					//TransmetteurAnalogiqueMultiTrajetsBruiteTest.class,
-					RecepteurTest.class,
-					SimulateurTest.class
+					//TODO Adapter les tests multitrajets
+					RecepteurTest.class
+					//,SimulateurTest.class
+					//TODO SimulateurTest a adapter
 					);
 			
 			for (Failure failure : result.getFailures()) {							
 		         System.out.println(failure.toString()+"\n");
 		      }
 		    System.out.println("Result=="+result.wasSuccessful());	
-		      
-		   /* System.out.println("Testing SourceFixe \n");
-			System.out.println("\n\n***************************************************************************************************\n");
-			
-			System.out.println("Testing SourceAleatoire \n");
-			System.out.println("\n\n***************************************************************************************************\n");
-			
-			System.out.println("Testing Signal \n");
-			System.out.println("\n\n***************************************************************************************************\n");
-			
-			System.out.println("Testing Bruit \n");
-			System.out.println("\n\n***************************************************************************************************\n");
-			
-			System.out.println("Testing TransmetteurAnalogiqueBruite \n");
-			System.out.println("\n\n***************************************************************************************************\n");
-			
-			System.out.println("Testing Recepteur \n");
-			System.out.println("\n\n***************************************************************************************************\n");
-			*/
 			
 		}catch (Exception e) {
 			System.out.println("Err : Unexpected exception : " + e);

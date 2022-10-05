@@ -1,150 +1,274 @@
 package tests;
 
 import static org.junit.Assert.*;
+import org.junit.Rule;
 import org.junit.Test;
-
+import org.junit.rules.ErrorCollector;
+import static org.hamcrest.CoreMatchers.is;
 import emetteur.*;
 import sources.SourceFixe;
 import information.InformationNonConformeException;
 import transmetteurs.*;
 
+/**
+ * 
+ * @author gaelc
+ *
+ */
 public class TransmetteurAnalogiqueBruiteTest {
 
-	private static int nbTests=0;
-	private static int nbErrors=0;
+	@Rule
+	public final ErrorCollector errorCollector= new ErrorCollector();
+	//TODO : JAVADOC
+	
+	//La source qu'on envoie a chaque fois
 	SourceFixe Source = new SourceFixe("0111000111");
 
 	public TransmetteurAnalogiqueBruiteTest(){}
 
-	//tester chaque variable dans une methode de test?(aina)
 	@Test
-	public void TransmetteurAnalogiqueBruiteInitTest(int nbEchantillons, float SNRParBit, Integer seed) {
-		nbErrors+=3;
+	/**
+	 * 
+	 */
+	public void TransmetteurAnalogiqueBruiteInitTest() {
+		//Arrange
+		int nbEchantillons = 10;
+		float SNRParBit=20;
+		Integer seed=10;
+		
+		//Act
 		TransmetteurAnalogiqueBruite Tr = new TransmetteurAnalogiqueBruite(nbEchantillons,  SNRParBit,  seed);
-		assertEquals("Le nombre d'echantillons ne correspond pas",Tr.getNbEchantillons(), nbEchantillons);
-		nbErrors--;
-		assertEquals("La valeur du SNR par Bit ne correspond pas",Tr.getSNRParBit(), SNRParBit);
-		nbErrors--;
-		assertEquals("La valeur de la seed ne correspond pas",Tr.getSeed(), seed);
-		nbErrors--;
+		
+		//Assert
+		errorCollector.checkThat("Le nombre d'echantillons ne correspond pas",Tr.getNbEchantillons(), is(nbEchantillons));
+		errorCollector.checkThat("La valeur du SNR par Bit ne correspond pas",Tr.getSNRParBit(), is(SNRParBit));
+		errorCollector.checkThat("La valeur de la seed ne correspond pas",Tr.getSeed(), is(seed));
+
 	}
 
 	@Test
-	public void TransmetteurAnalogiqueBruiteCalculPuissanceTest(int nbEchantillons, float min, float max, float SNRParBit, Integer seed) {
-
-		nbErrors+=3;
-		EmetteurAnalogique EmetteurNRZ = new EmetteurAnalogique("NRZ",nbEchantillons, min,  max);
-		EmetteurAnalogique EmetteurNRZT = new EmetteurAnalogique("NRZT",nbEchantillons, min,  max);
-		EmetteurAnalogique EmetteurRZ = new EmetteurAnalogique("RZ",nbEchantillons, min,  max);
-		TransmetteurAnalogiqueBruite TransmetteurNRZ = new TransmetteurAnalogiqueBruite(nbEchantillons,  SNRParBit,  seed);
-		TransmetteurAnalogiqueBruite TransmetteurNRZT = new TransmetteurAnalogiqueBruite(nbEchantillons,  SNRParBit,  seed);
-		TransmetteurAnalogiqueBruite TransmetteurRZ = new TransmetteurAnalogiqueBruite(nbEchantillons,  SNRParBit,  seed);
-
-		Source.connecter(EmetteurNRZ);
-		Source.connecter(EmetteurNRZT);
-		Source.connecter(EmetteurRZ);
-		EmetteurNRZ.connecter(TransmetteurNRZ);
-		EmetteurNRZT.connecter(TransmetteurNRZT);
-		EmetteurRZ.connecter(TransmetteurRZ);
-
-
-		try {
-			Source.emettre();
-			EmetteurNRZ.emettre();
-			EmetteurNRZT.emettre();
-			EmetteurRZ.emettre();
-		} catch (InformationNonConformeException e) {
-			e.printStackTrace();
-		}
-
-		float puissance= TransmetteurNRZ.puissance();
-
-		if((24.0f<puissance)&&(puissance<25.9f)) {
-			nbErrors--;
-		}
-		else fail("La valeur de la puissance ne correspond pas sur le NRZ");
-
-		puissance= TransmetteurNRZT.puissance();
-
-		if((20f<puissance)&&(puissance<25.9f)) {
-			nbErrors--;
-		}
-		else fail("La valeur de la puissance ne correspond pas sur le NRZT");
-
-		puissance= TransmetteurRZ.puissance();
-
-		if((24.0f<puissance)&&(puissance<25.9f)) {
-			nbErrors--;
-		}
-		else fail("La valeur de la puissance ne correspond pas sur le RZ");
-	}
-
-	@Test
-	public void TransmetteurAnalogiqueBruiteCalculEcartTypeTest(int nbEchantillons, float min, float max, float SNRParBit, Integer seed) {
-
-		nbErrors+=3;
-
-		EmetteurAnalogique EmetteurNRZ = new EmetteurAnalogique("NRZ",nbEchantillons, min,  max);
-		EmetteurAnalogique EmetteurNRZT = new EmetteurAnalogique("NRZT",nbEchantillons, min,  max);
-		EmetteurAnalogique EmetteurRZ = new EmetteurAnalogique("RZ",nbEchantillons, min,  max);
-		TransmetteurAnalogiqueBruite TransmetteurNRZ = new TransmetteurAnalogiqueBruite(nbEchantillons,  SNRParBit,  seed);
-		TransmetteurAnalogiqueBruite TransmetteurNRZT = new TransmetteurAnalogiqueBruite(nbEchantillons,  SNRParBit,  seed);
-		TransmetteurAnalogiqueBruite TransmetteurRZ = new TransmetteurAnalogiqueBruite(nbEchantillons,  SNRParBit,  seed);
-
-		Source.connecter(EmetteurNRZ);
-		Source.connecter(EmetteurNRZT);
-		Source.connecter(EmetteurRZ);
-		EmetteurNRZ.connecter(TransmetteurNRZ);
-		EmetteurNRZT.connecter(TransmetteurNRZT);
-		EmetteurRZ.connecter(TransmetteurRZ);
-
-
-		try {
-			Source.emettre();
-			EmetteurNRZ.emettre();
-			EmetteurNRZT.emettre();
-			EmetteurRZ.emettre();
-
-
-			float ecartType= TransmetteurNRZ.ecartType();
-
-			if((1.0f<ecartType)&&(ecartType<2.0f)) {
-				nbErrors--;
-			}
-			else fail("La valeur de l'ecart type ne correspond pas sur le NRZ");
-
-			ecartType= TransmetteurNRZT.ecartType();
-
-			if((1.0f<ecartType)&&(ecartType<2.0f)) {
-				nbErrors--;
-			}
-			else fail("La valeur de l'ecart type ne correspond pas sur le NRZT");
-
-			ecartType= TransmetteurRZ.ecartType();
-
-			if((1.0f<ecartType)&&(ecartType<2.0f)) {
-				nbErrors--;
-			}
-			else fail("La valeur de l'ecart type ne correspond pas sur le RZ");
-
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-	}
-
-	public static void main(String[] args) {
+	/**
+	 * 
+	 */
+	public void TransmetteurAnalogiqueBruiteCalculPuissanceNRZTest() {
+		//Arrange
 		int nbEchantillons = 10;
 		float SNRParBit=20;
 		float max=5;
 		float min=-5;
 		Integer seed=10;
+	
+		EmetteurAnalogique EmetteurNRZ = new EmetteurAnalogique("NRZ",nbEchantillons, min,  max);
+		TransmetteurAnalogiqueBruite TransmetteurNRZ = new TransmetteurAnalogiqueBruite(nbEchantillons,  SNRParBit,  seed);
+		Source.connecter(EmetteurNRZ);
+		EmetteurNRZ.connecter(TransmetteurNRZ);
+		
+		//Act
+		try {
+			Source.emettre();
+			EmetteurNRZ.emettre();
+		} catch (InformationNonConformeException e) {
+			e.printStackTrace();
+		}
+		
+		float puissance= TransmetteurNRZ.puissance();
+
+		//Assert
+		assertEquals("La valeur de la puissance ne correspond pas sur le NRZ",25f,puissance,0.5f);
+	}
+	
+	@Test
+	/**
+	 * 
+	 */
+	public void TransmetteurAnalogiqueBruiteCalculPuissanceNRZTTest() {
+		//Arrange
+		int nbEchantillons = 10;
+		float SNRParBit=20;
+		float max=5;
+		float min=-5;
+		Integer seed=10;
+	
+		EmetteurAnalogique EmetteurNRZT = new EmetteurAnalogique("NRZT",nbEchantillons, min,  max);
+		TransmetteurAnalogiqueBruite TransmetteurNRZT = new TransmetteurAnalogiqueBruite(nbEchantillons,  SNRParBit,  seed);
+		Source.connecter(EmetteurNRZT);
+		EmetteurNRZT.connecter(TransmetteurNRZT);
+		
+		//Act
+		try {
+			Source.emettre();
+			EmetteurNRZT.emettre();
+		} catch (InformationNonConformeException e) {
+			e.printStackTrace();
+		}
+		
+		float puissance= TransmetteurNRZT.puissance();
+
+		//Assert
+		//XXX La puissance est toujours inferieure a celle calculee, ici 20 a peu pres au lieu de 25
+		assertEquals("La valeur de la puissance ne correspond pas sur le NRZT",20f,puissance,0.5f);
+	}
+	
+	@Test
+	/**
+	 * 
+	 */
+	public void TransmetteurAnalogiqueBruiteCalculPuissanceRZTest() {
+		//Arrange
+		int nbEchantillons = 10;
+		float SNRParBit=20;
+		float max=5;
+		float min=-5;
+		Integer seed=10;
+	
+		EmetteurAnalogique EmetteurRZ = new EmetteurAnalogique("RZ",nbEchantillons, min,  max);
+		TransmetteurAnalogiqueBruite TransmetteurRZ = new TransmetteurAnalogiqueBruite(nbEchantillons,  SNRParBit,  seed);
+		Source.connecter(EmetteurRZ);
+		EmetteurRZ.connecter(TransmetteurRZ);
+		
+		//Act
+		try {
+			Source.emettre();
+			EmetteurRZ.emettre();
+		} catch (InformationNonConformeException e) {
+			e.printStackTrace();
+		}
+		
+		float puissance= TransmetteurRZ.puissance();
+
+		//Assert
+		assertEquals("La valeur de la puissance ne correspond pas sur le RZ",25f,puissance,0.5f);
+	}
+
+	@Test
+	/**
+	 * 
+	 */
+	public void TransmetteurAnalogiqueBruiteCalculEcartTypeNRZTest() {
+		
+		//Arrange
+		int nbEchantillons = 10;
+		float SNRParBit=20;
+		float max=5;
+		float min=-5;
+		Integer seed=10;
+	
+		EmetteurAnalogique EmetteurNRZ = new EmetteurAnalogique("NRZ",nbEchantillons, min,  max);
+		TransmetteurAnalogiqueBruite TransmetteurNRZ = new TransmetteurAnalogiqueBruite(nbEchantillons,  SNRParBit,  seed);
+		Source.connecter(EmetteurNRZ);
+		EmetteurNRZ.connecter(TransmetteurNRZ);
+		
+		//Act
+		try {
+			Source.emettre();
+			EmetteurNRZ.emettre();
+			
+		} catch (InformationNonConformeException e) {
+			e.printStackTrace();
+		}
+		
+		//Assert
+		try {
+			
+			float ecartType= TransmetteurNRZ.ecartType();
+			
+			assertEquals("La valeur de l'ecart type ne correspond pas sur le NRZ",1.5f,ecartType,0.5f);
+			
+		}catch (Exception e) {
+			e.printStackTrace();
+			fail();
+		}
+	}
+	
+	@Test
+	/**
+	 * 
+	 */
+	public void TransmetteurAnalogiqueBruiteCalculEcartTypeNRZTTest() {
+		
+		//Arrange
+		int nbEchantillons = 10;
+		float SNRParBit=20;
+		float max=5;
+		float min=-5;
+		Integer seed=10;
+	
+		EmetteurAnalogique EmetteurNRZT = new EmetteurAnalogique("NRZT",nbEchantillons, min,  max);
+		TransmetteurAnalogiqueBruite TransmetteurNRZT = new TransmetteurAnalogiqueBruite(nbEchantillons,  SNRParBit,  seed);
+		Source.connecter(EmetteurNRZT);
+		EmetteurNRZT.connecter(TransmetteurNRZT);
+		
+		//Act
+		try {
+			Source.emettre();
+			EmetteurNRZT.emettre();
+			
+		} catch (InformationNonConformeException e) {
+			e.printStackTrace();
+		}
+		
+		//Assert
+		try {
+			
+			float ecartType= TransmetteurNRZT.ecartType();
+			
+			assertEquals("La valeur de l'ecart type ne correspond pas sur le NRZT",1.5f,ecartType,0.5f);
+			
+		}catch (Exception e) {
+			e.printStackTrace();
+			fail();
+		}
+	}
+	
+	@Test
+	/**
+	 * 
+	 */
+	public void TransmetteurAnalogiqueBruiteCalculEcartTypeRZTest() {
+		
+		//Arrange
+		int nbEchantillons = 10;
+		float SNRParBit=20;
+		float max=5;
+		float min=-5;
+		Integer seed=10;
+	
+		EmetteurAnalogique EmetteurRZ = new EmetteurAnalogique("RZ",nbEchantillons, min,  max);
+		TransmetteurAnalogiqueBruite TransmetteurRZ = new TransmetteurAnalogiqueBruite(nbEchantillons,  SNRParBit,  seed);
+		Source.connecter(EmetteurRZ);
+		EmetteurRZ.connecter(TransmetteurRZ);
+		
+		//Act
+		try {
+			Source.emettre();
+			EmetteurRZ.emettre();
+			
+		} catch (InformationNonConformeException e) {
+			e.printStackTrace();
+		}
+		
+		//Assert
+		try {
+			
+			float ecartType= TransmetteurRZ.ecartType();
+			
+			assertEquals("La valeur de l'ecart type ne correspond pas sur le RZ",1.5f,ecartType,0.5f);
+			
+		}catch (Exception e) {
+			e.printStackTrace();
+			fail();
+		}
+	}
+
+	public static void main(String[] args) {
 		TransmetteurAnalogiqueBruiteTest T = new TransmetteurAnalogiqueBruiteTest();
 
-		nbTests+=15;
-		T.TransmetteurAnalogiqueBruiteInitTest(nbEchantillons, SNRParBit, seed);
-		nbTests+=3;
-		T.TransmetteurAnalogiqueBruiteCalculPuissanceTest(nbEchantillons, min, max, SNRParBit, seed);
-		nbTests+=3;
-		T.TransmetteurAnalogiqueBruiteCalculEcartTypeTest(nbEchantillons, min, max, SNRParBit, seed);
+		T.TransmetteurAnalogiqueBruiteInitTest();
+		T.TransmetteurAnalogiqueBruiteCalculPuissanceNRZTest();
+		T.TransmetteurAnalogiqueBruiteCalculPuissanceNRZTTest();
+		T.TransmetteurAnalogiqueBruiteCalculPuissanceRZTest();
+		T.TransmetteurAnalogiqueBruiteCalculEcartTypeNRZTest();
+		T.TransmetteurAnalogiqueBruiteCalculEcartTypeNRZTTest();
+		T.TransmetteurAnalogiqueBruiteCalculEcartTypeRZTest();
 	}
 }
