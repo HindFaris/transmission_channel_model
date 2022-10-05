@@ -1,5 +1,8 @@
 package tests;
 
+import org.junit.runner.JUnitCore;		
+import org.junit.runner.Result;		
+import org.junit.runner.notification.Failure;
 
 /**
  * La classe definissant les tests, et execute tous les tests de classes individuelles d'affilees.
@@ -8,117 +11,60 @@ package tests;
  */
 public class Tests {
 	
-	private int nbTests;  // Nombre de tests effectues
-	private int nbErrors; // Nombre total d'erreurs liees aux tests
-	
 	/**
 	 * 
-	 * @param nbTests Nombre de tests effectues
-	 * @param nbErrors Nombre total d'erreurs liees aux tests
 	 */
-	public Tests (int nbTests, int nbErrors) {
-		this.nbTests = nbTests;
-		this.nbErrors = nbErrors;
-	}
-	
-	/**
-	 * Retourne une chaine de caracteres decrivant les tests
-	 */
-	public String toString (){
-		String s = "[ Nb of performed tests : " + nbTests + " / nb of detected error(s) : "+ nbErrors + " ]";
-		return s;
-	}
-	
-	/**
-	 * Ajoute au test courant les valeurs du test en parametre
-	 * @param other un autre test
-	 */
-	public void add (Tests other){
-		this.nbTests += other.nbTests;
-		this.nbErrors += other.nbErrors;
-	}
-	
-	/**
-	 * Deux tests sont egaux si leurs valeurs interne sont egales
-	 */
-	public boolean equals (Object o){
-		if (o instanceof Tests){
-			Tests tr = (Tests) o;
-			return ((this.nbTests == tr.nbTests) && (this.nbErrors == tr.nbErrors));
-		}
-		return false;
-	}
+	public Tests () {}
 
-	
-
-	public static Tests TestReport(){
-		Tests bigTestReport = new Tests(0, 0);
-		Tests tr = new Tests(0, 0);
-		//On peut faire un truc qui compte les erreurs aussi
+	public static void TestReport(){
 		
 		System.out.println("Beginning of a new Test Report...  ");
+		
 		try {
+			System.out.println("\nTesting each class individually before testing the whole process (Simulateur) ...");
+			System.out.println("\n***************************************************************************************************\n");
 			
-			System.out.println("Testing each class individually before testing the whole process : \n");
+			Result result = JUnitCore.runClasses(
+					SourceFixeTest.class, //Je ne comprends pas pourquoi il passe deux fois dans le constructeur de SourceFixe....
+					SourceAleatoireTest.class,
+					EmetteurTest.class,
+					SignalTest.class,
+					BruitTest.class,
+					TransmetteurAnalogiqueBruiteTest.class,
+					//TransmetteurAnalogiqueMultiTrajetsBruiteTest.class,
+					RecepteurTest.class,
+					SimulateurTest.class
+					);
+			
+			for (Failure failure : result.getFailures()) {							
+		         System.out.println(failure.toString()+"\n");
+		      }
+		    System.out.println("Result=="+result.wasSuccessful());	
+		      
+		   /* System.out.println("Testing SourceFixe \n");
 			System.out.println("\n\n***************************************************************************************************\n");
-			
-			
-			System.out.println("Testing SourceFixe \n");
-			tr = SourceFixeTest.testReport();
-			bigTestReport.add(tr);
-			System.out.println("\n\n***************************************************************************************************\n");
-			
 			
 			System.out.println("Testing SourceAleatoire \n");
-			tr = SourceAleatoireTest.testReport();
-			bigTestReport.add(tr);
 			System.out.println("\n\n***************************************************************************************************\n");
 			
-			
-			System.out.println("Testing Emetteur \n");
-			System.out.println("Testing with a NRZ Signal \n");
-			tr = EmetteurAnalogiqueTest.testReport("NRZ");
-			bigTestReport.add(tr);
-			
-			System.out.println("\nTesting with a NRZT Signal \n");
-			tr = EmetteurAnalogiqueTest.testReport("NRZT");
-			bigTestReport.add(tr);
-			
-			System.out.println("\nTesting with a RZ Signal \n");
-			tr = EmetteurAnalogiqueTest.testReport("RZ");
-			bigTestReport.add(tr);
-			System.out.println("\n\n***************************************************************************************************\n");
-			
-
 			System.out.println("Testing Signal \n");
-			tr = SignalTest.testReport();
-			bigTestReport.add(tr);
 			System.out.println("\n\n***************************************************************************************************\n");
 			
 			System.out.println("Testing Bruit \n");
-			tr = BruitTest.testReport();
-			bigTestReport.add(tr);
 			System.out.println("\n\n***************************************************************************************************\n");
 			
 			System.out.println("Testing TransmetteurAnalogiqueBruite \n");
-			tr = TransmetteurAnalogiqueBruiteTest.testReport();
-			bigTestReport.add(tr);
 			System.out.println("\n\n***************************************************************************************************\n");
 			
 			System.out.println("Testing Recepteur \n");
-			tr = RecepteurTest.testReport();
-			bigTestReport.add(tr);
 			System.out.println("\n\n***************************************************************************************************\n");
-			
+			*/
 			
 		}catch (Exception e) {
 			System.out.println("Err : Unexpected exception : " + e);
 			e.printStackTrace();
 			System.exit(1);
 		}
-		
-		System.out.println("Hereby is the big test report : \n" + bigTestReport);
-		return bigTestReport;
 	}
 	
 	/**

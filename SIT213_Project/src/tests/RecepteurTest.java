@@ -30,15 +30,12 @@ public class RecepteurTest {
 		nbErrors--;
 	}
 	
-	public static Tests testReport() {		
-		Tests tr;
+	public static void main(String[] args) {	
 		RecepteurTest S = new RecepteurTest();
 		
 		S.RecepteurInitTest(10000, -5, 5, "RZ");
 		//Il faudra rajouter d'autres cas de tests
 		//TODO
 		
-		tr = new Tests(nbTests,nbErrors);
-		return tr; 
 	}
 }

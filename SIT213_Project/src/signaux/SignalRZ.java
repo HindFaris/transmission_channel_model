@@ -25,20 +25,20 @@ public class SignalRZ extends Signal{
 		}
 
 		for(int bit = 0; bit<tailleSignalEntree; bit++) {
-			for(int index = 0; index < nbEchantillon/3; index++) {
+			for(int index = 0; index < nbEchantillons/3; index++) {
 				signalSortieInformation.add(min);
 			}
 			if(copieInformationRecue.get(0) == true) {
-				for(int index = nbEchantillon/3; index < 2*nbEchantillon/3; index++) {
+				for(int index = nbEchantillons/3; index < 2*nbEchantillons/3; index++) {
 					signalSortieInformation.add(max);
 				}
 			}
 			else {
-				for(int index = nbEchantillon/3; index < 2*nbEchantillon/3; index++) {
+				for(int index = nbEchantillons/3; index < 2*nbEchantillons/3; index++) {
 					signalSortieInformation.add(min);
 				}
 			}
-			for(int index = 2*nbEchantillon/3; index < nbEchantillon; index++) {
+			for(int index = 2*nbEchantillons/3; index < nbEchantillons; index++) {
 				signalSortieInformation.add(min);
 			}
 			copieInformationRecue.remove(0);

@@ -6,7 +6,7 @@ public abstract class Signal {
 	
 	protected Information<Boolean> signalEntree;
 	protected Information<Float> signalSortieInformation;
-	protected int nbEchantillon;
+	protected int nbEchantillons;
 	protected float min;
 	protected float max;
 	protected int tailleSignalEntree;
@@ -15,8 +15,8 @@ public abstract class Signal {
 		return signalEntree;
 	}
 
-	public int getNbEchantillon() {
-		return nbEchantillon;
+	public int getNbEchantillons() {
+		return nbEchantillons;
 	}
 
 	public float getMin() {
@@ -45,7 +45,7 @@ public abstract class Signal {
 	public Signal (Information<Boolean> informationRecue, int nbEchantillons, float min, float max) {
 		this.min =min;
 		this.max=max;
-		this.nbEchantillon = nbEchantillons;
+		this.nbEchantillons = nbEchantillons;
 		signalEntree = informationRecue;
 		tailleSignalEntree = signalEntree.nbElements();
 		this.generer();		

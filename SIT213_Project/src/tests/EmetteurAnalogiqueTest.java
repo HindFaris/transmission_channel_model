@@ -27,19 +27,15 @@ public class EmetteurAnalogiqueTest {
 		
 	}
 	
-	@Test
-	public static Tests testReport(String typeEmetteur) {
-		Tests tr;
+	public static void main(String[] args) {
 		int nbEchantillons = 10000;
 		float min = -5;
 		float max = 5;
+		String typeEmetteur="NRZ";
 		EmetteurAnalogiqueTest E = new EmetteurAnalogiqueTest();
 		
 		nbTests+=4;
 		E.EmetteurAnalogiqueInitTest(typeEmetteur, nbEchantillons, min, max);
-		
-		
-		tr = new Tests(nbTests,nbErrors);
-		return tr; 
+
 	}
 }

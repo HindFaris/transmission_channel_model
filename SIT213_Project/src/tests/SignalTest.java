@@ -1,69 +1,67 @@
 package tests;
-import static org.junit.Assert.*;
-import org.junit.Test;
 
+//import static org.junit.Assert.*;
+import org.junit.Rule;
+import org.junit.Test;
+import org.junit.rules.ErrorCollector;
+import static org.hamcrest.CoreMatchers.is;
 import signaux.*;
 import sources.SourceFixe;
 import information.Information;
 
-//TO DO//
+/**
+ * 
+ * @author gaelc
+ *
+ */
 public class SignalTest {
 	
-	private static int nbTests=0;
-	private static int nbErrors=0;
+	@Rule
+	public final ErrorCollector errorCollector= new ErrorCollector();
+	//TODO : JAVADOC
 	
 	public SignalTest(){}
 
 	@Test
-	public void SignalInitTest(Information<Boolean> informationRecue, int nbEchantillons, float min, float max) {
-		nbErrors+=9;
-		Signal SignalNRZ = new SignalNRZ(informationRecue,nbEchantillons, min,  max);
-		
-		assertEquals("Le nombre d'Echantillons ne correspond pas", nbEchantillons, SignalNRZ.getNbEchantillon() );
-		nbErrors--;
-		assertEquals("La valeur de min ne correspond pas", min , SignalNRZ.getMin(), (double)0.0);
-		nbErrors--;
-		assertEquals("La valeur de max ne correspond pas", max , SignalNRZ.getMax(), (double)0.0);
-		nbErrors--;
-		
-		
-		Signal SignalNRZT = new SignalNRZT(informationRecue,nbEchantillons, min,  max);
-		
-		assertEquals("Le nombre d'Echantillons ne correspond pas", nbEchantillons, SignalNRZT.getNbEchantillon());
-		nbErrors--;
-		assertEquals("La valeur de min ne correspond pas", min , SignalNRZT.getMin(), (double)0.0);
-		nbErrors--;
-		assertEquals("La valeur de max ne correspond pas", max, SignalNRZT.getMax(), (double)0.0);
-		nbErrors--;
-		
-		
-		Signal SignalRZ = new SignalRZ(informationRecue,nbEchantillons, min,  max);
-		
-		assertEquals("Le nombre d'Echantillons ne correspond pas", nbEchantillons, SignalRZ.getNbEchantillon() );
-		nbErrors--;
-		assertEquals( "La valeur de min ne correspond pas", min, SignalRZ.getMin(), (double)0.0);
-		nbErrors--;
-		assertEquals( "La valeur de max ne correspond pas", max, SignalRZ.getMax(), (double)0.0);
-		nbErrors--;
-	}
-	
-	@Test
-	public static Tests testReport() {
-		Tests tr;
-		
+	public void SignalInitTest() {
+		//Arrange
+		int nbEchantillons = 10;
+		float min = -5;
+		float max = 5;
 		SourceFixe Source = new SourceFixe("0111000111");
 		Information<Boolean> informationRecue = new Information<Boolean>();
 		informationRecue = Source.getInformationGeneree();
 		
-		int nbEchantillons = 10;
-		float min = -5;
-		float max = 5;
+		//Act
+		Signal SignalNRZ = new SignalNRZ(informationRecue,nbEchantillons, min,  max);
+		Signal SignalNRZT = new SignalNRZT(informationRecue,nbEchantillons, min,  max);
+		Signal SignalRZ = new SignalRZ(informationRecue,nbEchantillons, min,  max);
+		
+		//Assert
+		errorCollector.checkThat( "L'Information entree ne correspond pas",SignalNRZ.getSignalEntree() ,is(informationRecue));
+		errorCollector.checkThat( "Le nombre d'echantillons ne correspond pas",SignalNRZ.getNbEchantillons() ,is(nbEchantillons));
+		errorCollector.checkThat( "La valeur du min ne correspond pas",SignalNRZ.getMin() ,is(min));
+		errorCollector.checkThat( "La valeur du max ne correspond pas",SignalNRZ.getMax() ,is(max));
+		
+		errorCollector.checkThat( "L'Information entree ne correspond pas",SignalNRZT.getSignalEntree() ,is(informationRecue));
+		errorCollector.checkThat( "Le nombre d'echantillons ne correspond pas",SignalNRZT.getNbEchantillons() ,is(nbEchantillons));
+		errorCollector.checkThat( "La valeur du min ne correspond pas",SignalNRZT.getMin() ,is(min));
+		errorCollector.checkThat( "La valeur du max ne correspond pas",SignalNRZT.getMax() ,is(max));
+		
+		errorCollector.checkThat( "L'Information entree ne correspond pas",SignalRZ.getSignalEntree() ,is(informationRecue));
+		errorCollector.checkThat( "Le nombre d'echantillons ne correspond pas",SignalRZ.getNbEchantillons() ,is(nbEchantillons));
+		errorCollector.checkThat( "La valeur du min ne correspond pas",SignalRZ.getMin() ,is(min));
+		errorCollector.checkThat( "La valeur du max ne correspond pas",SignalRZ.getMax() ,is(max));
+	}
+	
+	public static void main(String[] args) {
+		
 		SignalTest S = new SignalTest();
+		try {
+			S.SignalInitTest();
+		}catch(Exception e) {
+			e.printStackTrace();
+		}
 		
-		nbTests+=9;
-		S.SignalInitTest(informationRecue, nbEchantillons, min, max);
-		
-		tr = new Tests(nbTests,nbErrors);
-		return tr; 
 	}
 }

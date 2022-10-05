@@ -1,34 +1,69 @@
 package tests;
-import static org.junit.Assert.*;
+
+//import static org.junit.Assert.*;
+import org.junit.Rule;
 import org.junit.Test;
-
-
+import org.junit.rules.ErrorCollector;
+import static org.hamcrest.CoreMatchers.is;
 import java.util.LinkedList;
-
 import signaux.Bruit;
 
-//TO DO
-
+/**
+ * 
+ * @author gaelc
+ *
+ */
 public class BruitTest {
 	
-	private static int nbTests=0;
-	private static int nbErrors=0;
+	@Rule
+	public final ErrorCollector errorCollector= new ErrorCollector();
+	//TODO : JAVADOC
 	
 	public BruitTest(){}
 	
 	@Test
-	public void BruitInitTest(float ecartType, int tailleBruit, int seed) {
-		nbErrors+=3;
+	/**
+	 * 
+	 */
+	public void BruitInitTest() {
+		//Arrange
+		float ecartType = 5;
+		int tailleBruit = 20;
+		int seed = 20;
+		
+		//Act
 		Bruit Bruit = new Bruit(ecartType,  tailleBruit,  seed);
-		assertEquals("L'ecart type du bruit ne correspond pas",(float)ecartType, (float) Bruit.getEcartType(), (double)0.0);
-		nbErrors--;
-		assertEquals("La taille du signal d'entree ne correspond pas", tailleBruit, Bruit.getTailleBruit());
-		nbErrors--;
-		assertEquals("La valeur de la seed ne correspond pas",(int) seed , (int) Bruit.getSeed());
-		nbErrors--;
+		
+		//Assert
+		errorCollector.checkThat("L'ecart type du bruit ne correspond pas", Bruit.getEcartType(), is(ecartType));
+		errorCollector.checkThat("La taille du signal d'entree ne correspond pas", Bruit.getTailleBruit(), is(tailleBruit));
+		errorCollector.checkThat("La valeur de la seed ne correspond pas", Bruit.getSeed(), is(seed));
 	}
 	
-	 public LinkedList<LinkedList <Float>> autoCorrelateTest() 
+	@Test
+	/**
+	 * 
+	 */
+	public void BruitSeedTest() {
+		//Arrange
+		float ecartType = 5;
+		int tailleBruit = 20;
+		int seed = 20;
+		
+		//Act
+		Bruit Bruit1 = new Bruit(ecartType,  tailleBruit,  seed);
+		Bruit Bruit2 = new Bruit(ecartType,  tailleBruit,  seed);
+		
+		//Assert
+		errorCollector.checkThat("La valeur de la seed ne correspond pas", Bruit1.getSeed(), is(Bruit2.getSeed()));
+		errorCollector.checkThat("Les Bruits correspondant a la meme seed ne sont pas les memes", Bruit1.getSignalSortieInformation(), is(Bruit2.getSignalSortieInformation()));
+	}
+	
+	/** Un essai infructueux d'une methode pour verifier que deux echantillons tres proches ne sont pas correles
+	 * 
+	 * @return
+	 */
+	public LinkedList<LinkedList <Float>> autoCorrelateTest() 
 	 {
 		 Bruit br = new Bruit(4, 8, 50);
 		 LinkedList<Float> sum = new LinkedList <Float> (); 
@@ -41,31 +76,25 @@ public class BruitTest {
 	         {
 	        	a = (float) br.getSignalSortieInformation().iemeElement(i) * (float) br.getSignalSortieInformation().iemeElement(i-n);
 				sum.add(a);
-				
 	         }
 	         output.add(sum);
-
 	         sum.clear();
 	     }
 	     return output;
-
 	 }
-	 
-	@Test
-	public static Tests testReport() {
-		Tests tr;
-		
-		float ecartType = 5;
-		int tailleSignalEntree = 20;
-		int nbEchantillons = 10000;
-		
+	
+	
+	public static void main(String[] args) {
 		BruitTest E = new BruitTest();
 		
-		nbTests+=3;
-		E.BruitInitTest(ecartType, tailleSignalEntree, nbEchantillons);
-		E.autoCorrelateTest();
 		
-		tr = new Tests(nbTests,nbErrors);
-		return tr; 
+		try {
+			E.BruitInitTest();
+			E.BruitSeedTest();
+			System.out.println(E.autoCorrelateTest());
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 	}
 }

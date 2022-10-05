@@ -6,13 +6,13 @@ import information.Information;
 
 public class SignalNRZT extends Signal{
 
-	public SignalNRZT(Information<Boolean> informationRecue, int nbEchantillons, float min, float max) {
-		super(informationRecue, nbEchantillons, min, max);
+	public SignalNRZT(Information<Boolean> informationRecue, int nbEchantillonss, float min, float max) {
+		super(informationRecue, nbEchantillonss, min, max);
 	}
 
 	public void generer() {
 
-		float coefficientDirecteur = (max-((max+min)/2))/(nbEchantillon/3);
+		float coefficientDirecteur = (max-((max+min)/2))/(nbEchantillons/3);
 		float moyenne = (max+min)/2;
 		signalSortieInformation  = new Information<Float>();
 		LinkedList<Boolean> copieInformationRecue = new LinkedList<Boolean>();
@@ -32,18 +32,18 @@ public class SignalNRZT extends Signal{
 		signalSortieInformation.add(moyenne);
 
 		if(premierBit == true){
-			for(int index = 1; index < (nbEchantillon)/3; index++) {
+			for(int index = 1; index < (nbEchantillons)/3; index++) {
 				signalSortieInformation.add(coefficientDirecteur*index + moyenne);
 			}
-			for(int index = (nbEchantillon)/3; index < 2*(nbEchantillon)/3; index++) {
+			for(int index = (nbEchantillons)/3; index < 2*(nbEchantillons)/3; index++) {
 				signalSortieInformation.add(max);
 			}
 		}
 		else {
-			for(int index = 1; index < (nbEchantillon)/3; index++) {
+			for(int index = 1; index < (nbEchantillons)/3; index++) {
 				signalSortieInformation.add(-coefficientDirecteur*index + moyenne);
 			}
-			for(int index = (nbEchantillon)/3; index < 2*(nbEchantillon)/3; index++) {
+			for(int index = (nbEchantillons)/3; index < 2*(nbEchantillons)/3; index++) {
 				signalSortieInformation.add(min);
 			}
 		}
@@ -51,24 +51,24 @@ public class SignalNRZT extends Signal{
 		//Le troisieme tiers des echantillons
 		if (premierBit == true) {
 			if(deuxiemeBit == true) {
-				for(int index = 2*(nbEchantillon)/3; index < nbEchantillon; index++) {
+				for(int index = 2*(nbEchantillons)/3; index < nbEchantillons; index++) {
 					signalSortieInformation.add(max);
 				}
 			}
 			else {
-				for(int index = 2*(nbEchantillon)/3; index < nbEchantillon; index++) {
-					signalSortieInformation.add(-coefficientDirecteur*(index-(2*nbEchantillon/3))+max);
+				for(int index = 2*(nbEchantillons)/3; index < nbEchantillons; index++) {
+					signalSortieInformation.add(-coefficientDirecteur*(index-(2*nbEchantillons/3))+max);
 				}
 			}
 		}
 		else {
 			if (deuxiemeBit == true) {
-				for(int index = 2*(nbEchantillon)/3; index < nbEchantillon; index++) {
-					signalSortieInformation.add(coefficientDirecteur*(index-(2*nbEchantillon/3))+min);
+				for(int index = 2*(nbEchantillons)/3; index < nbEchantillons; index++) {
+					signalSortieInformation.add(coefficientDirecteur*(index-(2*nbEchantillons/3))+min);
 				}
 			}
 			else {
-				for(int index = 2*(nbEchantillon)/3; index < nbEchantillon; index++) {
+				for(int index = 2*(nbEchantillons)/3; index < nbEchantillons; index++) {
 					signalSortieInformation.add(min);
 				}
 			}
@@ -84,24 +84,24 @@ public class SignalNRZT extends Signal{
 			//Traitement du premier tiers des echantillons pour un bit donne
 			if(bitPrecedent == true) {
 				if(bitActuel == true) {
-					for(int index = 0; index < nbEchantillon/3; index++) {
+					for(int index = 0; index < nbEchantillons/3; index++) {
 						signalSortieInformation.add(max);
 					}
 				}
 				else {
-					for(int index = 0; index < nbEchantillon/3; index++) {
+					for(int index = 0; index < nbEchantillons/3; index++) {
 						signalSortieInformation.add(-coefficientDirecteur*index + moyenne);
 					}
 				}
 			}
 			else {
 				if(bitActuel == true) {
-					for(int index = 0; index < nbEchantillon/3; index++) {
+					for(int index = 0; index < nbEchantillons/3; index++) {
 						signalSortieInformation.add(coefficientDirecteur*index + moyenne);
 					}
 				}
 				else {
-					for(int index = 0; index < nbEchantillon/3; index++) {
+					for(int index = 0; index < nbEchantillons/3; index++) {
 						signalSortieInformation.add(min);
 					}
 				}
@@ -110,12 +110,12 @@ public class SignalNRZT extends Signal{
 
 			//Traitement du deuxieme tiers des echantillons pour un bit donne
 			if (bitActuel == true) {
-				for(int index = (int)(nbEchantillon/3); index < 2*nbEchantillon/3; index++) {
+				for(int index = (int)(nbEchantillons/3); index < 2*nbEchantillons/3; index++) {
 					signalSortieInformation.add(max);
 				}
 			}
 			else {
-				for(int index = (int)(nbEchantillon/3); index < 2*nbEchantillon/3; index++) {
+				for(int index = (int)(nbEchantillons/3); index < 2*nbEchantillons/3; index++) {
 					signalSortieInformation.add(min);
 				}
 			}
@@ -124,24 +124,24 @@ public class SignalNRZT extends Signal{
 			//Traitement du troisieme tiers des echantillons pour un bit donne
 			if(bitActuel == true) {
 				if(bitSuivant == true) {
-					for(int index = (int)(2*nbEchantillon/3); index < nbEchantillon; index++) {
+					for(int index = (int)(2*nbEchantillons/3); index < nbEchantillons; index++) {
 						signalSortieInformation.add(max);
 					}
 				}
 				else {
-					for(int index = (int)(2*nbEchantillon/3); index < nbEchantillon; index++) {
-						signalSortieInformation.add(-coefficientDirecteur*(index-(2*nbEchantillon/3))+max);
+					for(int index = (int)(2*nbEchantillons/3); index < nbEchantillons; index++) {
+						signalSortieInformation.add(-coefficientDirecteur*(index-(2*nbEchantillons/3))+max);
 					}
 				}
 			}
 			else {
 				if(bitSuivant == true) {
-					for(int index = (int)(2*nbEchantillon/3); index < nbEchantillon; index++) {
-						signalSortieInformation.add(coefficientDirecteur*(index-(2*nbEchantillon/3))+min);
+					for(int index = (int)(2*nbEchantillons/3); index < nbEchantillons; index++) {
+						signalSortieInformation.add(coefficientDirecteur*(index-(2*nbEchantillons/3))+min);
 					}
 				}
 				else {
-					for(int index = (int)(2*nbEchantillon/3); index < nbEchantillon; index++) {
+					for(int index = (int)(2*nbEchantillons/3); index < nbEchantillons; index++) {
 						signalSortieInformation.add(min);
 					}
 				}
@@ -157,24 +157,24 @@ public class SignalNRZT extends Signal{
 
 		if(avantDernierBit == true) {
 			if(dernierBit == true) {
-				for(int index = 0; index < nbEchantillon/3; index++) {
+				for(int index = 0; index < nbEchantillons/3; index++) {
 					signalSortieInformation.add(max);
 				}
 			}
 			else {
-				for(int index = 0; index < nbEchantillon/3; index++) {
+				for(int index = 0; index < nbEchantillons/3; index++) {
 					signalSortieInformation.add(-coefficientDirecteur*index + moyenne);
 				}
 			}
 		}
 		else {
 			if(dernierBit == true) {
-				for(int index = 0; index < nbEchantillon/3; index++) {
+				for(int index = 0; index < nbEchantillons/3; index++) {
 					signalSortieInformation.add(coefficientDirecteur*index + moyenne);
 				}
 			}
 			else {
-				for(int index = 0; index < nbEchantillon/3; index++) {
+				for(int index = 0; index < nbEchantillons/3; index++) {
 					signalSortieInformation.add(min);
 				}
 			}
@@ -183,19 +183,19 @@ public class SignalNRZT extends Signal{
 		
 		//deux derniers tiers
 		if(dernierBit == true) {
-			for(int index = nbEchantillon/3; index < 2*nbEchantillon/3; index++) {
+			for(int index = nbEchantillons/3; index < 2*nbEchantillons/3; index++) {
 				signalSortieInformation.add(max);
 			}
-			for(int index = 2*nbEchantillon/3; index < nbEchantillon; index++) {
-				signalSortieInformation.add(-coefficientDirecteur*(index-(2*nbEchantillon/3))+max);
+			for(int index = 2*nbEchantillons/3; index < nbEchantillons; index++) {
+				signalSortieInformation.add(-coefficientDirecteur*(index-(2*nbEchantillons/3))+max);
 			}
 		}
 		else {
-			for(int index = nbEchantillon/3; index < 2*nbEchantillon/3; index++) {
+			for(int index = nbEchantillons/3; index < 2*nbEchantillons/3; index++) {
 				signalSortieInformation.add(min);
 			}
-			for(int index = 2*nbEchantillon/3; index < nbEchantillon; index++) {
-				signalSortieInformation.add(coefficientDirecteur*(index-(2*nbEchantillon/3))+min);
+			for(int index = 2*nbEchantillons/3; index < nbEchantillons; index++) {
+				signalSortieInformation.add(coefficientDirecteur*(index-(2*nbEchantillons/3))+min);
 			}
 		}
 	}
