@@ -99,8 +99,7 @@ public class TransmetteurAnalogiqueMultiTrajets extends Transmetteur<Float, Floa
 			} catch (Exception e) {
 				System.out.println("Err : Impossible de creer le bruit dans Transmetteur MultiTrajet Bruite");
 			}
-			infosFilles[taus.size()+1] = bruit.getSignalSortieInformation();
-			
+			infosFilles[taus.size()] = bruit.getSignalSortieInformation();
 		}
 		
 		informationEmise = informationRecue.addInformations(infosFilles);
