@@ -31,10 +31,10 @@ public  class Information <T>  implements Iterable <T> {
 	
 	public Information<Float> addInformations(Information<Float>[] infos){
 		
-		Information<Float>[] infosCopie = new Information[infos.length]; //Copie de infos pour en pas modifier les informations
-		Information<Float> infoARetourner = new Information<Float>();
+		Information<Float>[] infosCopie = new Information[infos.length+1];	//Copie des infos pour ne pas modifier celles passees en parametre
+		Information<Float> infoARetourner = new Information<Float>();	//L'information qui correspondra a l'addition de toutes les informations
 		
-		for(int indice = 0; indice < infos.length; indice++) {	//On copie LocaleServiceProvider informations
+		for(int indice = 0; indice < infos.length; indice++) {	//On copie les informations en les clonants
 			infosCopie[indice] = new Information<Float>();
 			try {
 				infosCopie[indice].setContent(infos[indice].cloneInformation());
@@ -43,18 +43,25 @@ public  class Information <T>  implements Iterable <T> {
 				e.printStackTrace();
 			}
 		}
-
-		int tailleInformations = infos[0].nbElements();
-		float aAjouter;
-		for(int indice = 0; indice < tailleInformations; indice++) {
+		
+		infosCopie[infos.length+1]= (Information<Float>) this; //On ajoute l'information courante afin de l'ajouter egalement
+		int tailleInformations = infos[0].nbElements();	//La taille du contenu des informations (toutes les informations doivent etre de la meme taille) 
+		float aAjouter;	//variable qui additionnera tous les elements
+		
+		for(int indice = 0; indice < tailleInformations; indice++) {	//C'est ici qu'on additionne toutes les variables des differentes informations
+			
 			aAjouter = 0;
-			for(Information<Float> infoCourante : infosCopie) {
+			
+			for(Information<Float> infoCourante : infosCopie) {	//On ajoute les elements de toutes les informations entre eux
 				aAjouter += infoCourante.iemeElement(0);
 			}
-			infoARetourner.add(aAjouter);
+			
+			infoARetourner.add(aAjouter);	//On ajoute la somme a la fin de l'information a retourner
+			
 			for(Information<Float> infoCourante : infosCopie) {
 				infoCourante.remove(0);
 			}
+			
 		}
 		return infoARetourner;
 		
