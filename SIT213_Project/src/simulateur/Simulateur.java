@@ -89,7 +89,7 @@ public class Simulateur {
 	/** Nb d'echantillon de retard des signaux indirects**/
 	private LinkedList<Integer> taus = new LinkedList<Integer>();
 
-	/**	Indique si le simulateur utilise ou non un codeur à l'emission et un decodeur a la reception **/
+	/**	Indique si le simulateur utilise ou non un codeur ï¿½ l'emission et un decodeur a la reception **/
 	private boolean codage = false;
 
 	/** le  codeur de la chaine de transmission */
@@ -317,7 +317,7 @@ public class Simulateur {
 						taus.add(Integer.valueOf(tiArgsArray[index]));
 					}
 				}
-				System.out.println(alphas+"\n"+taus);
+				
 			}
 			else if(args[i].matches("-codeur")) {
 				codage = true;
