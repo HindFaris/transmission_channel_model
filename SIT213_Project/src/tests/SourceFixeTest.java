@@ -20,8 +20,7 @@ public class SourceFixeTest {
 	public final ErrorCollector errorCollector= new ErrorCollector();
 	//TODO : JAVADOC
 	
-	public SourceFixeTest(){
-	}
+	public SourceFixeTest(){}
 	
 	@Test
 	/**
