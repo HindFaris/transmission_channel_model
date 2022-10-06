@@ -44,7 +44,7 @@ public  class Information <T>  implements Iterable <T> {
 			}
 		}
 		
-		infosCopie[infos.length+1]= (Information<Float>) this; //On ajoute l'information courante afin de l'ajouter egalement
+		infosCopie[infos.length]= (Information<Float>) this; //On ajoute l'information courante afin de l'ajouter egalement
 		int tailleInformations = infos[0].nbElements();	//La taille du contenu des informations (toutes les informations doivent etre de la meme taille) 
 		float aAjouter;	//variable qui additionnera tous les elements
 		
@@ -79,7 +79,7 @@ public  class Information <T>  implements Iterable <T> {
 	}
 
 	/**
-	 * pour construire a  partir d'un tableau de T une information
+	 * pour construire aï¿½ partir d'un tableau de T une information
 	 * @param content le tableau d'elements pour initialiser l'information construite
 	 */
 	public Information(T [] content) {
@@ -113,7 +113,7 @@ public  class Information <T>  implements Iterable <T> {
 	}
 
 	/**
-	 * pour ajouter un element a la fin de l'information 
+	 * pour ajouter un element aï¿½la fin de l'information 
 	 * @param valeur  l'element a rajouter
 	 */
 	public void add(T valeur) {
