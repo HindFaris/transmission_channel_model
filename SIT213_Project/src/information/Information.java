@@ -56,7 +56,7 @@ public  class Information <T>  implements Iterable <T> {
 				aAjouter += infoCourante.iemeElement(0);
 			}
 			
-			infoARetourner.add(aAjouter);	//On ajoute la somme a la fin de l'information a retourner
+			infoARetourner.add(aAjouter);	//On ajoute la somme a la fin de l'information a retourner.
 			
 			for(Information<Float> infoCourante : infosCopie) {
 				infoCourante.remove(0);
