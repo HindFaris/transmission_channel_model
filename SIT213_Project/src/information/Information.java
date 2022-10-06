@@ -1,6 +1,9 @@
 package information;
 
 import java.util.*;
+import java.util.spi.LocaleServiceProvider;
+
+import javax.lang.model.element.Element;
 
 /** 
  *  
@@ -19,6 +22,41 @@ public  class Information <T>  implements Iterable <T> {
 		else {
 			throw new Exception();
 		}
+		
+	}
+	
+	public void setContent(LinkedList<T> content) {
+		this.content = content;
+	}
+	
+	public Information<Float> addInformations(Information<Float>[] infos){
+		
+		Information<Float>[] infosCopie = new Information[infos.length]; //Copie de infos pour en pas modifier les informations
+		Information<Float> infoARetourner = new Information<Float>();
+		
+		for(int indice = 0; indice < infos.length; indice++) {	//On copie LocaleServiceProvider informations
+			infosCopie[indice] = new Information<Float>();
+			try {
+				infosCopie[indice].setContent(infos[indice].cloneInformation());
+			} catch (Exception e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+
+		int tailleInformations = infos[0].nbElements();
+		float aAjouter;
+		for(int indice = 0; indice < tailleInformations; indice++) {
+			aAjouter = 0;
+			for(Information<Float> infoCourante : infosCopie) {
+				aAjouter += infoCourante.iemeElement(0);
+			}
+			infoARetourner.add(aAjouter);
+			for(Information<Float> infoCourante : infosCopie) {
+				infoCourante.remove(0);
+			}
+		}
+		return infoARetourner;
 		
 	}
 	
