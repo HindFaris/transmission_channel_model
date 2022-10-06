@@ -39,23 +39,23 @@ public class TransmetteurAnalogiqueMultiTrajets extends Transmetteur<Float, Floa
 	 * emettre l'information float a toutes les destinations connectees
 	 */
 
-	@SuppressWarnings("null")
 	public void emettre() {
 		Information<Float> informationAjoutee = new Information<Float>();
 		int tailleInformation = informationRecue.nbElements();
-		int tauMax = 0;
+		int tauMax = taus.get(0);
 
-		for (int index = 0; index < taus.size(); index++) {
+		for (int index = 1; index < taus.size(); index++) {	//Definit tauMax : le plus grand tau
 			if (tauMax < Integer.valueOf(taus.get(index))) {
 				tauMax= Integer.valueOf(taus.get(index));
 			}
 		}
 
-		for(int index = 0; index < tauMax; index++) {
+		for(int index = 0; index < tauMax; index++) {	//On ajoute taumax '0' à la fin du message recue pour qu'il fasse la bonne taille
 			informationRecue.add(0.0f);
+		}
+		for(int index = 0; index < taus.get(index); index++) {	//cette information correspond a un signal fille
 			informationAjoutee.add(0.0f);
 		}
-
 		//trajet indirect (alpha*s(t-tau))
 		Information<Float> information ;
 		LinkedList<Float> infoRecue = null;
@@ -136,6 +136,11 @@ public class TransmetteurAnalogiqueMultiTrajets extends Transmetteur<Float, Floa
 		this.informationEmise = informationRecue;
 	}
 
+	
+	
+	
+	
+	
 	public float puissance(){
 		float puissance = 0;
 		LinkedList<Float> copieInformationRecue = new LinkedList<Float>();
