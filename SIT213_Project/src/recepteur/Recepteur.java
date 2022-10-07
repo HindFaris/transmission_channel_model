@@ -8,7 +8,7 @@ import information.*;
 import transmetteurs.*;
 
 //Reception de l'information
-public class Recepteur extends Transmetteur<Float, Boolean> {
+public class Recepteur extends Transmetteur<Float, Boolean>{
 
 	private int nbEchantillons;
 	private float min=0f;
