@@ -1,9 +1,12 @@
 package information;
 
+import java.lang.reflect.Array;
+import java.time.zone.ZoneOffsetTransitionRule;
 import java.util.*;
 import java.util.spi.LocaleServiceProvider;
 
 import javax.lang.model.element.Element;
+import javax.swing.table.TableColumn;
 
 /** 
  *  
@@ -23,6 +26,26 @@ public  class Information <T>  implements Iterable <T> {
 			throw new Exception();
 		}
 		
+	}
+	
+	public Float[] clonerDansTableau() {
+		Object[] tableauARetourner = content.toArray();
+		Float[] tableauRetourne = Arrays.copyOf(tableauARetourner, tableauARetourner.length, Float[].class);
+		return tableauRetourne;
+	}	
+	
+	public Float[] clonerDansTableau(int taux) {
+		Object[] tableauACopier = content.toArray();
+		Float[] tableauCopier = Arrays.copyOf(tableauACopier, tableauACopier.length, Float[].class);//une fois que ça marche essaye tableauACopier.length+max
+		Float[] tableauARetourner = new Float[content.size()+taux];
+		int taille = content.size();
+		for(int indice = 0; indice < taille; indice ++) {
+			tableauARetourner[indice] = tableauCopier[indice];
+		}
+		for(int indice = taille; indice < taille + taux; indice ++) {
+			tableauARetourner[indice] = 0f; 
+		}		
+		return tableauARetourner;
 	}
 	
 	public void setContent(LinkedList<T> content) {

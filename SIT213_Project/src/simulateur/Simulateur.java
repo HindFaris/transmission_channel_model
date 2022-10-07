@@ -317,7 +317,7 @@ public class Simulateur {
 						taus.add(Integer.valueOf(tiArgsArray[index]));
 					}
 				}
-				
+
 			}
 			else if(args[i].matches("-codeur")) {
 				codage = true;
@@ -333,28 +333,50 @@ public class Simulateur {
 	 */ 
 
 	public void execute() throws Exception {  
-
+		//long debut = System.currentTimeMillis();
 		source.emettre();
+		//long fin = System.currentTimeMillis();
+		//System.out.println("Temps d'execution source : " + (fin-debut));
 		if(codage) {
+			//debut = System.currentTimeMillis();
 			codeur.emettre();
+			//fin = System.currentTimeMillis();
+			//System.out.println("Temps d'execution codeur : " + (fin-debut));
 		}
-		
+		//debut = System.currentTimeMillis();
 		emetteurAnalogique.emettre();
+		//fin = System.currentTimeMillis();
+		//System.out.println("Temps d'execution emetteur : " + (fin-debut));
 
 		if(trajetIndirect) {
+			//long debut = System.currentTimeMillis();
 			transmetteurAnalogiqueMultiTrajets.emettre();
+			//long fin = System.currentTimeMillis();
+			//System.out.println("Temps d'execution transmetteur multi trajet : " + (fin-debut));
 		}
 		else if (bruitActif) {
+			//debut = System.currentTimeMillis();
 			transmetteurAnalogiqueBruite.emettre();
+			//fin = System.currentTimeMillis();
+			//System.out.println("Temps d'execution transmetteur bruite : " + (fin-debut));
 		}
 		else {
+			//debut = System.currentTimeMillis();
 			transmetteurAnalogiqueParfait.emettre();
+			//fin = System.currentTimeMillis();
+			//System.out.println("Temps d'execution transmetteur parfait : " + (fin-debut));
 		}
 
+		//debut = System.currentTimeMillis();
 		recepteur.emettre();
-		
+		//fin = System.currentTimeMillis();
+		//System.out.println("Temps d'execution recepteur : " + (fin-debut));
+
 		if(codage) {
+			//debut = System.currentTimeMillis();
 			decodeur.emettre();
+			//fin = System.currentTimeMillis();
+			//System.out.println("Temps d'execution decodeur : " + (fin-debut));
 		}
 	}
 
@@ -398,10 +420,10 @@ public class Simulateur {
 		} 
 
 		try {
-			//long debut = System.currentTimeMillis();
+			long debut = System.currentTimeMillis();
 			simulateur.execute();
-			//long fin = System.currentTimeMillis();
-			//System.out.println("Temps d'execution en millisecondes : " + (fin-debut));
+			long fin = System.currentTimeMillis();
+			System.out.println("Temps d'execution en millisecondes : " + (fin-debut));
 			String s = "java  Simulateur  ";
 			for (int i = 0; i < args.length; i++) { //copier tous les parametres de simulation
 				s += args[i] + "  ";
