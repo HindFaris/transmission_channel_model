@@ -1,5 +1,6 @@
 package transmetteurs;
 
+import java.util.Arrays;
 import java.util.LinkedList;
 
 
@@ -48,62 +49,41 @@ public class TransmetteurAnalogiqueMultiTrajets extends Transmetteur<Float, Floa
 				tauxMax=taux;
 			}
 		}
-		Information<Float>[] infosFilles;
 		
-		//initialise la taille du tableau des informations filles selon la presence du bruit
-		if(bruitActif) {
-			infosFilles = new Information[taus.size()+1];
+		Float[] informationRecueCopie = informationRecue.clonerDansTableau(tauxMax);	//copie de l'info recue avec taux '0' a la fin
+		int tailleInfoRecue = informationRecueCopie.length;
+		Float[] tableauEmis = new Float[tailleInfoRecue];
+	
+		for(int indice = 0; indice < tailleInfoRecue; indice ++) {
+			tableauEmis[indice] = informationRecueCopie[indice];
+		}
+		
+		if(!bruitActif) {
+			for(int indice = 0; indice < tailleInfoRecue - tauxMax; indice++) {
+				for(int i = 0; i < taus.size(); i++) {
+					tableauEmis[indice+taus.get(i)] += informationRecueCopie[indice] * alphas.get(i);
+				}
+			}
 		}
 		else {
-			infosFilles = new Information[taus.size()];
-		}
-		
-		for(int indice = 0; indice<taus.size(); indice++) {
-			infosFilles[indice] = new Information<Float>();
-		}
-		
-		for(int i=0; i<taus.size();i++) {
-			LinkedList<Float> informationRecueCopie = null;
+			Bruit bruit = null;
 			try {
-				informationRecueCopie = informationRecue.cloneInformation();
+				bruit = new Bruit(this.ecartType(), tailleInfoRecue, seed);
 			} catch (Exception e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
+				System.out.println("Err : Impossible de creer le bruit dans Transmetteur MultiTrajet Bruite");
 			}
-			//Rajout de 0 au debut
-			for(int index=0;index<taus.get(i);index++) {
-				//Rajout de 0 au début 
-				infosFilles[i].add(0.0f);	
-			}
-			//Rajout de l'information attenuee
-			for(int index=0;index<informationRecue.nbElements();index++) {
-				infosFilles[i].add(alphas.get(i)*informationRecueCopie.get(0));
-				informationRecueCopie.remove(0);
-			}
-			//Rajout de 0 pour faire la taille du taux le plus grand
-			if(tauxMax != taus.get(i)) {
-				for(int index=0; index<tauxMax-taus.get(i);index++) {
-					infosFilles[i].add(0.0f);
+			Float[] informationBruit = bruit.getSignalSortieInformation().clonerDansTableau();
+			
+			for(int indice = 0; indice < tailleInfoRecue - tauxMax; indice++) {
+				tableauEmis[indice] += informationBruit[indice];
+				for(int i = 0; i < taus.size(); i++) {
+					tableauEmis[indice+taus.get(i)] += informationRecueCopie[indice] * alphas.get(i);
 				}
 			}
 		}
 
-		for(int index=0; index<tauxMax; index++) {
-			informationRecue.add(0.0f);
-		}
+		informationEmise = (Information<Float>) new Information((Float[]) tableauEmis);
 
-		if(bruitActif) {
-			Bruit bruit = null;
-			try {
-				bruit = new Bruit(this.ecartType(), informationRecue.nbElements(), seed);
-			} catch (Exception e) {
-				System.out.println("Err : Impossible de creer le bruit dans Transmetteur MultiTrajet Bruite");
-			}
-			infosFilles[taus.size()] = bruit.getSignalSortieInformation();
-		}
-		
-		informationEmise = informationRecue.addInformations(infosFilles);
-		
 		for (DestinationInterface<Float> destinationConnectee : destinationsConnectees) {
 			try {
 				destinationConnectee.recevoir(informationEmise);
@@ -115,7 +95,7 @@ public class TransmetteurAnalogiqueMultiTrajets extends Transmetteur<Float, Floa
 		this.informationEmise = informationRecue; 
 	}
 
-	
+
 	public float puissance(){
 		float puissance = 0;
 		LinkedList<Float> copieInformationRecue = new LinkedList<Float>();
