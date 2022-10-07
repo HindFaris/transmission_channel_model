@@ -7,7 +7,7 @@ import simulateur.ArgumentsException;
 import simulateur.Simulateur;
 
 public class TestsDeComplexite {
-	private final static String CHEMIN = "C:\\Professionnel\\IMT Atlantique\\Info\\Java\\projet2A\\courbes\\complexite.txt";	//Please respect this format
+	private final static String CHEMIN = "C:\\Professionnel\\IMT Atlantique\\Info\\Java\\projet2A\\courbes\\complexite.txt";	//Respecter ce format
 
 	public static void main(String[] args) throws ArgumentsException, Exception{
 		PrintStream myConsole = new PrintStream(new File(CHEMIN));
