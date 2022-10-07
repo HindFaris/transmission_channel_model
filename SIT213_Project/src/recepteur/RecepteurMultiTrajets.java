@@ -75,7 +75,7 @@ public class RecepteurMultiTrajets extends Transmetteur<Float, Boolean>{
 		dechiffrer();
 	}
 
-	public Information<Float> nrzAnalyse(){
+	public Float[] nrzAnalyse(){
 		
 		Float[] informationRecueCopie = informationRecue.clonerDansTableau();
 
@@ -97,8 +97,8 @@ public class RecepteurMultiTrajets extends Transmetteur<Float, Boolean>{
 				}
 			}
 		}
-		Information<Float> informationARetourner = new Information<Float>(informationRecueCopie);
-		return informationARetourner;
+
+		return informationRecueCopie;
 	}
 
 
@@ -108,17 +108,10 @@ public class RecepteurMultiTrajets extends Transmetteur<Float, Boolean>{
 	 * @throws InformationNonConformeException
 	 */
 	public  void dechiffrer() throws InformationNonConformeException{
-		LinkedList<Float> information = null; 
-		try {
-			information = informationRecue.cloneInformation();
-		} catch (Exception e) {
-			System.out.println("Err : impossible de cloner informationRecue dans recepteur");
-		}
+		Float[] donnees = new Float[informationRecue.nbElements()];
 		if(formeSignal.equals("NRZ")) {
-			information = this.nrzAnalyse().getContent();
+			donnees = this.nrzAnalyse();
 		}
-
-
 
 		float moyenneLimite = (max+min)/2;	//Moyenne limite pour le signal NRZ et NRZT
 
@@ -128,15 +121,12 @@ public class RecepteurMultiTrajets extends Transmetteur<Float, Boolean>{
 
 		informationEmise  = new Information<Boolean>(); 
 		float moyenneTemp = 0f;
-		int tailleDesBooleens = information.size()/nbEchantillons;
+		int nombreDeBooleens = (donnees.length-tauMax())/nbEchantillons;
 
-
-
-		for(int index = 0 ; index < tailleDesBooleens ; index++){
+		for(int index = 0 ; index < nombreDeBooleens ; index++){
 			moyenneTemp=0f;
 			for (int j = 0; j < nbEchantillons; j++) {
-				moyenneTemp += information.get(0);
-				information.remove(0);
+				moyenneTemp += donnees[index*nbEchantillons+j];
 			}
 
 			moyenneTemp = moyenneTemp/nbEchantillons;
