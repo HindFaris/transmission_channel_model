@@ -7,23 +7,21 @@ import simulateur.ArgumentsException;
 import simulateur.Simulateur;
 
 public class EvolutionTEBEnFonctionDuSNRTestMultiTrajet {
-	private final static String CHEMIN = "C:\\Users\\33663\\Documents\\2eme année ing\\SIT200\\SIT213\\evolution_TEB_SNR_multitrajet_sansBruit.txt";	//Please respect this format
+	private final static String CHEMIN = "C:\\Professionnel\\IMT Atlantique\\Info\\Java\\projet2A\\courbes\\codeurRZ.txt";	//Please respect this format
 
 	public static void main(String[] args) throws ArgumentsException, Exception{
 		PrintStream myConsole = new PrintStream(new File(CHEMIN));
 		System.setOut(myConsole);
 
-		System.out.println("Simulations pour un nombre d'echantillons de 10000");
-		System.out.println("SNR par bit (dB);NRZ sans multitrajet;NRZ multitrajet (A=0.9, dt=20) et (A=1, dt=10) ;NRZ multitrajet (A=0.2, dt=20) et (A=0.3, dt=10)");
-		for(float indice = -50; indice<=20; indice += 1) {
-			Simulateur simulateurNRZ =  new Simulateur(new String[] {"-mess","100000", "-form", "NRZ", "-snrpb", String.valueOf(indice)});
+		System.out.println("Simulations pour un nombre d'echantillons de 100000");
+		System.out.println("SNR par bit (dB);RZ sans codeur;RZ avec codeur");
+		for(float indice = -10; indice<=25; indice += 1) {
+			Simulateur simulateurNRZ =  new Simulateur(new String[] {"-mess","100000", "-form", "RZ", "-snrpb", String.valueOf(indice),"-ti","90","0.8", "120","0.6","150","0.7","15","0.9","25","0.9"});
 			simulateurNRZ.execute();
-			Simulateur simulateurNRZT =  new Simulateur(new String[] {"-mess","100000", "-form", "NRZ", "-snrpb", String.valueOf(indice),"-ti","20","0.9", "10","1"});
+			Simulateur simulateurNRZT =  new Simulateur(new String[] {"-mess","100000", "-form", "RZ", "-snrpb", String.valueOf(indice),"-ti","90","0.8", "120","0.6","150","0.7","15","0.9","25","0.9","-codeur"});
 			simulateurNRZT.execute();
-			Simulateur simulateurRZ =  new Simulateur(new String[] {"-mess","100000", "-form", "NRZ", "-snrpb", String.valueOf(indice),"-ti","20","0.2","10","0.3"});
-			simulateurRZ.execute();
 			System.out.println(Float.toString(indice) + ";" + Float.toString(simulateurNRZ.calculTauxErreurBinaire()) + ";" + 
-					Float.toString(simulateurNRZT.calculTauxErreurBinaire()) + ";" + Float.toString(simulateurRZ.calculTauxErreurBinaire()));
+					Float.toString(simulateurNRZT.calculTauxErreurBinaire()));
 		}
 		myConsole.close();
 	}
