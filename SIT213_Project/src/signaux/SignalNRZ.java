@@ -6,8 +6,8 @@ import information.Information;
 
 public class SignalNRZ extends Signal{
 
-	public SignalNRZ(Information<Boolean> informationRecue, int nbEchantillonss, float min, float max) {
-		super(informationRecue, nbEchantillonss, min, max);
+	public SignalNRZ(Information<Boolean> informationRecue, int nbEchantillons, float min, float max) {
+		super(informationRecue, nbEchantillons, min, max);
 	}
 
 	/**
