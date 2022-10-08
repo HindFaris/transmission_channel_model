@@ -315,7 +315,7 @@ public class Simulateur {
 						taus.add(Integer.valueOf(tiArgsArray[index]));
 					}
 				}
-				System.out.println(alphas+"\n"+taus);
+				//System.out.println(alphas+"\n"+taus);
 			}
 			else if(args[i].matches("-codeur")) {
 				codage = true;
