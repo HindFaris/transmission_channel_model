@@ -1,5 +1,6 @@
 package transmetteurs;
 
+import java.util.Arrays;
 import java.util.LinkedList;
 
 
@@ -40,103 +41,60 @@ public class TransmetteurAnalogiqueMultiTrajets extends Transmetteur<Float, Floa
 
 	@SuppressWarnings("null")
 	public void emettre() {
-		Information<Float> informationAjoutee = new Information<Float>();
-		int tailleInformation = informationRecue.nbElements();
-		int tauMax = 0;
 
-		for (int index = 0; index < taus.size(); index++) {
-			if (tauMax < Integer.valueOf(taus.get(index))) {
-				tauMax= Integer.valueOf(taus.get(index));
+		int tauxMax = 0;
+		//recupere le plus grand taux
+		for(int taux:taus) {
+			if(taux>tauxMax) {
+				tauxMax=taux;
 			}
 		}
-
-		for(int index = 0; index < tauMax; index++) {
-			informationRecue.add(0.0f);
-			informationAjoutee.add(0.0f);
+		
+		Float[] informationRecueCopie = informationRecue.clonerDansTableau(tauxMax);	//copie de l'info recue avec taux '0' a la fin
+		int tailleInfoRecue = informationRecueCopie.length;
+		Float[] tableauEmis = new Float[tailleInfoRecue];
+	
+		for(int indice = 0; indice < tailleInfoRecue; indice ++) {
+			tableauEmis[indice] = informationRecueCopie[indice];
 		}
-
-		//trajet indirect (alpha*s(t-tau))
-		Information<Float> information ;
-		LinkedList<Float> infoRecue = null;
-
-		for (int index = 0; index < taus.size(); index++) {
-			information = new Information<Float>();
-
-			try {
-				infoRecue = informationRecue.cloneInformation();
-			} catch (Exception e1) {
-				System.out.println("ERR : Impossible de cloner l'informationRecue dans Transmetteur MultiTrajet Parfait");
-			}
-
-			int tau = taus.get(index);
-			float alpha = alphas.get(index);
-
-			while (tau>0){
-				information.add(0.0f);
-				tau--;
-			}
-
-			for (int i = 0; i < tailleInformation; i++) {
-				information.add(infoRecue.get(0)*alpha);
-				infoRecue.remove(0);
-			}
-			LinkedList<Float> informationAjouteeCopie = new LinkedList<Float>();
-			try {
-				informationAjouteeCopie = informationAjoutee.cloneInformation();
-				for (int i = 0; i < tailleInformation; i++) {
-					informationAjouteeCopie.add(0.0f);
+		
+		if(!bruitActif) {
+			for(int indice = 0; indice < tailleInfoRecue - tauxMax; indice++) {
+				for(int i = 0; i < taus.size(); i++) {
+					tableauEmis[indice+taus.get(i)] += informationRecueCopie[indice] * alphas.get(i);
 				}
-			} catch (Exception e1) {
-				System.out.println("ERR : Impossible de cloner l'informationRecue dans Transmetteur MultiTrajet Parfait");
-			}
-			int tailleDeInformation = information.nbElements();
-			for (int i = 0; i < tailleDeInformation; i++) {
-				float var = informationAjouteeCopie.get(0)+information.iemeElement(0);
-				information.remove(0);
-				informationAjouteeCopie.remove(0);
-				informationAjoutee.add(var);
-			} 
-
-
-		}
-
-		//signal emis par le transmetteur	
-		if(bruitActif) {
-			
-			Bruit bruit = null;
-			try {
-				bruit = new Bruit(this.ecartType(), tailleInformation+tauMax, seed);
-			} catch (Exception e) {
-				System.out.println("Err : Impossible de creer le bruit dans Transmetteur MultiTrajet Bruite");
-			}
-			System.out.println(informationRecue +"\n"+ informationAjoutee);
-			for(int indice = 0 ; indice < (tailleInformation+tauMax); indice++) {
-				
-				informationEmise.add(informationRecue.iemeElement(0)+ 
-						informationAjoutee.iemeElement(0)+ 
-						bruit.iemeElement(0) );
-				informationRecue.remove(0);
-				informationAjoutee.remove(0);
-				bruit.remove(0);
 			}
 		}
 		else {
-			for(int indice = 0 ; indice < (tailleInformation+tauMax); indice++) {
-				informationEmise.add(informationRecue.iemeElement(0)+ informationAjoutee.iemeElement(0));
-				informationRecue.remove(0);
-				informationAjoutee.remove(0);
+			Bruit bruit = null;
+			try {
+				bruit = new Bruit(this.ecartType(), tailleInfoRecue, seed);
+			} catch (Exception e) {
+				System.out.println("Err : Impossible de creer le bruit dans Transmetteur MultiTrajet Bruite");
+			}
+			Float[] informationBruit = bruit.getSignalSortieInformation().clonerDansTableau();
+			
+			for(int indice = 0; indice < tailleInfoRecue - tauxMax; indice++) {
+				tableauEmis[indice] += informationBruit[indice];
+				for(int i = 0; i < taus.size(); i++) {
+					tableauEmis[indice+taus.get(i)] += informationRecueCopie[indice] * alphas.get(i);
+				}
 			}
 		}
+
+		informationEmise = (Information<Float>) new Information((Float[]) tableauEmis);
+
 		for (DestinationInterface<Float> destinationConnectee : destinationsConnectees) {
 			try {
 				destinationConnectee.recevoir(informationEmise);
 			} catch (InformationNonConformeException e) {
+				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
-
 		}
-		this.informationEmise = informationRecue;
+		this.informationEmise = informationRecue; 
 	}
+
 
 	public float puissance(){
 		float puissance = 0;

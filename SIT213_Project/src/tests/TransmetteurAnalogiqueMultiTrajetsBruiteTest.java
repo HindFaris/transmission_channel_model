@@ -48,6 +48,6 @@ import transmetteurs.*;
 //		Information<Float> InfomationRecue = new Information<Float>(signalRecu);
 //		transmetteur.setInformationRecue(InfomationRecue);
 //		collector.checkThat("La puissance n'est pas la bonne", transmetteur.puissance(),is((float)Math.pow(5,8)));
-//	}
+//	}//
 //	
 //}
