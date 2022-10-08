@@ -3,7 +3,7 @@
  */
 package tests;
 
-import static org.junit.Assert.*;
+/*import static org.junit.Assert.*;
 
 import java.util.stream.Collector;
 
@@ -14,6 +14,7 @@ import static org.hamcrest.CoreMatchers.is;
 
 import information.Information;
 import transmetteurs.*;
+*/
 
 /**
  * @author jerom

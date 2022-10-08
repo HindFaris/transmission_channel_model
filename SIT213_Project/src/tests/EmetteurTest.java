@@ -1,46 +1,66 @@
 package tests;
-import static org.junit.Assert.*;
-import org.junit.Test;
 
+//import static org.junit.Assert.*;
+import org.junit.Rule;
+import org.junit.Test;
+import org.junit.rules.ErrorCollector;
+import static org.hamcrest.CoreMatchers.is;
 import emetteur.EmetteurAnalogique;
 
-
+/**
+ * 
+ * @author gaelc
+ *
+ */
 public class EmetteurTest {
 	
-	private static int nbTests=0;
-	private static int nbErrors=0;
+	@Rule
+	public final ErrorCollector errorCollector= new ErrorCollector();
+	//TODO : JAVADOC
 	
-	public EmetteurTest(){}
-	
-	@Test
-	public void EmetteurInitTest(String typeEmetteur, int nbEchantillons, float min, float max, float SNRParBit, boolean bruitActif) {
-		nbErrors+=6;
-		EmetteurAnalogique Emetteur = new EmetteurAnalogique(typeEmetteur, nbEchantillons, min,  max);
-		assertEquals("Le type emetteur ne correspond pas", typeEmetteur , Emetteur.getTypeEmetteur());
-		nbErrors--;
-		assertEquals( "La valeur de seed ne correspond pas", nbEchantillons, Emetteur.getNbEchantillons());
-		nbErrors--;
-		assertEquals("La valeur de min ne correspond pas", min, Emetteur.getMin());
-		nbErrors--;
-		assertEquals("La valeur de max ne correspond pas", max, Emetteur.getMax());
-		nbErrors--;
+	public EmetteurTest(){
 	}
 	
 	@Test
-	public static Tests testReport(String typeEmetteur) {
-		Tests tr;
+	/**
+	 * 
+	 */
+	public void EmetteurInitTest() {
+		//Arrange
 		int nbEchantillons = 10000;
 		float min = -5;
 		float max = 5;
-		float SNRParBit = 0;
-		boolean bruitActif = true;
+		
+		//Act
+		EmetteurAnalogique emetteurNRZ = new EmetteurAnalogique("NRZ", nbEchantillons, min,  max);
+		EmetteurAnalogique emetteurNRZT = new EmetteurAnalogique("NRZT", nbEchantillons, min,  max);
+		EmetteurAnalogique emetteurRZ = new EmetteurAnalogique("RZ", nbEchantillons, min,  max);
+		
+		//Assert
+		errorCollector.checkThat("Le type emetteur ne correspond pas en NRZ", emetteurNRZ.getTypeEmetteur() , is("NRZ") );
+		errorCollector.checkThat( "Le nombre d'echantillons ne correspond pas",emetteurNRZ.getNbEchantillons() ,is(nbEchantillons));
+		errorCollector.checkThat( "La valeur du min ne correspond pas",emetteurNRZ.getMin() ,is(min));
+		errorCollector.checkThat( "La valeur du max ne correspond pas",emetteurNRZ.getMax() ,is(max));
+
+		errorCollector.checkThat("Le type emetteur ne correspond pas en NRZT", emetteurNRZT.getTypeEmetteur() , is("NRZT") );
+		errorCollector.checkThat( "Le nombre d'echantillons ne correspond pas",emetteurNRZT.getNbEchantillons() ,is(nbEchantillons));
+		errorCollector.checkThat( "La valeur du min ne correspond pas",emetteurNRZT.getMin() ,is(min));
+		errorCollector.checkThat( "La valeur du max ne correspond pas",emetteurNRZT.getMax() ,is(max));
+
+		errorCollector.checkThat("Le type emetteur ne correspond pas en RZ", emetteurRZ.getTypeEmetteur() , is("RZ") );
+		errorCollector.checkThat( "Le nombre d'echantillons ne correspond pas",emetteurRZ.getNbEchantillons() ,is(nbEchantillons));
+		errorCollector.checkThat( "La valeur du min ne correspond pas",emetteurRZ.getMin() ,is(-3));
+		errorCollector.checkThat( "La valeur du max ne correspond pas",emetteurRZ.getMax() ,is(max));
+	}
+
+	public static void main(String[] args) {
 		EmetteurTest E = new EmetteurTest();
 		
-		nbTests+=6;
-		E.EmetteurInitTest(typeEmetteur, nbEchantillons, min, max, SNRParBit, bruitActif);
-		
-		
-		tr = new Tests(nbTests,nbErrors);
-		return tr; 
+		try {
+			E.EmetteurInitTest();
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 	}
 }

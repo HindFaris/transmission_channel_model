@@ -24,7 +24,7 @@ public class SignalNRZ extends Signal{
 		} catch (Exception e) {
 
 		}
-		for(int index = 1; index < nbEchantillon; index++) {
+		for(int index = 1; index < nbEchantillons; index++) {
 			if (copieInformationRecue.get(0) == true) {
 				signalSortieInformation.add(max);
 			}
@@ -37,12 +37,12 @@ public class SignalNRZ extends Signal{
 		for(int bit = 1; bit<tailleSignalEntree;bit++) {
 
 			if (copieInformationRecue.get(0) == true) {
-				for(int index = 0; index < nbEchantillon; index++) {
+				for(int index = 0; index < nbEchantillons; index++) {
 					signalSortieInformation.add(max);
 				}
 			}
 			else {
-				for(int index = 0; index < nbEchantillon; index++) {
+				for(int index = 0; index < nbEchantillons; index++) {
 					signalSortieInformation.add(min);
 				}
 			}
