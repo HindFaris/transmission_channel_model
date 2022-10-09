@@ -47,7 +47,6 @@ public class Decodeur extends Transmetteur<Boolean, Boolean>{
 			destinationConnectee.recevoir(informationEmise);
 		}
 		
-		this.informationEmise = informationRecue;
 	}
 	
 }

@@ -28,6 +28,8 @@ public class Tests {
 			Result result = JUnitCore.runClasses(
 					SourceFixeTest.class, 
 					SourceAleatoireTest.class,
+					CodeurTest.class,
+					DecodeurTest.class,
 					EmetteurTest.class,
 					SignalTest.class,
 					BruitTest.class,

@@ -39,7 +39,6 @@ public class Codeur extends Transmetteur<Boolean, Boolean> {
 			destinationConnectee.recevoir(informationEmise);
 		}
 		
-		this.informationEmise = informationRecue;
 	}
 
 }
