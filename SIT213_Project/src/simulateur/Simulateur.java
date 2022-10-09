@@ -123,7 +123,7 @@ public class Simulateur {
 
 		//instanciation du recepteur
 		if (trajetIndirect) {
-			recepteur = new RecepteurMultiTrajets(nbEchantillon, min, max, formSignal);
+			recepteur = new RecepteurMultiTrajets(nbEchantillon, min, max, formSignal, taus, alphas);
 		} else {
 			recepteur = new Recepteur(nbEchantillon, min, max, formSignal);
 		}
