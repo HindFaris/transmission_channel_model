@@ -8,12 +8,14 @@ import information.*;
 import transmetteurs.*;
 
 //Reception de l'information
-public class RecepteurMultiTrajets extends Transmetteur<Float, Boolean> {
+public class RecepteurMultiTrajets extends Transmetteur<Float, Boolean>{
 
 	private int nbEchantillons;
 	private float min=0f;
 	private float max=1f;
 	private String formeSignal;
+	private LinkedList<Integer> taus;
+	private LinkedList<Float> alphas;
 
 	/**
 	 * permet d'initialiser le Recepteur
@@ -22,54 +24,214 @@ public class RecepteurMultiTrajets extends Transmetteur<Float, Boolean> {
 	 * @param max
 	 * @param formeSignal
 	 */
-	public RecepteurMultiTrajets(int nbEchantillons, float min, float max, String formSignal) {
-		this.min = min;
-		this.max = max;
-		this.nbEchantillons = nbEchantillons;
-		this.formeSignal = formSignal;
+	public RecepteurMultiTrajets(int _nbEchantillons, float min, float max, String formSignal, LinkedList<Integer> taus, LinkedList<Float> alphas) {
+		this.min=min;
+		this.max=max;
+		nbEchantillons=_nbEchantillons;
+		formeSignal = formSignal;
+		this.taus = taus;
+		this.alphas = alphas;
+
 	}
 
+	public int tauMax() {
+		int tauxMax = 0;
+		for(int taux:taus) {
+			if(taux>tauxMax) {
+				tauxMax=taux;
+			}
+		}
+		return tauxMax;
+	}
+	/*
+	public void equivalentAlphasTaus() {
+
+		if(taus.size() > 1) {
+			LinkedList<Integer> indicesAEnlever = new LinkedList<Integer>();
+			for(int i = 0; i < taus.size()-1; i++) {
+				for(int j = i+1; j<taus.size(); j++) {
+					if(taus.get(i) == taus.get(j) && (indicesAEnlever.contains(j)) == false) {
+						indicesAEnlever.add(j);
+						alphas.set(i, alphas.get(i)+alphas.get(j));
+					}
+				}
+			}
+			if(!indicesAEnlever.isEmpty()) {
+				for(Integer indice : indicesAEnlever) {
+					taus.remove((int) indice);
+					alphas.remove((int)indice);
+				}
+			}
+		}
+	}
+	 */
 	/**
-	 * permet de recevoir l'nformation float, ensuite fait appel a la methode dechiffrer 
+	 * permet de recevoir l'information float, ensuite fait appel a la methode dechiffrer 
 	 * pour la transformer en boolean
 	 * @param information
 	 */
-	public  void recevoir(Information <Float> information){
+	public  void recevoir(Information <Float> information) throws InformationNonConformeException{
 		informationRecue = information;
-		dechiffrer(informationRecue);
+		dechiffrer();
 	}
 
-	/**
-	 * permet de dechiffrer l'information et de passer une information float a une information boolean
-	 * @param information
-	 * @throws Exception 
-	 */
+	public Float[] nrzAnalyse(){
 
-	public  void dechiffrer(Information <Float> informationRecue){
+		Float[] informationRecueCopie = informationRecue.clonerDansTableau();
 
-		float moyenneLimite;	
-		if(formeSignal == "RZ") moyenneLimite = (max-min)*1/6 + min; //Moyenne limite pour le signal RZ
-		else moyenneLimite = (max+min)/2;//Moyenne limite pour le signal NRZ et NRZT
-		
-		LinkedList<Float> infoRecue = null; 
-		try {
-			infoRecue = informationRecue.cloneInformation();
-		} catch (Exception e) {
-			System.out.println("Clone info recept multi trajet");
+		int tailleTotaleMoinsTauMax = informationRecueCopie.length-tauMax();
+		float elementCourant;
+
+		for(int indice = 0; indice < tailleTotaleMoinsTauMax; indice++) {
+
+			elementCourant = informationRecueCopie[indice];
+
+			if(elementCourant >= (max+min)/2) {	//On est plus proche du max
+				for(int i = 0; i < taus.size(); i++) {
+					informationRecueCopie[indice + taus.get(i)] -= (max) * alphas.get(i);	//Pour tous les taux on vient enlever le alpha additionne
+				}
+			}
+			else {	//On est plus proche du min
+				for(int i = 0; i < taus.size(); i++) {
+					informationRecueCopie[indice + taus.get(i)] -= (min) * alphas.get(i);	//Pour tous les taux on vient ajouter le alpha additionne
+				}
+			}
 		}
 
-		informationEmise  = new Information<Boolean>();
-		float moyenneTemp = 0f;
-		int tailleDesBooleens = infoRecue.size()/nbEchantillons;
+		return informationRecueCopie;
+	}
+	
+	public Float[] rzAnalyse(){
 
-				
-		for(int index = 0 ; index < tailleDesBooleens ; index++){
+		Float[] informationRecueCopie = informationRecue.clonerDansTableau();
+
+		int tailleTotaleMoinsTauMax = informationRecueCopie.length-tauMax();
+		float elementCourant;
+
+		for(int indice = 0; indice < tailleTotaleMoinsTauMax; indice++) {
+
+			elementCourant = informationRecueCopie[indice];
+
+			if(elementCourant >= (max+min)/2) {	//On est plus proche du max
+				for(int i = 0; i < taus.size(); i++) {
+					informationRecueCopie[indice + taus.get(i)] -= (max) * alphas.get(i);	//Pour tous les taux on vient enlever le alpha additionne
+				}
+			}
+			else {	//On est plus proche du min
+				for(int i = 0; i < taus.size(); i++) {
+					informationRecueCopie[indice + taus.get(i)] -= (min) * alphas.get(i);	//Pour tous les taux on vient ajouter le alpha additionne
+				}
+			}
+		}
+		return informationRecueCopie;
+	}
+
+	public Float[] nrztAnalyse(){
+
+		Float[] informationRecueCopie = informationRecue.clonerDansTableau();
+		float coefficientDirecteur = (max-((max+min)/2))/(nbEchantillons/3);
+		int tailleTotaleMoinsTauMax = informationRecueCopie.length-tauMax();
+		float elementCourant;
+		int indiceCourant;
+		float moyenne = (max+min)/2;
+		
+		for(int iemeInformation = 0; iemeInformation < tailleTotaleMoinsTauMax/nbEchantillons; iemeInformation++) {
+			for(int indice = nbEchantillons/3; indice < 2*nbEchantillons/3; indice++) {
+				indiceCourant = indice+(iemeInformation*nbEchantillons);
+				elementCourant = informationRecueCopie[indiceCourant];
+
+				if(elementCourant >= (max+min)/2) {	//On est plus proche du max
+					for(int i = 0; i < taus.size(); i++) {
+						informationRecueCopie[indiceCourant + taus.get(i)] -= (max) * alphas.get(i);	//Pour tous les taux on vient enlever le alpha additionne
+					}
+				}
+				else {	//On est plus proche du min
+					for(int i = 0; i < taus.size(); i++) {
+						informationRecueCopie[indiceCourant + taus.get(i)] -= (min) * alphas.get(i);	//Pour tous les taux on vient ajouter le alpha additionne
+					}
+				}
+			}
+		}
+
+		return informationRecueCopie;
+	}
+
+	public void dechiffrerNrz(Float[] donnees) {
+		float moyenneLimite = (max+min)/2;	//Moyenne limite pour le signal NRZ et NRZT
+
+		if(formeSignal.equals("RZ")) {
+			moyenneLimite = (max-min)*1/6 + min;
+		}
+
+		informationEmise  = new Information<Boolean>(); 
+		float moyenneTemp = 0f;
+		int nombreDeBooleens = (donnees.length-tauMax())/nbEchantillons;
+
+		for(int index = 0 ; index < nombreDeBooleens ; index++){
 			moyenneTemp=0f;
 			for (int j = 0; j < nbEchantillons; j++) {
-				moyenneTemp += infoRecue.get(0);
-				infoRecue.remove(0);
+				moyenneTemp += donnees[index*nbEchantillons+j];
 			}
+
 			moyenneTemp = moyenneTemp/nbEchantillons;
+
+			if(moyenneTemp >= moyenneLimite) {
+				informationEmise.add(true);
+			}
+			else {
+				informationEmise.add(false);
+			}
+		}
+	}
+	
+	public void dechiffrerRz(Float[] donnees) {
+		float moyenneLimite = (max+min)/2;	//Moyenne limite pour le signal NRZ et NRZT
+
+		informationEmise  = new Information<Boolean>(); 
+		float moyenneTemp = 0f;
+		int nombreDeBooleens = (donnees.length-tauMax())/nbEchantillons;
+		int coefficient = 0;
+		for (int j = nbEchantillons; j < 2*nbEchantillons/3; j++) {
+			coefficient += 1;
+		}
+
+		for(int index = 0 ; index < nombreDeBooleens ; index++){
+			moyenneTemp=0f;
+			for (int j = nbEchantillons/3; j < 2*nbEchantillons/3; j++) {
+				moyenneTemp += donnees[index*nbEchantillons+j];
+			}
+
+			moyenneTemp = moyenneTemp/coefficient;
+
+			if(moyenneTemp >= moyenneLimite) {
+				informationEmise.add(true);
+			}
+			else {
+				informationEmise.add(false);
+			}
+		}
+	}
+	
+	public void dechiffrerNrzt(Float[] donnees) {
+		float moyenneLimite = (max+min)/2;	//Moyenne limite pour le signal NRZ et NRZT
+
+		informationEmise  = new Information<Boolean>(); 
+		float moyenneTemp = 0f;
+		int nombreDeBooleens = (donnees.length-tauMax())/nbEchantillons;
+		
+		int coefficient = 0;
+		for (int j = nbEchantillons; j < 2*nbEchantillons/3; j++) {
+			coefficient += 1;
+		}
+		
+		for(int index = 0 ; index < nombreDeBooleens ; index++){
+			moyenneTemp=0f;
+			
+			for (int j = nbEchantillons/3; j < 2*nbEchantillons/3; j++) {
+				moyenneTemp += donnees[index*nbEchantillons+j];
+			}
+
+			moyenneTemp = moyenneTemp/coefficient;
 
 			if(moyenneTemp >= moyenneLimite) {
 				informationEmise.add(true);
@@ -81,7 +243,28 @@ public class RecepteurMultiTrajets extends Transmetteur<Float, Boolean> {
 	}
 
 	/**
-	 * emet aux differentes destinations
+	 * permet de dechiffrer l'information et de passer une information float a une information boolean
+	 * @param information
+	 * @throws InformationNonConformeException
+	 */
+	public  void dechiffrer() throws InformationNonConformeException{
+		Float[] donnees = new Float[informationRecue.nbElements()];
+		if(formeSignal.equals("NRZ")) {
+			donnees = this.nrzAnalyse();
+			dechiffrerNrz(donnees);
+		}
+		else if(formeSignal.equals("RZ")) {
+			donnees = this.rzAnalyse();
+			dechiffrerRz(donnees);
+		}
+		else {
+			donnees = this.nrztAnalyse();
+			dechiffrerNrzt(donnees);
+		}
+	}
+
+	/**
+	 * transmet aux differentes destinations
 	 */
 
 	public void emettre() throws InformationNonConformeException{
@@ -106,4 +289,5 @@ public class RecepteurMultiTrajets extends Transmetteur<Float, Boolean> {
 	public String getFormeSignal() {
 		return formeSignal;
 	}
+
 }
