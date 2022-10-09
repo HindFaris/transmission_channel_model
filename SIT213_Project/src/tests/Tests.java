@@ -34,7 +34,7 @@ public class Tests {
 					SignalTest.class,
 					BruitTest.class,
 					TransmetteurAnalogiqueBruiteTest.class,
-					//TransmetteurAnalogiqueMultiTrajetsBruiteTest.class,
+					TransmetteurAnalogiqueMultiTrajetsBruiteTest.class,
 					//TODO Adapter les tests multitrajets
 					RecepteurTest.class
 					//,SimulateurTest.class

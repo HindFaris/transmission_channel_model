@@ -49,7 +49,7 @@ public class EmetteurTest {
 
 		errorCollector.checkThat("Le type emetteur ne correspond pas en RZ", emetteurRZ.getTypeEmetteur() , is("RZ") );
 		errorCollector.checkThat( "Le nombre d'echantillons ne correspond pas",emetteurRZ.getNbEchantillons() ,is(nbEchantillons));
-		errorCollector.checkThat( "La valeur du min ne correspond pas",emetteurRZ.getMin() ,is(-3));
+		errorCollector.checkThat( "La valeur du min ne correspond pas",emetteurRZ.getMin() ,is(min));
 		errorCollector.checkThat( "La valeur du max ne correspond pas",emetteurRZ.getMax() ,is(max));
 	}
 
