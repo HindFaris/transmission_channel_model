@@ -5,6 +5,10 @@ import information.Information;
 import information.InformationNonConformeException;
 import transmetteurs.Transmetteur;
 
+/**
+ * Classe definissant le decodage par le Recepteur.
+ *
+ */
 public class Decodeur extends Transmetteur<Boolean, Boolean>{
 
 	@Override
@@ -13,6 +17,12 @@ public class Decodeur extends Transmetteur<Boolean, Boolean>{
 	}
 
 	@Override
+	/**
+	 * On traduit l'information recue du Canal
+	 * Pour un triplet de bit a 101 (aucune erreur) ou 111, 001, 100 (on fait l'assomption qu'un bit est en erreur) en entree on ajoute 1 a l'information qui sera emise
+	 * Pour le reste des combinaisons des triplets de bit en entree on ajoute 0 a l'information qui sera emise
+	 * Enfin, on emets l'information aux destinations connectees.
+	 */
 	public void emettre() throws InformationNonConformeException {
 		informationEmise = new Information<Boolean>();
 		final int TAILLEINFORMATIONAEMETTRE = informationRecue.nbElements()/3;

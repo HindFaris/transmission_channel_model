@@ -21,8 +21,8 @@ public class TransmetteurAnalogiqueMultiTrajetsBruiteTest {
 	public ErrorCollector collector = new ErrorCollector();
 	
 	/**
-	 * Test method for {@link transmetteurs.TransmetteurAnalogiqueMultiTrajetsBruite#ecartType()}.
-	 * @throws Exception 
+	 * Test method for {@link transmetteurs.TransmetteurAnalogiqueMultiTrajets#ecartType()}.
+	 * @throws Exception quelconque
 	 */
 	@Test
 	public void testEcartType() throws Exception {
@@ -48,7 +48,7 @@ public class TransmetteurAnalogiqueMultiTrajetsBruiteTest {
 	}
 
 	/**
-	 * Test method for {@link transmetteurs.TransmetteurAnalogiqueMultiTrajetsBruite#puissance()}.
+	 * Test method for {@link transmetteurs.TransmetteurAnalogiqueMultiTrajets#puissance()}.
 	 */
 	@Test
 	public void testPuissance() {

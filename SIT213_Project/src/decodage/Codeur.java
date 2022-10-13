@@ -6,6 +6,9 @@ import information.Information;
 import information.InformationNonConformeException;
 import transmetteurs.Transmetteur;
 
+/**
+ * Classe definissant le codage par l'Emetteur.
+ */
 public class Codeur extends Transmetteur<Boolean, Boolean> {
 
 	@Override
@@ -14,6 +17,12 @@ public class Codeur extends Transmetteur<Boolean, Boolean> {
 	}
 
 	@Override
+	/**
+	 * On traduit l'information recue de l'Emetteur (l'Objet JAVA du moins, car le codeur fait en soit partie de l'emission)
+	 * Pour un bit a 1 en entree on ajoute 101 a l'information qui sera emise
+	 * Pour un bit a 0 en entree on ajoute 010 a l'information qui sera emise
+	 * Enfin, on emets l'information aux destinations connectees.
+	 */
 	public void emettre() throws InformationNonConformeException {
 		informationEmise = new Information<Boolean>();
 		final int TAILLEINFORMATIONRECUE = informationRecue.nbElements();
@@ -21,7 +30,6 @@ public class Codeur extends Transmetteur<Boolean, Boolean> {
 		try {
 			informationRecueCopie = informationRecue.cloneInformation();
 		} catch (Exception e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		for(int indice = 0; indice < TAILLEINFORMATIONRECUE; indice++) {
@@ -30,15 +38,11 @@ public class Codeur extends Transmetteur<Boolean, Boolean> {
 			}
 			else {
 				informationEmise.add(false,true,false);
-
 			}
 			informationRecueCopie.remove(0);
 		}
-		
 		for (DestinationInterface<Boolean> destinationConnectee : destinationsConnectees) {
 			destinationConnectee.recevoir(informationEmise);
 		}
-		
 	}
-
 }

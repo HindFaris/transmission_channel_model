@@ -92,10 +92,7 @@ public class Simulateur {
 	/**	Indique si le simulateur utilise ou non un codeur � l'emission et un decodeur a la reception **/
 	private boolean codage = false;
 	
-	/** Un simple getter pour indiquer si on utilise ou non le codage **/
-	public boolean getCodage() {
-		return codage;
-	}
+	
 
 	/** le  codeur de la chaine de transmission */
 	private Codeur codeur = null;
@@ -104,8 +101,8 @@ public class Simulateur {
 	private Decodeur decodeur = null;
 
 	/** Le constructeur de Simulateur construit une chaine de
-	 * transmission composee d'une Source <Boolean>, d'une Destination
-	 * <Boolean> et de Transmetteur(s) [voir la methode
+	 * transmission composee d'une Source Boolean, d'une Destination
+	 * Boolean et de Transmetteur(s) [voir la methode
 	 * analyseArguments]...  <br> Les differents composants de la
 	 * chaine de transmission (Source, Transmetteur(s), Destination,
 	 * Sonde(s) de visualisation) sont cres et connectes.
@@ -405,7 +402,7 @@ public class Simulateur {
 
 	/** La methode qui calcule le taux d'erreur binaire en comparant
 	 * les bits du message emis avec ceux du message recu.
-	 * @return  La valeur du Taux dErreur Binaire.
+	 * @return  (float)nbVariablesDifferentes/TAILLEMOTBINAIRE La valeur du Taux dErreur Binaire.
 	 */   	   
 
 	public float  calculTauxErreurBinaire() {
@@ -464,65 +461,80 @@ public class Simulateur {
 		return nbEchantillon;
 	}
 
+	/**
+	 * 
+	 * @return min Le minimum du signal
+	 */
 	public float getMin() {
 		return min;
 	}
 
+	/**
+	 * 
+	 * @return max Le maximum du signal
+	 */
 	public float getMax() {
 		return max;
 	}
 
+	/**
+	 * 
+	 * @return formeSignal la forme du signal (NRZ, NRZT ou RZ)
+	 */
 	public String getFormSignal() {
 		return formSignal;
 	}
 
+	/**
+	 * 
+	 * @return seed la graine a utiliser en cas de source aleatoire
+	 */
 	public Integer getSeed() {
 		return seed;
 	}
 
+	/**
+	 * 
+	 * @return nbBitsMess le nombre de bit du message a transmettre
+	 */
 	public int getNbBitsMess() {
 		return nbBitsMess;
 	}
 
+	/**
+	 * 
+	 * @return messageString la String correspondant au message
+	 */
 	public String getMessageString() {
 		return messageString;
 	}
-
-	public Source<Boolean> getSource() {
-		return source;
-	}
-
-	public Transmetteur<Float, Float> getTransmetteurAnalogiqueParfait() {
-		return transmetteurAnalogiqueParfait;
-	}
-
-	public Destination<Boolean> getDestination() {
-		return destination;
-	}
-
-	public Transmetteur<Boolean, Float> getEmetteurAnalogique() {
-		return emetteurAnalogique;
-	}
-
-	public Transmetteur<Float, Boolean> getRecepteur() {
-		return recepteur;
-	}
-
+	
+	/**
+	 *  Un simple getter qui renvoie la valeur du SNR par bit
+	 * @return SNRParBit le SNR par bit du signal
+	 */
 	public float getSNRParBit() {
 		return SNRParBit;
 	}
 
+	/**
+	 * Un simple getter qui renvoie un booleen disant si le message est bruite ou non
+	 * @return bruitActif le boolean indiquant si le message est bruite ou non
+	 */
 	public boolean getBruitActif() {
 		return bruitActif;
 	}
 
+	/**
+	 * Un simple getter qui renvoie un booleen disant si le message utilise les trajets multiples ou non
+	 * @return trajetIndirect le boolean indiquant si le message utilise les trajets multiples ou non
+	 */
 	public boolean getTrajetIndirect() {
 		return trajetIndirect;
 	}
 	/**
 	 * Un simple getter qui renvoie la taille du mot  recu a la destiation
-	 * @return int 
-	 * 			la longueur du mot recu
+	 * @return destination.getLongueurInformationRecue() la longueur du mot recu
 	 */
 	public int getTailleMotDestination(){
 		return destination.getLongueurInformationRecue();
@@ -530,8 +542,7 @@ public class Simulateur {
 
 	/**
 	 * Un simple getter qui renvoie un booleen disant si le message est aleatoire ou non
-	 * @return -boolean
-	 * 			vrai si le message est aleatoire. Faux sinon
+	 * @return messageAleatoire vrai si le message est aleatoire. Faux sinon
 	 */
 	public boolean getMessageAleatoire() {
 		return messageAleatoire;
@@ -539,8 +550,7 @@ public class Simulateur {
 
 	/**
 	 * Un simple getter qui renvoie un booleen disant si le message a une germe ou non
-	 * @return -boolean
-	 * 			vrai si le message contient une germe. Faux sinon
+	 * @return aleatoireAvecGerme vrai si le message contient une germe. Faux sinon
 	 */
 	public boolean getAleatoireAvecGerme() {
 		return aleatoireAvecGerme;
@@ -548,18 +558,32 @@ public class Simulateur {
 
 	/**
 	 * Un simple getter qui renvoie un booleen disant si les sondes sont actives
-	 * @return -boolean
-	 * 			vrai si les sondes sont actives. Faux sinon
+	 * @return affichage vrai si les sondes sont actives. Faux sinon
 	 */
 	public boolean getAffichage() {
 		return affichage;
 	}
 
+	/**
+	 * Un simple getter qui renvoie les alphas (attenuation) des trajets multiples
+	 * @return alphas les alphas (attenuation) des trajets multiples
+	 */
 	public LinkedList<Float> getAlphas() {
 		return alphas;
 	}
 
+	/**
+	 * Un simple getter qui renvoie les taus (retard) des trajets multiples
+	 * @return taus les taus (retard) des trajets multiples
+	 */
 	public LinkedList<Integer> getTaus() {
 		return taus;
+	}
+	
+	/** Un simple getter pour indiquer si on utilise ou non le codage 
+	 * @return codage le boolean qui indique si on utilise le codage ou non
+	 */
+	public boolean getCodage() {
+		return codage;
 	}
 }

@@ -8,6 +8,11 @@ import information.*;
 import transmetteurs.*;
 
 //Reception de l'information
+/**
+ * Classe definissant le Recepteur utilise lors de l'ajout de Multi trajets
+ * @author gaelc
+ *
+ */
 public class RecepteurMultiTrajets extends Transmetteur<Float, Boolean>{
 
 	private int nbEchantillons;
@@ -19,21 +24,27 @@ public class RecepteurMultiTrajets extends Transmetteur<Float, Boolean>{
 
 	/**
 	 * permet d'initialiser le Recepteur
-	 * @param _nbEchantillons
-	 * @param min
-	 * @param max
-	 * @param formeSignal
+	 * @param nbEchantillons le nombre d'echantillons
+	 * @param min le minimum du signal
+	 * @param max le maximum du signal
+	 * @param formSignal la forme du signal (NRZ, NRZT ou RZ)
+	 * @param alphas les alphas (attenuation) des multi trajets
+	 * @param taus les taus (retards) des multi trajets
 	 */
-	public RecepteurMultiTrajets(int _nbEchantillons, float min, float max, String formSignal, LinkedList<Integer> taus, LinkedList<Float> alphas) {
+	public RecepteurMultiTrajets(int nbEchantillons, float min, float max, String formSignal, LinkedList<Integer> taus, LinkedList<Float> alphas) {
 		this.min=min;
 		this.max=max;
-		nbEchantillons=_nbEchantillons;
-		formeSignal = formSignal;
+		this.nbEchantillons=nbEchantillons;
+		this.formeSignal = formSignal;
 		this.taus = taus;
 		this.alphas = alphas;
 
 	}
-
+	
+	/**
+	 * Methode qui renvoie le tau maximum de la liste des taus
+	 * @return tauMax le tau maximal
+	 */
 	public int tauMax() {
 		int tauxMax = 0;
 		for(int taux:taus) {
@@ -43,39 +54,23 @@ public class RecepteurMultiTrajets extends Transmetteur<Float, Boolean>{
 		}
 		return tauxMax;
 	}
-	/*
-	public void equivalentAlphasTaus() {
-
-		if(taus.size() > 1) {
-			LinkedList<Integer> indicesAEnlever = new LinkedList<Integer>();
-			for(int i = 0; i < taus.size()-1; i++) {
-				for(int j = i+1; j<taus.size(); j++) {
-					if(taus.get(i) == taus.get(j) && (indicesAEnlever.contains(j)) == false) {
-						indicesAEnlever.add(j);
-						alphas.set(i, alphas.get(i)+alphas.get(j));
-					}
-				}
-			}
-			if(!indicesAEnlever.isEmpty()) {
-				for(Integer indice : indicesAEnlever) {
-					taus.remove((int) indice);
-					alphas.remove((int)indice);
-				}
-			}
-		}
-	}
-	 */
+	
+	
 	/**
 	 * permet de recevoir l'information float, ensuite fait appel a la methode dechiffrer 
 	 * pour la transformer en boolean
-	 * @param information
+	 * @param information L'information a recevoir
 	 */
 	public  void recevoir(Information <Float> information) throws InformationNonConformeException{
 		informationRecue = information;
 		dechiffrer();
 	}
-
-	public Float[] nrzAnalyse(){
+	
+	/**
+	 * Analyse les donnees pour essayer d'eliminer les trajets multiples
+	 * @return informationRecueCopie L'information analysee, les trajets retires
+	 */
+	public Float[] analyseNRZ(){
 
 		Float[] informationRecueCopie = informationRecue.clonerDansTableau();
 
@@ -101,7 +96,11 @@ public class RecepteurMultiTrajets extends Transmetteur<Float, Boolean>{
 		return informationRecueCopie;
 	}
 	
-	public Float[] rzAnalyse(){
+	/**
+	 * Analyse les donnees pour essayer d'eliminer les trajets multiples
+	 * @return informationRecueCopie L'information analysee, les trajets retires
+	 */
+	public Float[] analyseRZ(){
 
 		Float[] informationRecueCopie = informationRecue.clonerDansTableau();
 
@@ -125,15 +124,19 @@ public class RecepteurMultiTrajets extends Transmetteur<Float, Boolean>{
 		}
 		return informationRecueCopie;
 	}
-
-	public Float[] nrztAnalyse(){
+	
+	/**
+	 * Analyse les donnees pour essayer d'eliminer les trajets multiples
+	 * @return informationRecueCopie L'information analysee, les trajets retires
+	 */
+	public Float[] analyseNRZT(){
 
 		Float[] informationRecueCopie = informationRecue.clonerDansTableau();
-		float coefficientDirecteur = (max-((max+min)/2))/(nbEchantillons/3);
+		//float coefficientDirecteur = (max-((max+min)/2))/(nbEchantillons/3); //Ancien calcul du coefficient direteur
 		int tailleTotaleMoinsTauMax = informationRecueCopie.length-tauMax();
 		float elementCourant;
 		int indiceCourant;
-		float moyenne = (max+min)/2;
+		//float moyenne = (max+min)/2;  //Ancien calcul de la moyenne simple
 		
 		for(int iemeInformation = 0; iemeInformation < tailleTotaleMoinsTauMax/nbEchantillons; iemeInformation++) {
 			for(int indice = nbEchantillons/3; indice < 2*nbEchantillons/3; indice++) {
@@ -155,8 +158,12 @@ public class RecepteurMultiTrajets extends Transmetteur<Float, Boolean>{
 
 		return informationRecueCopie;
 	}
-
-	public void dechiffrerNrz(Float[] donnees) {
+	
+	/**
+	 * Dechiffre les donnees en parametres pour estimer le bit emis
+	 * @param donnees	Les donnes analysee
+	 */
+	public void dechiffrerNRZ(Float[] donnees) {
 		float moyenneLimite = (max+min)/2;	//Moyenne limite pour le signal NRZ et NRZT
 
 		if(formeSignal.equals("RZ")) {
@@ -184,7 +191,11 @@ public class RecepteurMultiTrajets extends Transmetteur<Float, Boolean>{
 		}
 	}
 	
-	public void dechiffrerRz(Float[] donnees) {
+	/**
+	 * Dechiffre les donnees en parametres pour estimer le bit emis
+	 * @param donnees Les donnes analysee
+	 */
+	public void dechiffrerRZ(Float[] donnees) {
 		float moyenneLimite = (max+min)/2;	//Moyenne limite pour le signal NRZ et NRZT
 		informationEmise  = new Information<Boolean>(); 
 		float moyenneTemp = 0f;
@@ -231,7 +242,11 @@ public class RecepteurMultiTrajets extends Transmetteur<Float, Boolean>{
 		}
 	}
 	
-	public void dechiffrerNrzt(Float[] donnees) {
+	/**
+	 * Dechiffre les donnees en parametres pour estimer le bit emis
+	 * @param donnees Les donnes analysee
+	 */
+	public void dechiffrerNRZT(Float[] donnees) {
 		float moyenneLimite = (max+min)/2;	//Moyenne limite pour le signal NRZ et NRZT
 
 		informationEmise  = new Information<Boolean>(); 
@@ -263,50 +278,86 @@ public class RecepteurMultiTrajets extends Transmetteur<Float, Boolean>{
 
 	/**
 	 * permet de dechiffrer l'information et de passer une information float a une information boolean
-	 * @param information
-	 * @throws InformationNonConformeException
+	 * @throws InformationNonConformeException L'exception est levee si l'information n'est pas conforme
 	 */
 	public  void dechiffrer() throws InformationNonConformeException{
 		Float[] donnees = new Float[informationRecue.nbElements()];
 		if(formeSignal.equals("NRZ")) {
-			donnees = this.nrzAnalyse();
-			dechiffrerNrz(donnees);
+			donnees = this.analyseNRZ();
+			dechiffrerNRZ(donnees);
 		}
 		else if(formeSignal.equals("RZ")) {
-			donnees = this.rzAnalyse();
-			dechiffrerRz(donnees);
+			donnees = this.analyseRZ();
+			dechiffrerRZ(donnees);
 		}
 		else {
-			donnees = this.nrztAnalyse();
-			dechiffrerNrzt(donnees);
+			donnees = this.analyseNRZT();
+			dechiffrerNRZT(donnees);
 		}
 	}
 
 	/**
-	 * transmet aux differentes destinations
+	 * Envoie aux differentes destinations
 	 */
-
 	public void emettre() throws InformationNonConformeException{
 
 		for (DestinationInterface <Boolean> destinationConnectee : destinationsConnectees) {
 			destinationConnectee.recevoir(informationEmise);
 		}
 	}
-
+	
+	/**
+	 * @return nbEchantillons le nombre d'echantillons de la transmission
+	 */
 	public int getNbEchantillons() {
 		return nbEchantillons;
 	}
-
+	
+	/**
+	 * 
+	 * @return min le Minimum
+	 */
 	public float getMin() {
 		return min;
 	}
-
+	
+	/**
+	 * 
+	 * @return max le Maximum
+	 */
 	public float getMax() {
 		return max;
 	}
-
+	
+	/**
+	 * 
+	 * @return formeSignal la forme du Signal (NRZ, NRZT ou RZ)
+	 */
 	public String getFormeSignal() {
 		return formeSignal;
 	}
 
 }
+
+/* Ancienne methode (ARCHIVE)
+public void equivalentAlphasTaus() {
+
+	if(taus.size() > 1) {
+		LinkedList<Integer> indicesAEnlever = new LinkedList<Integer>();
+		for(int i = 0; i < taus.size()-1; i++) {
+			for(int j = i+1; j<taus.size(); j++) {
+				if(taus.get(i) == taus.get(j) && (indicesAEnlever.contains(j)) == false) {
+					indicesAEnlever.add(j);
+					alphas.set(i, alphas.get(i)+alphas.get(j));
+				}
+			}
+		}
+		if(!indicesAEnlever.isEmpty()) {
+			for(Integer indice : indicesAEnlever) {
+				taus.remove((int) indice);
+				alphas.remove((int)indice);
+			}
+		}
+	}
+}
+ */

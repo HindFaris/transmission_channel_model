@@ -11,15 +11,26 @@ import java.util.LinkedList;
 
 import simulateur.*;
 
+/**
+ * Le Test sur la classe Simulateur, qui teste les arguments ainsi que le process complet
+ * @author gaelc
+ *
+ */
 public class SimulateurTest {
 
 	@Rule
 	public final ErrorCollector errorCollector= new ErrorCollector();
-	//TODO : JAVADOC
 	
+	/**
+	 * Constructeur du Test
+	 */
 	public SimulateurTest(){}
 	
 	@Test
+	/**
+	 * Test pour tous les arguments par défaut
+	 * @throws ArgumentsException si les arguments ne sont pas corrects
+	 */
 	public void analyseArgumentDefautTest()  throws  ArgumentsException {
 		//Arrange and Act
 		Simulateur simulateur =  new Simulateur(new String[] {}); //Permet de tester toutes les valeurs par défaut
@@ -39,6 +50,10 @@ public class SimulateurTest {
 	}
 
 	@Test
+	/**
+	 * Test pour l'argument Message
+	 * @throws ArgumentsException si les arguments ne sont pas corrects
+	 */
 	public void analyseArgumentMessTest()  throws  ArgumentsException {
 		//Arrange and Act
 		Simulateur simulateur2 =  new Simulateur(new String[] {"-mess","1010010001"});
@@ -53,18 +68,30 @@ public class SimulateurTest {
 	}
 	
 	@Test(expected = ArgumentsException.class)
+	/**
+	 * Test pour l'argument Message avec un float
+	 * @throws ArgumentsException si les arguments ne sont pas corrects
+	 */
 	public void analyseArgumentMessFloatFailTest()  throws  ArgumentsException {
 		//Arrange, Act and Assert
 		new Simulateur(new String[] {"-mess","1.1"});
 	}
 
 	@Test(expected = ArgumentsException.class)
+	/**
+	 * Test pour l'argument Message avec 0 
+	 * @throws ArgumentsException si les arguments ne sont pas corrects
+	 */
 	public void analyseArgumentMessFailTest()  throws  ArgumentsException {
 		//Arrange, Act and Assert
 		new Simulateur(new String[] {"-mess","0"});
 	}
 	
 	@Test
+	/**
+	 * Test pour l'argument Sonde
+	 * @throws ArgumentsException si les arguments ne sont pas corrects
+	 */
 	public void analyseArgumentSondeTest()  throws  ArgumentsException {
 		//Arrange and Act
 		Simulateur simulateur =  new Simulateur(new String[] {"-s"});;
@@ -74,6 +101,10 @@ public class SimulateurTest {
 	}
 	
 	@Test
+	/**
+	 * Test pour l'argument Seed
+	 * @throws ArgumentsException si les arguments ne sont pas corrects
+	 */
 	public void analyseArgumentSeedTest()  throws  ArgumentsException {
 		//Arrange and Act
 		Simulateur simulateur =  new Simulateur(new String[] {"-seed","1"});
@@ -85,12 +116,20 @@ public class SimulateurTest {
 	}
 	
 	@Test(expected = ArgumentsException.class)
+	/**
+	 *  Test pour l'argument Seed avec un float
+	 * @throws ArgumentsException si les arguments ne sont pas corrects
+	 */
 	public void analyseArgumentSeedFailTest()  throws  ArgumentsException {
 		//Arrange, Act and Assert
 		new Simulateur(new String[] {"-seed","1.1"});
 	}
 	
 	@Test
+	/**
+	 * Test pour l'argument form
+	 * @throws ArgumentsException si les arguments ne sont pas corrects
+	 */
 	public void analyseArgumentFormTest()  throws  ArgumentsException {
 		//Arrange and Act
 		Simulateur simulateur =  new Simulateur(new String[] {"-form","NRZ"});
@@ -104,12 +143,20 @@ public class SimulateurTest {
 	}
 	
 	@Test(expected = ArgumentsException.class)
+	/**
+	 * Test pour l'argument form avec une forme autre que les trois attendues
+	 * @throws ArgumentsException si les arguments ne sont pas corrects
+	 */
 	public void analyseArgumentFormFailTest()  throws  ArgumentsException {
 		//Arrange, Act and Assert
 		new Simulateur(new String[] {"-form","AZERTY"});
 	}
 	
 	@Test
+	/**
+	 * Test pour l'argument nbEch 
+	 * @throws ArgumentsException si les arguments ne sont pas corrects
+	 */
 	public void analyseArgumentEchTest()  throws  ArgumentsException {
 		//Arrange and Act
 		Simulateur simulateur =  new Simulateur(new String[] {"-nbEch","40"});
@@ -119,12 +166,20 @@ public class SimulateurTest {
 	}
 	
 	@Test(expected = ArgumentsException.class)
+	/**
+	 * Test pour l'argument nbEch avec un nb negatif
+	 * @throws ArgumentsException si les arguments ne sont pas corrects
+	 */
 	public void analyseArgumentEchFailTest()  throws  ArgumentsException {
 		//Arrange, Act and Assert
 		new Simulateur(new String[] {"-nbEch","-1"});
 	}
 	
 	@Test
+	/**
+	 * Test pour l'argument ampl
+	 * @throws ArgumentsException si les arguments ne sont pas corrects
+	 */
 	public void analyseArgumentAmplTest()  throws  ArgumentsException {
 		//Arrange and Act
 		Simulateur simulateur =  new Simulateur(new String[] {"-ampl","0","1"});
@@ -143,12 +198,20 @@ public class SimulateurTest {
 	}
 	
 	@Test(expected = ArgumentsException.class)
+	/**
+	 * Test pour l'argument ampl avec un min > max
+	 * @throws ArgumentsException si les arguments ne sont pas corrects
+	 */
 	public void analyseArgumentAmplFailTest()  throws  ArgumentsException {
 		//Arrange, Act and Assert
 		new Simulateur(new String[] {"-ampl","10","5"});
 	}
 	
 	@Test
+	/**
+	 * Test pour l'argument snrpb
+	 * @throws ArgumentsException si les arguments ne sont pas corrects
+	 */
 	public void analyseArgumentSnrpbTest()  throws  ArgumentsException {
 		//Arrange and Act
 		Simulateur simulateur =  new Simulateur(new String[] {"-snrpb","10"}); //>0
@@ -160,6 +223,10 @@ public class SimulateurTest {
 	}
 	
 	@Test
+	/**
+	 * Test pour l'argument ti
+	 * @throws ArgumentsException si les arguments ne sont pas corrects
+	 */
 	public void analyseArgumentTiTest()  throws  ArgumentsException {
 		//Arrange and Act
 		Simulateur simulateur =  new Simulateur(new String[] {"-ti","1","0.1"});
@@ -174,24 +241,40 @@ public class SimulateurTest {
 	}
 	
 	@Test(expected = ArgumentsException.class)
+	/**
+	 * Test pour l'argument ti avec plus de 5 couples de dt at
+	 * @throws ArgumentsException si les arguments ne sont pas corrects
+	 */
 	public void analyseArgumentTiMoreThan5FailTest()  throws  ArgumentsException {
 		//Arrange, Act and Assert
 		new Simulateur(new String[] {"-ti","1","0.11","2","0.22","3","0.33","4","0.44","5","0.55","6","1"}); //Supposed to fail after 5 couples of dt at
 	}
 	
 	@Test(expected = ArgumentsException.class)
+	/**
+	 * Test pour l'argument ti avec un alpha negatif
+	 * @throws ArgumentsException si les arguments ne sont pas corrects
+	 */
 	public void analyseArgumentAlphaNegativeFailTest()  throws  ArgumentsException {
 		//Arrange, Act and Assert
 		new Simulateur(new String[] {"-ti","0","-1"});
 	}
 	
 	@Test(expected = ArgumentsException.class)
+	/**
+	 * Test pour l'argument ti avec un tau negatif
+	 * @throws ArgumentsException si les arguments ne sont pas corrects
+	 */
 	public void analyseArgumentTiTauNegativeFailTest()  throws  ArgumentsException {
 		//Arrange, Act and Assert
 		new Simulateur(new String[] {"-ti","-10","1"}); //tau<0
 	}
 	
 	@Test
+	/**
+	 * Test pour l'argument codeur
+	 * @throws ArgumentsException si les arguments ne sont pas corrects
+	 */
 	public void analyseArgumentCodeurTest()  throws  ArgumentsException {
 		//Arrange and Act
 		Simulateur simulateur =  new Simulateur(new String[] {"-codeur"});
@@ -202,6 +285,10 @@ public class SimulateurTest {
 	
 	
 	@Test
+	/**
+	 * Test pour la methode qui calcule le TEB en transmission parfaite
+	 * @throws Exception si les arguments ne sont pas corrects
+	 */
 	public void calculTEBTransmissionParfaiteTest() throws Exception{
 		//Arrange
 		Simulateur simulateur =  new Simulateur(new String[] {"-mess","1010010001"});
@@ -214,6 +301,10 @@ public class SimulateurTest {
 	}
 	
 	@Test
+	/**
+	 * Test pour la methode qui calcule le TEB en transmission bruitee
+	 * @throws Exception quelconque 
+	 */
 	public void calculTEBTransmissionBruiteeTest() throws Exception{
 		//Arrange
 		Simulateur simulateur =  new Simulateur(new String[] {"-mess","48","-snrpb","-20"});
@@ -226,6 +317,10 @@ public class SimulateurTest {
 	}
 	
 	@Test
+	/**
+	 * Test pour voir si l'on recupere bien la meme taille d'information en sortie
+	 * @throws Exception quelconque
+	 */
 	public void tailleMotRecuTest() throws Exception{
 		//Arrange
 		Simulateur simulateur1 =  new Simulateur(new String[] {"-mess","1010010001"});
@@ -238,6 +333,11 @@ public class SimulateurTest {
 	}
 	
 	@Test
+	/**
+	 * Test de performance du Simulateur au global
+	 * On viens afficher les sondes et utiliser TOUS les parametres, puis on calcule le temps que cela a pris
+	 * @throws Exception quelconque
+	 */
 	public void mainPerformanceTest() throws Exception{
 		//Arrange
 		System.out.println("Testing the Whole Process with those arguments :\n");
