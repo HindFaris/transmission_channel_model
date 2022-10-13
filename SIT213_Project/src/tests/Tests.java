@@ -22,8 +22,7 @@ public class Tests {
 		System.out.println("Beginning of a new Test Report...  ");
 		
 		try {
-			System.out.println("\nTesting each class individually before testing the whole process (Simulateur) ...");
-			System.out.println("\n***************************************************************************************************\n");
+			System.out.println("\nTesting each class individually before testing the whole process (Simulateur) ...\n");
 			
 			Result result = JUnitCore.runClasses(
 					SourceFixeTest.class, 
@@ -35,10 +34,8 @@ public class Tests {
 					BruitTest.class,
 					TransmetteurAnalogiqueBruiteTest.class,
 					TransmetteurAnalogiqueMultiTrajetsBruiteTest.class,
-					//TODO Adapter les tests multitrajets
-					RecepteurTest.class
-					//,SimulateurTest.class
-					//TODO SimulateurTest a adapter
+					RecepteurTest.class,
+					SimulateurTest.class
 					);
 			
 			for (Failure failure : result.getFailures()) {							

@@ -91,6 +91,11 @@ public class Simulateur {
 
 	/**	Indique si le simulateur utilise ou non un codeur � l'emission et un decodeur a la reception **/
 	private boolean codage = false;
+	
+	/** Un simple getter pour indiquer si on utilise ou non le codage **/
+	public boolean getCodage() {
+		return codage;
+	}
 
 	/** le  codeur de la chaine de transmission */
 	private Codeur codeur = null;
@@ -109,10 +114,11 @@ public class Simulateur {
 	 * @throws ArgumentsException si un des arguments est incorrect
 	 *
 	 */  
-	public  Simulateur(String [] args) throws ArgumentsException {
-
+	public Simulateur(String [] args) throws ArgumentsException {
+		
+		
 		analyseArguments(args);
-
+		
 		//instanciation de la source
 		if(!messageAleatoire) {
 			source = new SourceFixe(messageString);    		
@@ -216,6 +222,7 @@ public class Simulateur {
 	 */   
 	public void analyseArguments(String[] args)  throws  ArgumentsException {
 
+		
 		for (int i=0;i<args.length;i++){ // traiter les arguments 1 par 1
 			if (args[i].matches("-s")){
 				affichage = true;
@@ -293,20 +300,35 @@ public class Simulateur {
 			else if(args[i].matches("-ti")) {
 				trajetIndirect = true;
 
-				String argsString = null ;
-				int ind = 0;
-				ind = i;
-				while (ind < args.length) {
-					argsString += "\t" +args[ind] ;
-					ind++;
+				String argsString=null+"\t" +args[i];
+				
+				for (int ind=i+1; ind<args.length; ind++) {
+					if (args[ind].startsWith("-"))
+						break;
+					else {
+						argsString += "\t" +args[ind] ;
+					}
 				}
+				
 				String regexString = "-ti\t(([0-9]{1,6}\t([0][.][0-9]{1,6}|0|[1][.][0]{1,6}|[1])\t{0,1}){1,5})";
 				Pattern pattern = Pattern.compile(regexString);
 				MatchResult matcher = pattern.matcher(argsString);
+				
+				//Si la liste d'arguments comprends plus de 5 couples, on leve l'exception
+				String argsStringTest= argsString;
+				String[] tiArgsSize = argsStringTest.split("\t");
+				if (tiArgsSize.length>12) {
+					throw new ArgumentsException("Valeur du parametre -ti invalide : " + args[i]);
+				}
+				
 				String tiArgsString = null;
 				while (((Matcher)matcher).find()) {
 					tiArgsString = matcher.group(1);
 				}
+				
+				if (tiArgsString == null) //Apparait lorsqu'on a un tau ou un alpha nul
+						throw new ArgumentsException("Valeur du parametre -ti invalide : " + args[i]);
+				
 				String[] tiArgsArray = tiArgsString.split("\t");
 				int compteur = 0;
 				for (int index=0; index<tiArgsArray.length; index++) {
@@ -316,8 +338,8 @@ public class Simulateur {
 					} else {
 						taus.add(Integer.valueOf(tiArgsArray[index]));
 					}
+					
 				}
-
 			}
 			else if(args[i].matches("-codeur")) {
 				codage = true;
