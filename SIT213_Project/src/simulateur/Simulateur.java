@@ -420,10 +420,10 @@ public class Simulateur {
 		} 
 
 		try {
-			long debut = System.currentTimeMillis();
+			//long debut = System.currentTimeMillis();
 			simulateur.execute();
-			long fin = System.currentTimeMillis();
-			System.out.println("Temps d'execution en millisecondes : " + (fin-debut));
+			//long fin = System.currentTimeMillis();
+			//System.out.println("Temps d'execution en millisecondes : " + (fin-debut));
 			String s = "java  Simulateur  ";
 			for (int i = 0; i < args.length; i++) { //copier tous les parametres de simulation
 				s += args[i] + "  ";

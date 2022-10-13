@@ -13,7 +13,7 @@ public class environnement2 {
 		PrintStream myConsole = new PrintStream(new File(CHEMIN));
 		System.setOut(myConsole);
 
-		System.out.println("Simulations pour un nombre d'echantillons de 100000");
+		System.out.println("Simulations pour un nombre d'echantillons de 200000");
 		System.out.println("Taille d'un bit = nombre d'échantillons;TEB;");
 		for(int indice = 2; indice<= 400; indice += 2) {
 			Simulateur simulateurNRZ =  new Simulateur(new String[] {"-mess","200000", "-form", "NRZ", "-ti","10","0.5","-nbEch" ,String.valueOf(indice) ,"-snrpb", "15" });
@@ -24,10 +24,7 @@ public class environnement2 {
 			simulateurRZ.execute();
 			Simulateur simulateurRZC =  new Simulateur(new String[] {"-mess","200000", "-form", "RZ", "-ti","10","0.5", "-nbEch" ,String.valueOf(indice), "-snrpb", "15","-codeur"});
 			simulateurRZC.execute();
-			/*Simulateur simulateurNRZT =  new Simulateur(new String[] {"-mess","100000", "-form", "NRZT", "-ti","10","0.5", "-nbEch" ,String.valueOf(indice), "-snrpb", "15"});
-			simulateurNRZT.execute();
-			Simulateur simulateurNRZTC =  new Simulateur(new String[] {"-mess","50000", "-form", "NRZT", "-ti","10","0.5", "-nbEch" ,String.valueOf(indice), "-snrpb", "15","-codeur"});
-			simulateurNRZT.execute();*/
+
 			System.out.println(Float.toString(indice) + ";" + Float.toString(simulateurNRZ.calculTauxErreurBinaire()) + ";" + Float.toString(simulateurNRZC.calculTauxErreurBinaire()) + ";" 
 					+ Float.toString(simulateurRZ.calculTauxErreurBinaire()) + ";" + Float.toString(simulateurRZC.calculTauxErreurBinaire()));
 					//+ ";" + Float.toString(simulateurNRZT.calculTauxErreurBinaire()));
