@@ -186,19 +186,38 @@ public class RecepteurMultiTrajets extends Transmetteur<Float, Boolean>{
 	
 	public void dechiffrerRz(Float[] donnees) {
 		float moyenneLimite = (max+min)/2;	//Moyenne limite pour le signal NRZ et NRZT
-
 		informationEmise  = new Information<Boolean>(); 
 		float moyenneTemp = 0f;
 		int nombreDeBooleens = (donnees.length-tauMax())/nbEchantillons;
 		int coefficient = 0;
-		for (int j = nbEchantillons; j < 2*nbEchantillons/3; j++) {
-			coefficient += 1;
+		int borneInferieur;
+		int borneSuperieur;
+		
+		if((nbEchantillons/3)-(float)(int)(nbEchantillons/3) == 0) {
+			borneInferieur = (int)(nbEchantillons/3);
 		}
-
+		else {
+			borneInferieur = (int)(nbEchantillons/3) + 1;
+		}
+		
+		if((2*nbEchantillons/3)-(float)(int)(2*nbEchantillons/3) == 0) {
+			borneSuperieur = (int)(2*nbEchantillons/3);
+		}
+		else {
+			borneSuperieur = (int)(2*nbEchantillons/3) + 1;
+		}
+		
+		for(int j = borneInferieur; j < borneSuperieur; j++) {
+			if(j >= nbEchantillons/3 && j < 2*nbEchantillons/3){
+				coefficient++;
+			}
+		}
+			
 		for(int index = 0 ; index < nombreDeBooleens ; index++){
 			moyenneTemp=0f;
-			for (int j = nbEchantillons/3; j < 2*nbEchantillons/3; j++) {
-				moyenneTemp += donnees[index*nbEchantillons+j];
+			
+			for(int j = borneInferieur; j < borneSuperieur; j++) {
+				moyenneTemp += donnees[index*nbEchantillons+(int)(j)];
 			}
 
 			moyenneTemp = moyenneTemp/coefficient;
