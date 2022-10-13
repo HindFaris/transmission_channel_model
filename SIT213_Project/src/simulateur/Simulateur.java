@@ -271,7 +271,7 @@ public class Simulateur {
 			else if(args[i].matches("-nbEch")){
 				i++; 
 				nbEchantillon=Integer.valueOf(args[i]);
-				if( nbEchantillon < 9)
+				if( nbEchantillon < 1)
 					throw new ArgumentsException("Valeur du parametre -nbEch invalide, il faut rentrer un nombre strictement plus grand que 8 : " + args[i]);
 			}
 
