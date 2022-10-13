@@ -1,6 +1,7 @@
 package recepteur;
 
 
+import java.util.Arrays;
 import java.util.LinkedList;
 
 import destinations.DestinationInterface;
@@ -43,6 +44,7 @@ public class RecepteurMultiTrajets extends Transmetteur<Float, Boolean>{
 		}
 		return tauxMax;
 	}
+
 	/*
 	public void equivalentAlphasTaus() {
 
@@ -125,43 +127,37 @@ public class RecepteurMultiTrajets extends Transmetteur<Float, Boolean>{
 		}
 		return informationRecueCopie;
 	}
-
+	
 	public Float[] nrztAnalyse(){
 
 		Float[] informationRecueCopie = informationRecue.clonerDansTableau();
-		float coefficientDirecteur = (max-((max+min)/2))/(nbEchantillons/3);
+
 		int tailleTotaleMoinsTauMax = informationRecueCopie.length-tauMax();
 		float elementCourant;
-		int indiceCourant;
-		float moyenne = (max+min)/2;
-		
-		for(int iemeInformation = 0; iemeInformation < tailleTotaleMoinsTauMax/nbEchantillons; iemeInformation++) {
-			for(int indice = nbEchantillons/3; indice < 2*nbEchantillons/3; indice++) {
-				indiceCourant = indice+(iemeInformation*nbEchantillons);
-				elementCourant = informationRecueCopie[indiceCourant];
+		float elementCorrige;
+		int tau;
+		float alpha;
+	
+		for(int indice = 0; indice < tailleTotaleMoinsTauMax; indice++) {
 
-				if(elementCourant >= (max+min)/2) {	//On est plus proche du max
-					for(int i = 0; i < taus.size(); i++) {
-						informationRecueCopie[indiceCourant + taus.get(i)] -= (max) * alphas.get(i);	//Pour tous les taux on vient enlever le alpha additionne
-					}
-				}
-				else {	//On est plus proche du min
-					for(int i = 0; i < taus.size(); i++) {
-						informationRecueCopie[indiceCourant + taus.get(i)] -= (min) * alphas.get(i);	//Pour tous les taux on vient ajouter le alpha additionne
-					}
-				}
+			elementCourant = informationRecueCopie[indice];
+			
+			
+			for(int indiceTrajet = 0; indiceTrajet < taus.size(); indiceTrajet++) {
+				tau = taus.get(indiceTrajet);
+				alpha = alphas.get(indiceTrajet);
+				
+				elementCorrige = elementCourant*alpha;
+				informationRecueCopie[indice + tau] -= elementCorrige;
 			}
 		}
-
 		return informationRecueCopie;
 	}
-
+	
+	
 	public void dechiffrerNrz(Float[] donnees) {
 		float moyenneLimite = (max+min)/2;	//Moyenne limite pour le signal NRZ et NRZT
-
-		if(formeSignal.equals("RZ")) {
-			moyenneLimite = (max-min)*1/6 + min;
-		}
+		
 
 		informationEmise  = new Information<Boolean>(); 
 		float moyenneTemp = 0f;
@@ -230,7 +226,9 @@ public class RecepteurMultiTrajets extends Transmetteur<Float, Boolean>{
 			}
 		}
 	}
+
 	
+
 	public void dechiffrerNrzt(Float[] donnees) {
 		float moyenneLimite = (max+min)/2;	//Moyenne limite pour le signal NRZ et NRZT
 
@@ -277,7 +275,7 @@ public class RecepteurMultiTrajets extends Transmetteur<Float, Boolean>{
 			dechiffrerRz(donnees);
 		}
 		else {
-			donnees = this.nrztAnalyse();
+			donnees = this.nrztAnalyse(); 
 			dechiffrerNrzt(donnees);
 		}
 	}
