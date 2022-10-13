@@ -310,7 +310,7 @@ public class Simulateur {
 					}
 				}
 				
-				String regexString = "-ti\\t(([0-9]{1,6}\\t([0][.][0-9]{1,6}|0|[1][.][0]{1,6}|[1])\\t{0,1}){1,5})";
+				String regexString = "-ti\t(([0-9]{1,6}\t([0][.][0-9]{1,6}|0|[1][.][0]{1,6}|[1])\t{0,1}){1,5})";
 				Pattern pattern = Pattern.compile(regexString);
 				MatchResult matcher = pattern.matcher(argsString);
 				

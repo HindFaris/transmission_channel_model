@@ -246,7 +246,7 @@ public class SimulateurTest {
 		for (int j = 0; j < args.length; j++) {
 			s += args[j] + "  ";
 		}
-		System.out.println(s+"\n");
+		System.out.println(s+"\n\n***************************************************************************************************\n");
 		long debut = System.currentTimeMillis();
 		
 		//Act

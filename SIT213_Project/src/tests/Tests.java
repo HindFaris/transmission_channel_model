@@ -22,7 +22,7 @@ public class Tests {
 		System.out.println("Beginning of a new Test Report...  ");
 		
 		try {
-			System.out.println("\nTesting each class individually before testing the whole process (Simulateur) ...");
+			System.out.println("\nTesting each class individually before testing the whole process (Simulateur) ...\n");
 			
 			Result result = JUnitCore.runClasses(
 					SourceFixeTest.class, 
