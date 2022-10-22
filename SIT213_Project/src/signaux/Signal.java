@@ -36,11 +36,11 @@ public abstract class Signal {
 	}
 	
 	/**
-	 * permet d'initialiser le signal avec des parametres : informationRecue, nb echantillons, max, min
-	 * @param informationRecue
-	 * @param nbEchantillons
-	 * @param min
-	 * @param max
+	 * Permet d'initialiser le signal avec des parametres : informationRecue, nb echantillons, max, min
+	 * @param informationRecue L'information recue
+	 * @param nbEchantillons Le nombre d'echantillons
+	 * @param min La valeur minimum
+	 * @param max La valeur maximum
 	 */
 	public Signal (Information<Boolean> informationRecue, int nbEchantillons, float min, float max) {
 		this.min =min;
@@ -52,7 +52,7 @@ public abstract class Signal {
 	}
 	
 	/**
-	 * genere le code analogique a  partir du code logique
+	 * Genere le code analogique a partir du code logique
 	 */
 	public abstract void generer();
 

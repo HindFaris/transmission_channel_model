@@ -19,10 +19,10 @@ public class EmetteurAnalogique extends Transmetteur<Boolean, Float>{
 
 	/**
 	 * constructeur de l'emetteur analogique initialise avec differents parametres
-	 * @param typeEmetteur
-	 * @param nbEchantillons
-	 * @param min
-	 * @param max
+	 * @param typeEmetteur Le type d'emetteur choisi
+ 	 * @param nbEchantillons Le nombre d'echantillons
+	 * @param min La valeur minimale
+	 * @param max La valeur maximale
 	 */
 	public EmetteurAnalogique(String typeEmetteur, int nbEchantillons, float min, float max) {
 		this.min = min;

@@ -61,7 +61,7 @@ public class BruitTest {
 	
 	/** Un essai infructueux d'une methode pour verifier que deux echantillons tres proches ne sont pas correles
 	 * 
-	 * @return
+	 * @return output La valeur de l'autocorrelation en chaque point.... infructueux comme dit precedemment
 	 */
 	public LinkedList<LinkedList <Float>> autoCorrelateTest() 
 	 {

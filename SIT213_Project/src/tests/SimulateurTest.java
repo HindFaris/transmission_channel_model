@@ -28,25 +28,25 @@ public class SimulateurTest {
 	
 	@Test
 	/**
-	 * Test pour tous les arguments par défaut
+	 * Test pour tous les arguments par defaut
 	 * @throws ArgumentsException si les arguments ne sont pas corrects
 	 */
 	public void analyseArgumentDefautTest()  throws  ArgumentsException {
 		//Arrange and Act
-		Simulateur simulateur =  new Simulateur(new String[] {}); //Permet de tester toutes les valeurs par défaut
+		Simulateur simulateur =  new Simulateur(new String[] {}); //Permet de tester toutes les valeurs par defaut
 		
 		//Assert
-		errorCollector.checkThat("Les Arguments par défaut : La taille du message n'est pas de 100 comme prévu par défaut", simulateur.getNbBitsMess(), is(100));
-		errorCollector.checkThat("Les Arguments par défaut : Le message est detecté comme non aleatoire alors qu'il devrait l'etre par défaut", simulateur.getMessageAleatoire(), is(true));
-		errorCollector.checkThat("Les Arguments par défaut : L'afficheur est actif alors qu'il ne devrait pas l'etre par défaut", simulateur.getAffichage(), is(false));
-		errorCollector.checkThat("Les Arguments par défaut : La seed est active alors qu'elle ne devrait pas l'etre par défaut", simulateur.getAleatoireAvecGerme(), is(false));
-		errorCollector.checkThat("Les Arguments par défaut : La forme d'onde n'est pas RZ alors qu'elle devrait l'etre par défaut", simulateur.getFormSignal(), is("RZ"));
-		errorCollector.checkThat("Les Arguments par défaut : Le nombre d'échantillons n'est pas de 30 alors qu'il devrait l'etre par défaut", simulateur.getNbEchantillon(), is(30));
-		errorCollector.checkThat("Les Arguments par défaut : Le min n'est pas de 0.0f alors qu'il devrait l'etre par défaut", simulateur.getMin(), is(0.0f));
-		errorCollector.checkThat("Les Arguments par défaut : Le max n'est pas de 1.0f alors qu'il devrait l'etre par défaut", simulateur.getMax(), is(1.0f));
-		errorCollector.checkThat("Les Arguments par défaut : Le bruit est actif alors qu'il ne devrait pas l'etre par défaut", simulateur.getBruitActif(), is(false));
-		errorCollector.checkThat("Les Arguments par défaut : Les trajets indirects sont actifs alors qu'ils ne devraient pas l'etre par défaut", simulateur.getTrajetIndirect(), is(false));
-		errorCollector.checkThat("Les Arguments par défaut : Le codage est actif alors qu'il ne devrait pas l'etre par défaut", simulateur.getCodage(), is(false));
+		errorCollector.checkThat("Les Arguments par defaut : La taille du message n'est pas de 100 comme prevu par defaut", simulateur.getNbBitsMess(), is(100));
+		errorCollector.checkThat("Les Arguments par defaut : Le message est detecte comme non aleatoire alors qu'il devrait l'etre par defaut", simulateur.getMessageAleatoire(), is(true));
+		errorCollector.checkThat("Les Arguments par defaut : L'afficheur est actif alors qu'il ne devrait pas l'etre par defaut", simulateur.getAffichage(), is(false));
+		errorCollector.checkThat("Les Arguments par defaut : La seed est active alors qu'elle ne devrait pas l'etre par defaut", simulateur.getAleatoireAvecGerme(), is(false));
+		errorCollector.checkThat("Les Arguments par defaut : La forme d'onde n'est pas RZ alors qu'elle devrait l'etre par defaut", simulateur.getFormSignal(), is("RZ"));
+		errorCollector.checkThat("Les Arguments par defaut : Le nombre d'echantillons n'est pas de 30 alors qu'il devrait l'etre par defaut", simulateur.getNbEchantillon(), is(30));
+		errorCollector.checkThat("Les Arguments par defaut : Le min n'est pas de 0.0f alors qu'il devrait l'etre par defaut", simulateur.getMin(), is(0.0f));
+		errorCollector.checkThat("Les Arguments par defaut : Le max n'est pas de 1.0f alors qu'il devrait l'etre par defaut", simulateur.getMax(), is(1.0f));
+		errorCollector.checkThat("Les Arguments par defaut : Le bruit est actif alors qu'il ne devrait pas l'etre par defaut", simulateur.getBruitActif(), is(false));
+		errorCollector.checkThat("Les Arguments par defaut : Les trajets indirects sont actifs alors qu'ils ne devraient pas l'etre par defaut", simulateur.getTrajetIndirect(), is(false));
+		errorCollector.checkThat("Les Arguments par defaut : Le codage est actif alors qu'il ne devrait pas l'etre par defaut", simulateur.getCodage(), is(false));
 	}
 
 	@Test
@@ -60,11 +60,11 @@ public class SimulateurTest {
 		Simulateur simulateur4 =  new Simulateur(new String[] {"-mess","47"});
 		
 		//Assert
-		errorCollector.checkThat("L'Argument -mess : La taille du message n'est pas de 10 comme prévu", simulateur2.getNbBitsMess(), is(10));
-		errorCollector.checkThat("L'Argument -mess : Le message est detecté comme aleatoire alors qu'il ne devrait pas l'etre", simulateur2.getMessageAleatoire(), is(false));		
+		errorCollector.checkThat("L'Argument -mess : La taille du message n'est pas de 10 comme prevu", simulateur2.getNbBitsMess(), is(10));
+		errorCollector.checkThat("L'Argument -mess : Le message est detecte comme aleatoire alors qu'il ne devrait pas l'etre", simulateur2.getMessageAleatoire(), is(false));		
 		
-		errorCollector.checkThat("L'Argument -mess : La taille du message n'est pas de 10 comme prévu", simulateur4.getNbBitsMess(), is(47));
-		errorCollector.checkThat("L'Argument -mess : Le message est detecté comme non aleatoire alors qu'il devrait l'etre", simulateur4.getMessageAleatoire(), is(true));
+		errorCollector.checkThat("L'Argument -mess : La taille du message n'est pas de 10 comme prevu", simulateur4.getNbBitsMess(), is(47));
+		errorCollector.checkThat("L'Argument -mess : Le message est detecte comme non aleatoire alors qu'il devrait l'etre", simulateur4.getMessageAleatoire(), is(true));
 	}
 	
 	@Test(expected = ArgumentsException.class)
@@ -97,7 +97,7 @@ public class SimulateurTest {
 		Simulateur simulateur =  new Simulateur(new String[] {"-s"});;
 		
 		//Assert
-		errorCollector.checkThat("L'Argument -s : L'afficheur n'est pas actif alors qu'il devrait l'etre par défaut", simulateur.getAffichage(), is(true));	
+		errorCollector.checkThat("L'Argument -s : L'afficheur n'est pas actif alors qu'il devrait l'etre par defaut", simulateur.getAffichage(), is(true));	
 	}
 	
 	@Test
@@ -111,8 +111,8 @@ public class SimulateurTest {
 		Simulateur simulateur2 =  new Simulateur(new String[] {"-seed","-1"});
 		
 		//Assert		
-		errorCollector.checkThat("L'Argument -seed : La seed n'a pas la valeur souhaitée", simulateur.getSeed(), is(1));
-		errorCollector.checkThat("L'Argument -seed : La seed n'a pas la valeur souhaitée", simulateur2.getSeed(), is(-1));
+		errorCollector.checkThat("L'Argument -seed : La seed n'a pas la valeur souhaitee", simulateur.getSeed(), is(1));
+		errorCollector.checkThat("L'Argument -seed : La seed n'a pas la valeur souhaitee", simulateur2.getSeed(), is(-1));
 	}
 	
 	@Test(expected = ArgumentsException.class)
@@ -183,8 +183,8 @@ public class SimulateurTest {
 	public void analyseArgumentAmplTest()  throws  ArgumentsException {
 		//Arrange and Act
 		Simulateur simulateur =  new Simulateur(new String[] {"-ampl","0","1"});
-		Simulateur simulateur2 =  new Simulateur(new String[] {"-ampl","-10","10"}); //Symétrique
-		Simulateur simulateur3 =  new Simulateur(new String[] {"-ampl","-12","10"}); //Asymétrique
+		Simulateur simulateur2 =  new Simulateur(new String[] {"-ampl","-10","10"}); //Symetrique
+		Simulateur simulateur3 =  new Simulateur(new String[] {"-ampl","-12","10"}); //Asymetrique
 		
 		//Assert		
 		errorCollector.checkThat("L'Argument -ampl : L'amplitude min n'est pas 0 alors qu'elle devrait l'etre", simulateur.getMin(), is((float)0));
@@ -280,7 +280,7 @@ public class SimulateurTest {
 		Simulateur simulateur =  new Simulateur(new String[] {"-codeur"});
 		
 		//Assert		
-		errorCollector.checkThat("L'Argument -codeur : Le codeur n'est pas activé alors qu'il devrait l'etre", simulateur.getCodage(), is(true));
+		errorCollector.checkThat("L'Argument -codeur : Le codeur n'est pas active alors qu'il devrait l'etre", simulateur.getCodage(), is(true));
 	}
 	
 	
@@ -313,7 +313,7 @@ public class SimulateurTest {
 		simulateur.execute();
 		
 		//Assert
-		errorCollector.checkThat("Le taux d'erreur binaire est de 0 alors que la transmission est très bien bruitée",  simulateur.calculTauxErreurBinaire(),not(0.0f) );
+		errorCollector.checkThat("Le taux d'erreur binaire est de 0 alors que la transmission est tres bien bruitee",  simulateur.calculTauxErreurBinaire(),not(0.0f) );
 	}
 	
 	@Test

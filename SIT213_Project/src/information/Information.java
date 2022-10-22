@@ -36,7 +36,7 @@ public  class Information <T>  implements Iterable <T> {
 	
 	public Float[] clonerDansTableau(int taux) {
 		Object[] tableauACopier = content.toArray();
-		Float[] tableauCopier = Arrays.copyOf(tableauACopier, tableauACopier.length, Float[].class);//une fois que ça marche essaye tableauACopier.length+max
+		Float[] tableauCopier = Arrays.copyOf(tableauACopier, tableauACopier.length, Float[].class); //une fois que ca marche essaye tableauACopier.length+max
 		Float[] tableauARetourner = new Float[content.size()+taux];
 		int taille = content.size();
 		for(int indice = 0; indice < taille; indice ++) {
@@ -122,6 +122,7 @@ public  class Information <T>  implements Iterable <T> {
 
 	/**
 	 * pour renvoyer un element d'une information
+	 * @param i l'endroit a venir chercher
 	 * @return le ieme element de l'information
 	 */
 	public T iemeElement(int i) {
@@ -130,6 +131,8 @@ public  class Information <T>  implements Iterable <T> {
 
 	/**
 	 * pour modifier le ieme element d'une information
+	 * @param i l'element dans l'information
+	 * @param v La valeur a positionner
 	 */
 	public void setIemeElement(int i, T v) {
 		this.content.set(i, v);
@@ -180,6 +183,10 @@ public  class Information <T>  implements Iterable <T> {
 		return s;
 	}
 
+	/**
+	 * On viens enlever un element de l'information
+	 * @param index l'element de l'information a enlever
+	 */
 	public void remove(int index) {
 		content.remove(index);
 	}

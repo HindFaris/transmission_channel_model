@@ -49,8 +49,8 @@ public class CodeurTest {
 		}
 		
 		//Assert
-		errorCollector.checkThat("L'information recue par le codeur ne correspond pas à l'information émise par la source", codeur.getInformationRecue(),is(informationEntrante));
-		errorCollector.checkThat("L'information traduite par le codeur ne correspond pas à la traduction attendue", codeur.getInformationEmise(), is(informationTraduite));
+		errorCollector.checkThat("L'information recue par le codeur ne correspond pas a l'information emise par la source", codeur.getInformationRecue(),is(informationEntrante));
+		errorCollector.checkThat("L'information traduite par le codeur ne correspond pas a la traduction attendue", codeur.getInformationEmise(), is(informationTraduite));
 		
 	}
 	

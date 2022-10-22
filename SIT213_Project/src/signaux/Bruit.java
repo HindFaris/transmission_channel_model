@@ -49,6 +49,7 @@ public class Bruit {
 	 * 
 	 * @param ecartType l'ecart type de la gaussienne
 	 * @param tailleBruit la longueur du bruit
+	 * @param seed La seed utilisee pour generer le bruit
 	 */
 
 	public Bruit(float ecartType, int tailleBruit, Integer seed) {
