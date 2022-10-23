@@ -338,26 +338,3 @@ public class RecepteurMultiTrajets extends Transmetteur<Float, Boolean>{
 	}
 
 }
-
-/* Ancienne methode (ARCHIVE)
-public void equivalentAlphasTaus() {
-
-	if(taus.size() > 1) {
-		LinkedList<Integer> indicesAEnlever = new LinkedList<Integer>();
-		for(int i = 0; i < taus.size()-1; i++) {
-			for(int j = i+1; j<taus.size(); j++) {
-				if(taus.get(i) == taus.get(j) && (indicesAEnlever.contains(j)) == false) {
-					indicesAEnlever.add(j);
-					alphas.set(i, alphas.get(i)+alphas.get(j));
-				}
-			}
-		}
-		if(!indicesAEnlever.isEmpty()) {
-			for(Integer indice : indicesAEnlever) {
-				taus.remove((int) indice);
-				alphas.remove((int)indice);
-			}
-		}
-	}
-}
- */

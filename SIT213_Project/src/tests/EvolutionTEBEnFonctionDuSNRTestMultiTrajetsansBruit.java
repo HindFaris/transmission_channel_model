@@ -13,18 +13,21 @@ public class EvolutionTEBEnFonctionDuSNRTestMultiTrajetsansBruit {
 		PrintStream myConsole = new PrintStream(new File(CHEMIN));
 		System.setOut(myConsole);
 
-		System.out.println("Simulations pour un nombre d'echantillons de 100000");
+		System.out.println("Simulations pour un nombre d'echantillons de 100000 avec seed");
 		System.out.println("SNR par bit (dB);NRZ multitrajet (A=0,7, dt=10) et (A=0,8, dt=30) ;NRZ multitrajet (A=0,3, dt=10) et (A=0,4, dt=30)");
 		for(float indice = -1; indice<=25; indice += 1) {
-			Simulateur simulateurNRZ =  new Simulateur(new String[] {"-mess","100000", "-form", "NRZ", "-snrpb", String.valueOf(indice)});
-			simulateurNRZ.execute();
-			Simulateur simulateurNRZmultitrajet1 =  new Simulateur(new String[] {"-mess","100000", "-form", "NRZ", "-snrpb", String.valueOf(indice),"-ti","10","0.7", "30","0.8"});
-			simulateurNRZmultitrajet1.execute();
-			Simulateur simulateurNRZmultitrajet2 =  new Simulateur(new String[] {"-mess","100000", "-form", "NRZ", "-snrpb", String.valueOf(indice),"-ti","10","0.3", "30","0.4"});
-			simulateurNRZmultitrajet2.execute();
-			System.out.println(Float.toString(indice) + ";" + Float.toString(simulateurNRZ.calculTauxErreurBinaire()) + ";" + 
-					Float.toString(simulateurNRZmultitrajet1.calculTauxErreurBinaire()) + ";" + 
-							Float.toString(simulateurNRZmultitrajet2.calculTauxErreurBinaire()));
+			Simulateur simulateurNRZ1 =  new Simulateur(new String[] {"-mess","100000", "-form", "NRZ", "-snrpb", String.valueOf(indice), "-ti", "10", "0.5", "-nbEch", "1"});
+			simulateurNRZ1.execute();
+			Simulateur simulateurNRZ2 =  new Simulateur(new String[] {"-mess","100000", "-form", "NRZ", "-snrpb", String.valueOf(indice), "-ti", "10", "0.5", "-nbEch", "2"});
+			simulateurNRZ2.execute();
+			Simulateur simulateurRZ1 =  new Simulateur(new String[] {"-mess","100000", "-form", "RZ", "-snrpb", String.valueOf(indice), "-ti", "10", "0.5", "-nbEch", "1"});
+			simulateurNRZ1.execute();
+			Simulateur simulateurRZ2 =  new Simulateur(new String[] {"-mess","100000", "-form", "RZ", "-snrpb", String.valueOf(indice), "-ti", "10", "0.5", "-nbEch", "2"});
+			simulateurNRZ2.execute();
+			
+			System.out.println(Float.toString(indice) + ";" + Float.toString(simulateurNRZ1.calculTauxErreurBinaire()) + ";" + 
+					Float.toString(simulateurNRZ2.calculTauxErreurBinaire()) + ";" + Float.toString(simulateurRZ1.calculTauxErreurBinaire()) +
+					";" + Float.toString(simulateurRZ2.calculTauxErreurBinaire()));
 		}
 		myConsole.close();
 	}

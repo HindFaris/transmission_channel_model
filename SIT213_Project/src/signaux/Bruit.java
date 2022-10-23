@@ -21,15 +21,15 @@ public class Bruit {
 	}
 
 	/**
-	 * un getter donnant le bruit
-	 * @return le bruit
+	 * Un getter retournant le bruit
+	 * @return le contenu du bruit
 	 */
 	public Information<Float> getSignalSortieInformation() {
 		return signalSortieInformation;
 	}
 
 	/**
-	 * un getter donnant l'ecart type de la gaussienne
+	 * un getter donnant l'ecart type du bruit suivant une loi gaussienne
 	 * @return l'ecart type
 	 */
 	public float getEcartType() {
@@ -64,19 +64,23 @@ public class Bruit {
 	 * genere le bruit blanc gaussien
 	 */
 	public void generer(){
-		if(seed == null) {
+		if(seed == null) {	//Si la seed du bruit n'est pas active alors on ne passe rien en argument a l'objet Random
 			Random random = new Random();
 			float rdm = 0;
 			for(int index = 0; index < tailleBruit; index++) {
+				//la fonction nextGaussian suit une loi centree reduite. Le bruit est centre.
+				//Cependant, pour ne pas qu'il soit reduit, on le multiplie par l'ecart-type souhaite
 				rdm=(float)random.nextGaussian()*ecartType;
 				signalSortieInformation.add(rdm);
 			}
 
 		}
-		else {
+		else {	//Si la seed du bruit est active alors on la passe en argument a l'objet Random afin d'avoir le même bruit
 			Random random = new Random(seed);
 			float rdm = 0;
 			for(int index = 0; index < tailleBruit; index++) {
+				//la fonction nextGaussian suit une loi centree reduite. Le bruit est centre.
+				//Cependant, pour ne pas qu'il soit reduit, on le multiplie par l'ecart-type souhaite
 				rdm=(float)random.nextGaussian()*ecartType;
 				signalSortieInformation.add(rdm);
 			}
@@ -84,10 +88,18 @@ public class Bruit {
 
 	}
 
+	/**
+	 * Un getter donnant la seed du bruit
+	 * @return la seed
+	 */
 	public Integer getSeed() {
 		return seed;
 	}
 
+	/**
+	 * Enleve le i eme element du bruit
+	 * @param index : le ieme element
+	 */
 	public void remove(int index) {
 		signalSortieInformation.remove(index);
 	}
