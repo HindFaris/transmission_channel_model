@@ -34,7 +34,7 @@ public class SignalRZ extends Signal{
 					signalSortieInformation.add(min);
 				}
 			}
-			copieInformationRecue.remove(0);
+			copieInformationRecue.remove(0);	//On passe a au bit suivant
 		}
 	}
 }
