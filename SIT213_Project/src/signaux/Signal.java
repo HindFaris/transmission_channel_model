@@ -2,6 +2,11 @@ package signaux;
 
 import information.Information;
 
+/**
+ * classe parent pour creer le signal
+ * @author 33663
+ *
+ */
 public abstract class Signal {
 	
 	protected Information<Boolean> signalEntree;

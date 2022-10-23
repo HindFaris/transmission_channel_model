@@ -31,6 +31,10 @@ public  abstract class Destination <T> implements DestinationInterface <T> {
 		return this.informationRecue;
 	}
 
+	/**
+	 * retourne la taille de l'info recue
+	 * @return informationRecuenbElements la taille de l'information recue
+	 */
 	public int getLongueurInformationRecue() {
 		return informationRecue.nbElements();
 	}

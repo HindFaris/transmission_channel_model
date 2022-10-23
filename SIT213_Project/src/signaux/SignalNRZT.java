@@ -5,14 +5,19 @@ import java.util.function.ObjDoubleConsumer;
 
 import information.Information;
 
+/**
+ * Classe pour generer le signal NRZT
+ * @author 33663
+ *
+ */
 public class SignalNRZT extends Signal{
 
 	/**
 	 * Le constructeur faisant appel au constructeur de la classe mere : Signal
-	 * @param informationRecue
-	 * @param nbEchantillons
-	 * @param min
-	 * @param max
+	 * @param informationRecue l'information recue
+	 * @param nbEchantillons le nombre d'echantillons
+	 * @param min minimum
+	 * @param max maximum
 	 */
 	public SignalNRZT(Information<Boolean> informationRecue, int nbEchantillons, float min, float max) {
 		super(informationRecue, nbEchantillons, min, max);
@@ -29,7 +34,7 @@ public class SignalNRZT extends Signal{
 		try {
 			copieInformationRecue = signalEntree.cloneInformation();	//Copie l'information afin de ne pas modifier l'information primaire
 		} catch (Exception e) {
-			System.out.println("Le clone de l'information s'est mal passé");
+			System.out.println("Le clone de l'information s'est mal passe");
 		}
 
 

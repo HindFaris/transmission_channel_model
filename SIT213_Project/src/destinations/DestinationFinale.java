@@ -8,6 +8,12 @@ import information.InformationNonConformeException;
  */
 public class DestinationFinale extends Destination <Boolean>{
 	
+	/**
+	 * Constructeur de Destination finale
+	 */
+	public DestinationFinale() {
+		// TODO Auto-generated constructor stub
+	}
 	public void recevoir(Information <Boolean> information) throws InformationNonConformeException{
 		informationRecue = information;
 	}

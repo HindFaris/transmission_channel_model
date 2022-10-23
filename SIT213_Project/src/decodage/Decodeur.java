@@ -10,7 +10,13 @@ import transmetteurs.Transmetteur;
  *
  */
 public class Decodeur extends Transmetteur<Boolean, Boolean>{
-
+	
+	/**
+	 * Constructeur de decodeur
+	 */
+	public Decodeur() {
+	}
+	
 	@Override
 	public void recevoir(Information<Boolean> information) throws InformationNonConformeException {
 		informationRecue = information;

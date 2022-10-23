@@ -7,10 +7,20 @@ import information.InformationNonConformeException;
 import transmetteurs.Transmetteur;
 
 /**
- * Classe definissant le codage par l'Emetteur.
+ * La classe codeur permet de coder le signal recu de la source
+ * @author 33663
+ *
  */
-public class Codeur extends Transmetteur<Boolean, Boolean> {
 
+public class Codeur extends Transmetteur<Boolean, Boolean> {
+	
+	/**
+	 * Constructeur de codeur
+	 */
+	public Codeur() {
+	}
+	
+	
 	@Override
 	public void recevoir(Information<Boolean> information) throws InformationNonConformeException {
 		informationRecue = information;

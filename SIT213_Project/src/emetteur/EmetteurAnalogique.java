@@ -69,28 +69,28 @@ public class EmetteurAnalogique extends Transmetteur<Boolean, Float>{
 	}
 	
 	/**
-	 * 
+	 * Un getter qui retourne le type de forme
 	 * @return le type d'emetteur RZ, NRZ ou NRZT
 	 */
 	public String getTypeEmetteur() {
 		return typeEmetteur;
 	}
 	/**
-	 * 
+	 * Un getter qui retourne le nombre d'echantillons
 	 * @return le nombre d'echantillons
 	 */
 	public int getNbEchantillons() {
 		return nbEchantillons;
 	}
 	/**
-	 * 
+	 * Un getter qui retourne l'amplitude minimale du signal
 	 * @return l'amplitude minimale
 	 */
 	public float getMin() {
 		return min;
 	}
 	/**
-	 * 
+	 * Un getter qui retourne l'amplitude maximale du signal
 	 * @return l'amplitude maximale
 	 */
 	public float getMax() {

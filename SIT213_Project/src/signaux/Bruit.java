@@ -3,7 +3,11 @@ package signaux;
 import information.Information;
 
 import java.util.Random;
-
+/**
+ * classe permettant de generer le bruit selon un ecart type donne
+ * @author 33663
+ *
+ */
 public class Bruit {
 
 	protected Information<Float> signalSortieInformation;
@@ -75,7 +79,7 @@ public class Bruit {
 			}
 
 		}
-		else {	//Si la seed du bruit est active alors on la passe en argument a l'objet Random afin d'avoir le même bruit
+		else {	//Si la seed du bruit est active alors on la passe en argument a l'objet Random afin d'avoir le meme bruit
 			Random random = new Random(seed);
 			float rdm = 0;
 			for(int index = 0; index < tailleBruit; index++) {

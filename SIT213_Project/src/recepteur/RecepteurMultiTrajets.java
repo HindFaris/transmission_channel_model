@@ -50,7 +50,7 @@ public class RecepteurMultiTrajets extends Transmetteur<Float, Boolean>{
 	 * @return tauMax le tau maximal
 	 */
 	public int tauMax() {
-		int tauxMax = 0;	//Le plus petit taux possible est de 0. Tous les taux sont au moins superieurs ou egal à lui
+		int tauxMax = 0;	//Le plus petit taux possible est de 0. Tous les taux sont au moins superieurs ou egal a lui
 		for(int taux:taus) {
 			if(taux>tauxMax) {
 				tauxMax=taux;
