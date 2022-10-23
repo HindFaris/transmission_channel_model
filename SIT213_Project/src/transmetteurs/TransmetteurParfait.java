@@ -4,6 +4,10 @@ import destinations.DestinationInterface;
 import information.Information;
 import information.InformationNonConformeException;
 
+/**
+ * Le transmeteur parfait (non bruite)
+ * @author jerom
+ */
 public class TransmetteurParfait extends Transmetteur<Boolean, Boolean>{
 
 	@Override

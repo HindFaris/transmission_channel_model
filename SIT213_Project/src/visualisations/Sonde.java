@@ -15,17 +15,25 @@ public  abstract class Sonde <T> extends Destination <T> {
 	protected String nom;
 
 	/**
-	 *  
+	 * Le constructeur de la sonde
 	 * @param nom  le nom de la fenetre d'affichage
 	 */   
 	public Sonde(String nom) {
 		this.nom = nom;
 	}
 
+	/**
+	 * Un getter pour le nom
+	 * @return nom le nom
+	 */
 	public String getNom() {
 		return nom;
 	}
 
+	/**
+	 * Un setter pour le nom
+	 * @param nom le nom
+	 */
 	public void setNom(String nom) {
 		this.nom = nom;
 	}

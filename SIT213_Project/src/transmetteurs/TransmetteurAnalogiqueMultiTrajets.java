@@ -8,6 +8,11 @@ import destinations.DestinationInterface;
 import information.*;
 import signaux.Bruit;
 
+/**
+ * Le transmetteur analogique multi-trajets
+ * @author jerom
+ *
+ */
 public class TransmetteurAnalogiqueMultiTrajets extends Transmetteur<Float, Float> {
 
 	private int nbEchantillons;
@@ -19,12 +24,12 @@ public class TransmetteurAnalogiqueMultiTrajets extends Transmetteur<Float, Floa
 	
 	/**
 	 * initialise le transmetteur analogique multitrajet
-	 * @param nbEchantillons
-	 * @param SNRParBit
-	 * @param seed
-	 * @param alphas
-	 * @param taus
-	 * @param bruitActif
+	 * @param nbEchantillons le nombre d'echantillons
+	 * @param SNRParBit le SNRParBit
+	 * @param seed la seed
+	 * @param alphas les decalages
+	 * @param taus les attenuations
+	 * @param bruitActif l'etat du bruit
 	 */
 	public TransmetteurAnalogiqueMultiTrajets(int nbEchantillons, float SNRParBit, Integer seed, LinkedList<Float> alphas, LinkedList<Integer> taus, boolean bruitActif) {
 		super();
@@ -130,8 +135,8 @@ public class TransmetteurAnalogiqueMultiTrajets extends Transmetteur<Float, Floa
 	
 	/**
 	 * calculer l'ecartype en faisant appel a puissance 
-	 * @return ecartType
-	 * @throws Exception
+	 * @return ecartType l'ecart-type
+	 * @throws Exception l'exception potentiellement levee
 	 */
 	public float ecartType() throws Exception{
 		float ecartType = (float)Math.sqrt(this.puissance()*nbEchantillons/(2*Math.pow(10, SNRParBit/10)));
@@ -139,14 +144,16 @@ public class TransmetteurAnalogiqueMultiTrajets extends Transmetteur<Float, Floa
 	}
 
 	/** 
-	 * @return l'attenuation
+	 * Un getter pour la liste des attenuations
+	 * @return alphas l'attenuation
 	 */
 	public LinkedList<Float> getAlphas() {
 		return alphas;
 	}
 
 	/**
-	 * @return le retard
+	 * un getter pour la liste de taus
+	 * @return taus le retard
 	 */
 	public LinkedList<Integer> getTaus() {
 		return taus;

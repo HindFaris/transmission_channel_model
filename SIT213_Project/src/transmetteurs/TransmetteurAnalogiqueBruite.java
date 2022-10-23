@@ -6,7 +6,11 @@ import destinations.DestinationInterface;
 import information.Information;
 import information.InformationNonConformeException;
 import signaux.Bruit;
-
+/**
+ * Le transmetteur analogique bruite
+ * @author jerom
+ *
+ */
 public class TransmetteurAnalogiqueBruite extends Transmetteur<Float, Float> {
 	
 	private float SNRParBit;
@@ -15,20 +19,23 @@ public class TransmetteurAnalogiqueBruite extends Transmetteur<Float, Float> {
 	
 	
 	/**
-	 * retourne le nombre d'echantillons
+	 * Un getter donnant le nombre d'echantillons
+	 * @return nbEchantillons le nombre d'echantillons
 	 */
 	public int getNbEchantillons() {
 		return nbEchantillons;
 	}
 
 	/**
-	 * retourne le SNRparBit
+	 * Un getter retournant la valeur du rapport signal a bruit par bit en dB
+	 * @return SNRParBit le SNRparBit
 	 */
 	public float getSNRParBit() {
 		return SNRParBit;
 	}
 	/**
-	 * retourne la seed si elle existe
+	 * Un getter pour avoir l'identifiant de la seed si elle est présente
+	 * @return seed l'identifiant de la seed ou null s'il n'y en a pas
 	 */
 	public Integer getSeed() {
 		return seed;
@@ -36,10 +43,10 @@ public class TransmetteurAnalogiqueBruite extends Transmetteur<Float, Float> {
 
 	
 	/**
-	 * initialise le transmetteur analogique bruite avec le nbEchantillons, la seed et le SNR
-	 * @param nbEchantillons
-	 * @param SNRParBit
-	 * @param seed
+	 * Initialise le transmetteur analogique bruite avec le nbEchantillons, la seed et le SNRpb
+	 * @param nbEchantillons le nombre d'echantillons
+	 * @param SNRParBit le SNRpb
+	 * @param seed la seed
 	 */
 	public TransmetteurAnalogiqueBruite(int nbEchantillons, float SNRParBit, Integer seed) {
 		super();
@@ -57,8 +64,8 @@ public class TransmetteurAnalogiqueBruite extends Transmetteur<Float, Float> {
 
 	/**
 	 * calculer l'ecartype en faisant appel a puissance 
-	 * @return ecartType
-	 * @throws Exception
+	 * @return ecartType l'ecart-type
+	 * @throws Exception l'exception potentiellement levee
 	 */
 	
 	public float ecartType() throws Exception{
@@ -68,7 +75,7 @@ public class TransmetteurAnalogiqueBruite extends Transmetteur<Float, Float> {
 	
 	/**
 	 * calcul de la puissance du signal emis
-	 * @return puissance du signal
+	 * @return puissance la puissance du signal
 	 */
 	public float puissance(){
 		float puissance = 0;

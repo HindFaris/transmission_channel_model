@@ -17,7 +17,7 @@ public class SondePuissance extends Sonde <Float> {
 	super(nom);
     }
    	 
-
+    @Override
 	public void recevoir (Information <Float> information) { 
 		informationRecue = information;
 		int nbElements = information.nbElements();

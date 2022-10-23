@@ -16,6 +16,10 @@ import java.util.*;
  */
 public abstract  class Transmetteur <R,E> implements  DestinationInterface <R>, SourceInterface <E> {
 
+	/**
+	 * Un getter retournant la liste des destinations connectees
+	 * @return destinationsConnectees la liste des destinations connectees
+	 */
 	public LinkedList<DestinationInterface<E>> getDestinationsConnectees() {
 		return destinationsConnectees;
 	}
@@ -49,29 +53,33 @@ public abstract  class Transmetteur <R,E> implements  DestinationInterface <R>, 
 	/**
 	 * retourne la derniere information recue en entree du
 	 * transmetteur
-	 * @return une information   
+	 * @return informationRecue l'information recue  
 	 */
 	public Information <R>  getInformationRecue() {
-		return this.informationRecue;
+		return informationRecue;
 	}
 
 	/**
 	 * retourne la derniere information émise en sortie du
 	 * transmetteur
-	 * @return une information   
+	 * @return informationEmise l'information emise  
 	 */
 	public Information <E>  getInformationEmise() {
-		return this.informationEmise;
+		return informationEmise;
 	}
 
 	/**
-	 * connecte une destination a la sortie du transmetteur
+	 * connecter une destination a la sortie du transmetteur
 	 * @param destination la destination a connecter
 	 */
 	public void connecter (DestinationInterface <E> destination) {
 		destinationsConnectees.add(destination);
 	}
 	
+	/**
+	 * Un getter retournant la taille de la liste des destinations connectees
+	 * @return le nombre de destinations connectees
+	 */
 	public int getNbDestinationsConnectees() {
 		return destinationsConnectees.size();
 	}
@@ -93,13 +101,22 @@ public abstract  class Transmetteur <R,E> implements  DestinationInterface <R>, 
 
 	/**
 	 * emet l'information construite par le transmetteur
+	 * @throws InformationNonConformeException l'exception pouvant etre levee
 	 */
 	public  abstract void emettre() throws InformationNonConformeException; 
 	
+	/**
+	 * Un setter pour fixer l'information emise
+	 * @param informationEmise l'inforamion que l'on veut emettre
+	 */
 	public void setInformationEmise(Information<E> informationEmise) {
 		this.informationEmise = informationEmise;
 	}
 	
+	/**
+	 * Un setter pour fixer l'information recue
+	 * @param informationRecue l'infroamtion que l'on recoit
+	 */
 	public void setInformationRecue(Information<R> informationRecue) {
 		this.informationRecue = informationRecue;
 	}
