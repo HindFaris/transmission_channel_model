@@ -6,9 +6,27 @@ import java.io.PrintStream;
 import simulateur.ArgumentsException;
 import simulateur.Simulateur;
 
+/**
+ * teste l'evolution du TEB en fonction du multi trajet
+ * @author 33663
+ *
+ */
 public class EvolutionTEBEnFonctionDuSNRMultiTrajet {
+	
+	/**
+	 * a
+	 */
+	public EvolutionTEBEnFonctionDuSNRMultiTrajet() {
+		// TODO Auto-generated constructor stub
+	}
 	private final static String CHEMIN = "C:\\Professionnel\\IMT Atlantique\\Info\\Java\\projet2A\\courbes\\NRZ_et_RZ_multitrajet_code_et_non_code.txt";	//Please respect this format
 
+	/**
+	 * tester
+	 * @param args du main 
+	 * @throws ArgumentsException exception
+	 * @throws Exception exception
+	 */
 	public static void main(String[] args) throws ArgumentsException, Exception{
 		PrintStream myConsole = new PrintStream(new File(CHEMIN));
 		System.setOut(myConsole);

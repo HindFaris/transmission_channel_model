@@ -8,23 +8,29 @@ import static org.hamcrest.CoreMatchers.is;
 import emetteur.EmetteurAnalogique;
 
 /**
- * 
+ * classe qui teste emetteur
  * @author gaelc
  *
  */
 public class EmetteurTest {
 	
+	/**
+	 * d
+	 */
 	@Rule
 	public final ErrorCollector errorCollector= new ErrorCollector();
 	//TODO : JAVADOC
 	
+	/**
+	 * a
+	 */
 	public EmetteurTest(){
 	}
 	
-	@Test
 	/**
-	 * 
+	 *a 
 	 */
+	@Test
 	public void EmetteurInitTest() {
 		//Arrange
 		int nbEchantillons = 10000;
@@ -53,6 +59,10 @@ public class EmetteurTest {
 		errorCollector.checkThat( "La valeur du max ne correspond pas",emetteurRZ.getMax() ,is(max));
 	}
 
+	/**
+	 * main pour tester la methode de tests
+	 * @param args du main
+	 */
 	public static void main(String[] args) {
 		EmetteurTest E = new EmetteurTest();
 		

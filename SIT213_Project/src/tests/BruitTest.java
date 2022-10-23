@@ -9,22 +9,28 @@ import java.util.LinkedList;
 import signaux.Bruit;
 
 /**
- * 
+ * classe qui teste le bruit
  * @author gaelc
  *
  */
 public class BruitTest {
 	
+	/**
+	 * a
+	 */
 	@Rule
 	public final ErrorCollector errorCollector= new ErrorCollector();
 	//TODO : JAVADOC
 	
+	/**
+	 * a
+	 */
 	public BruitTest(){}
 	
-	@Test
 	/**
-	 * 
+	 * test bruit
 	 */
+	@Test
 	public void BruitInitTest() {
 		//Arrange
 		float ecartType = 5;
@@ -40,10 +46,10 @@ public class BruitTest {
 		errorCollector.checkThat("La valeur de la seed ne correspond pas", Bruit.getSeed(), is(seed));
 	}
 	
-	@Test
 	/**
-	 * 
+	 * test bruit avec seed
 	 */
+	@Test
 	public void BruitSeedTest() {
 		//Arrange
 		float ecartType = 5;
@@ -83,7 +89,10 @@ public class BruitTest {
 	     return output;
 	 }
 	
-	
+	/**
+	 * main qui rassemble l'ensemble des tests
+	 * @param args  du main
+	 */
 	public static void main(String[] args) {
 		BruitTest E = new BruitTest();
 		

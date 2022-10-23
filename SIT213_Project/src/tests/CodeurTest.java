@@ -12,23 +12,28 @@ import static org.hamcrest.CoreMatchers.is;
 import sources.*;
 
 /**
- * 
+ * classe pour tester codeur
  * @author gaelc
  *
  */
 public class CodeurTest {
 	
+	/**
+	 * a
+	 */
 	@Rule
 	public final ErrorCollector errorCollector= new ErrorCollector();
 	//TODO : JAVADOC
 	
+	/**
+	 * test
+	 */
 	public CodeurTest() {}
 
-
-	@Test
 	/**
-	 * 
+	 * tester codeur
 	 */
+	@Test
 	public void CodeurGlobalTest() {
 		//Arrange
 		SourceFixe s = new SourceFixe("01001110");
@@ -54,6 +59,10 @@ public class CodeurTest {
 		
 	}
 	
+	/**
+	 * test la methode
+	 * @param args parametres du main
+	 */
 	public static void main(String[] args) {	
 		CodeurTest c = new CodeurTest();
 		

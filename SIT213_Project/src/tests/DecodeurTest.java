@@ -12,23 +12,28 @@ import static org.hamcrest.CoreMatchers.is;
 import sources.*;
 
 /**
- * 
+ * classe du decodeur
  * @author gaelc
  *
  */
 public class DecodeurTest {
 	
+	/**
+	 * a
+	 */
 	@Rule
 	public final ErrorCollector errorCollector= new ErrorCollector();
 	//TODO : JAVADOC
 	
+	/**
+	 * g
+	 */
 	public DecodeurTest() {}
 
-
-	@Test
 	/**
-	 * 
+	 *decode test 
 	 */
+	@Test
 	public void DecodeurGlobalTest() {
 		//Arrange
 		SourceFixe s = new SourceFixe("010101010010101101101010");
@@ -53,7 +58,10 @@ public class DecodeurTest {
 		errorCollector.checkThat("L'information traduite par le codeur ne correspond pas a la traduction attendue", decodeur.getInformationEmise(), is(informationTraduite));
 		
 	}
-	
+	/**
+	 * permet de lancer tt les tests
+	 * @param args du main
+	 */
 	public static void main(String[] args) {	
 		DecodeurTest d = new DecodeurTest();
 		

@@ -6,9 +6,26 @@ import java.io.PrintStream;
 import simulateur.ArgumentsException;
 import simulateur.Simulateur;
 
+/**
+ * Classe de l'environnement 2
+ * @author 33663
+ *
+ */
 public class environnement2 {
+	/**
+	 * instancie environnement 2
+	 */
+	public environnement2() {
+		// TODO Auto-generated constructor stub
+	}
 	private final static String CHEMIN = "C:\\Professionnel\\IMT Atlantique\\Info\\Java\\projet2A\\courbes\\environnement2.txt";	//Please respect this format
 
+	/**
+	 * Methode qui genere les tests pour l'environnement
+	 * @param args du main
+	 * @throws ArgumentsException probleme d'exception
+	 * @throws Exception exception
+	 */
 	public static void main(String[] args) throws ArgumentsException, Exception{
 		PrintStream myConsole = new PrintStream(new File(CHEMIN));
 		System.setOut(myConsole);

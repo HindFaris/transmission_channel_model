@@ -6,9 +6,26 @@ import java.io.PrintStream;
 import simulateur.ArgumentsException;
 import simulateur.Simulateur;
 
+/**
+ * methode de l'avancament du TEB en fct du signal
+ * @author 33663
+ *
+ */
 public class EvolutionTEBEnFonctionDuSNRTestMultiTrajetsansBruit {
-	private final static String CHEMIN = "C:\\Users\\33663\\Documents\\2eme année ing\\SIT200\\SIT213\\evolution_TEB_SNR_multitrajet_sansBruit_NRZ.txt";	//Please respect this format
 
+	/**
+	 * a
+	 */
+	public EvolutionTEBEnFonctionDuSNRTestMultiTrajetsansBruit(){
+
+	}
+	private final static String CHEMIN = "C:\\Users\\33663\\Documents\\2eme année ing\\SIT200\\SIT213\\evolution_TEB_SNR_multitrajet_sansBruit_NRZ.txt";	//Please respect this format
+	/**
+	 * a
+	 * @param args du main
+	 * @throws ArgumentsException exception
+	 * @throws Exception exception
+	 */
 	public static void main(String[] args) throws ArgumentsException, Exception{
 		PrintStream myConsole = new PrintStream(new File(CHEMIN));
 		System.setOut(myConsole);
@@ -24,7 +41,7 @@ public class EvolutionTEBEnFonctionDuSNRTestMultiTrajetsansBruit {
 			simulateurNRZ1.execute();
 			Simulateur simulateurRZ2 =  new Simulateur(new String[] {"-mess","100000", "-form", "RZ", "-snrpb", String.valueOf(indice), "-ti", "10", "0.5", "-nbEch", "2"});
 			simulateurNRZ2.execute();
-			
+
 			System.out.println(Float.toString(indice) + ";" + Float.toString(simulateurNRZ1.calculTauxErreurBinaire()) + ";" + 
 					Float.toString(simulateurNRZ2.calculTauxErreurBinaire()) + ";" + Float.toString(simulateurRZ1.calculTauxErreurBinaire()) +
 					";" + Float.toString(simulateurRZ2.calculTauxErreurBinaire()));
