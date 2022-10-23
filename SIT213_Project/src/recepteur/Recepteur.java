@@ -91,7 +91,7 @@ public class Recepteur extends Transmetteur<Float, Boolean>{
 	}
 	
 	/**
-	 * 
+	 * Un getter qui retourne le nombre d'echantillons
 	 * @return nbEchantillons le nombre d'echantillons
 	 */
 	public int getNbEchantillons() {
@@ -99,7 +99,7 @@ public class Recepteur extends Transmetteur<Float, Boolean>{
 	}
 
 	/**
-	 * 
+	 * Un getter qui retourne le minimum et le maximum du signal
 	 * @return min Le minimum du signal
 	 */
 	public float getMin() {
@@ -107,7 +107,7 @@ public class Recepteur extends Transmetteur<Float, Boolean>{
 	}
 
 	/**
-	 * 
+	 * Un getter qui retourne le maximum du signal
 	 * @return max Le maximum du signal
 	 */
 	public float getMax() {
@@ -115,7 +115,7 @@ public class Recepteur extends Transmetteur<Float, Boolean>{
 	}
 
 	/**
-	 * 
+	 * Un getter qui retourne la forme du signal
 	 * @return formeSignal la forme du signal (NRZ, NRZT ou RZ)
 	 */
 	public String getFormeSignal() {
