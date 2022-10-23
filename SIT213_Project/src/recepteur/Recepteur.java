@@ -7,7 +7,7 @@ import destinations.DestinationInterface;
 import information.*;
 import transmetteurs.*;
 
-//Reception de l'information
+
 /**
  * Classe definissant le Recepteur sans Multi trajets
  * @author gaelc
@@ -34,19 +34,14 @@ public class Recepteur extends Transmetteur<Float, Boolean>{
 		this.formeSignal = formSignal;
 	}
 	
-	/**
-	 * permet de recevoir l'information float, ensuite fait appel a la methode dechiffrer 
-	 * pour la transformer en boolean
-	 * @param information L'information a recevoir
-	 * @throws InformationNonConformeException On leve l'exception si l'information n'est pas conforme
-	 */
+	@Override
 	public  void recevoir(Information <Float> information) throws InformationNonConformeException{
 		informationRecue = information;
 		dechiffrer();
 	}
 
 	/**
-	 * Permet de dechiffrer l'information et de passer une information float a une information boolean
+	 * Permet de dechiffrer l'information en comparant au seuil et de passer une information float a une information boolean
 	 * On estime la valeur envoyee a l'origine en faisant une moyenne
 	 * @throws InformationNonConformeException L'exception est levee si l'information n'est pas conforme
 	 */
@@ -66,18 +61,18 @@ public class Recepteur extends Transmetteur<Float, Boolean>{
 		informationEmise  = new Information<Boolean>(); 
 		float moyenneTemp = 0f;
 		int tailleDesBooleens = information.size()/nbEchantillons;
-		
-		
-				
+					
 		for(int index = 0 ; index < tailleDesBooleens ; index++){
 			moyenneTemp=0f;
 			for (int j = 0; j < nbEchantillons; j++) {
 				moyenneTemp += information.get(0);
 				information.remove(0);
 			}
-
+			
+			//calcule la moyenne du bit
 			moyenneTemp = moyenneTemp/nbEchantillons;
-
+			
+			//compare avec la moyenne limite pour decider de la valeur du bit
 			if(moyenneTemp >= moyenneLimite) {
 				informationEmise.add(true);
 			}
@@ -87,9 +82,7 @@ public class Recepteur extends Transmetteur<Float, Boolean>{
 		}
 	}
 
-	/**
-	 * Envoie aux differentes destinations
-	 */
+	@Override
 	public void emettre() throws InformationNonConformeException{
 
 		for (DestinationInterface <Boolean> destinationConnectee : destinationsConnectees) {
