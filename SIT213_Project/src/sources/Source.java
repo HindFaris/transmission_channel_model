@@ -12,10 +12,16 @@ import java.util.*;
  */
 public  abstract class Source <T> implements  SourceInterface <T> {
 
+	/**
+	 * @return recuper les destinations qui sont connectees a la source
+	 */
 	public LinkedList<DestinationInterface<T>> getDestinationsConnectees() {
 		return destinationsConnectees;
 	}
 
+	/**
+	 * @return recuper les transmetteurs qui sont connectees a la source
+	 */
 
 	public LinkedList<Transmetteur<Boolean, Float>> getTransmetteursConnectees() {
 		return transmetteursConnectees;
@@ -26,7 +32,9 @@ public  abstract class Source <T> implements  SourceInterface <T> {
 	 * la liste des composants destination connectes
 	 */
 	protected LinkedList <DestinationInterface <T>> destinationsConnectees;
-	
+	/** 
+	 * la liste des transmetteurs destination connectes
+	 */
 	protected LinkedList <Transmetteur <Boolean,Float>> transmetteursConnectees;
 
 	/** 

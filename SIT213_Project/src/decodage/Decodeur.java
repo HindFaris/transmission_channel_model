@@ -17,7 +17,7 @@ public class Decodeur extends Transmetteur<Boolean, Boolean>{
 	}
 
 	@Override
-	/**
+	/*
 	 * On traduit l'information recue du Canal
 	 * Pour un triplet de bit a 101 (aucune erreur) ou 111, 001, 100 (on fait l'assomption qu'un bit est en erreur) en entree on ajoute 1 a l'information qui sera emise
 	 * Pour le reste des combinaisons des triplets de bit en entree on ajoute 0 a l'information qui sera emise

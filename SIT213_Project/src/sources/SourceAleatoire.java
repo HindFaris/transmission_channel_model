@@ -22,7 +22,7 @@ public class SourceAleatoire extends Source<Boolean>{
 			}
 		}
 		
-		else {
+		else {//si une seed est rentree par l'utilusateur on l'utilise pour generer l'objet Random
 			Random randomZeroOrOne = new Random(seed);
 			for (int index=0; index < nbBitsMess; index++) {
 				informationGeneree.add(randomZeroOrOne.nextBoolean());

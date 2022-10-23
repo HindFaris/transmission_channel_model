@@ -31,30 +31,31 @@ public class EmetteurAnalogique extends Transmetteur<Boolean, Float>{
 		this.nbEchantillons=nbEchantillons;
 	}
 	
-	/**
-	 * recevoir l'information booleenne depuis la source
-	 */
+	@Override
 	public  void recevoir(Information <Boolean> information) throws InformationNonConformeException{
 		informationRecue = information;
 		
 	}
-	/**
-	 * emettre permet de generer un signal "RZ" "NRZ" ou "NRZT" selon ce qui a ete specifie 
-	 * dans les arguments et ensuite d'envoyer cet information vers le recepteur
-	 */
+
+	@Override
 	public void emettre() throws InformationNonConformeException{
 		
 		if(typeEmetteur.equalsIgnoreCase("RZ")) {
-			
+			//si le RZ est remonte par le simulateur, on initialise un signal RZ
 			SignalRZ signal = new SignalRZ(informationRecue, nbEchantillons, min, max);
+			//le signal est stocke dans information emise
 			informationEmise = signal.getSignalSortieInformation();
 		}
 		else if(typeEmetteur.equalsIgnoreCase("NRZ")) {
+			//si le NRZ est remonte par le simulateur, on initialise un signal NRZ
 			SignalNRZ signal = new SignalNRZ(informationRecue, nbEchantillons, min, max);
+			//le signal est stocke dans information emise
 			informationEmise = signal.getSignalSortieInformation();
 		}
 		else if(typeEmetteur.equalsIgnoreCase("NRZT")) {
+			//si le NRZT est remonte par le simulateur, on initialise un signal NRZT
 			SignalNRZT signal = new SignalNRZT(informationRecue, nbEchantillons, min, max);
+			//le signal est stocke dans information emise
 			informationEmise = signal.getSignalSortieInformation();
 		}
 		else {
@@ -67,18 +68,31 @@ public class EmetteurAnalogique extends Transmetteur<Boolean, Float>{
 		}		 
 	}
 	
+	/**
+	 * 
+	 * @return le type d'emetteur RZ, NRZ ou NRZT
+	 */
 	public String getTypeEmetteur() {
 		return typeEmetteur;
 	}
-
+	/**
+	 * 
+	 * @return le nombre d'echantillons
+	 */
 	public int getNbEchantillons() {
 		return nbEchantillons;
 	}
-
+	/**
+	 * 
+	 * @return l'amplitude minimale
+	 */
 	public float getMin() {
 		return min;
 	}
-
+	/**
+	 * 
+	 * @return l'amplitude maximale
+	 */
 	public float getMax() {
 		return max;
 	}
