@@ -13,10 +13,10 @@ public class TestsDeComplexite {
 		PrintStream myConsole = new PrintStream(new File(CHEMIN));
 		System.setOut(myConsole);
 
-		//System.out.println("Simulations pour un nombre d'echantillons de 10000");
+		System.out.println("nbEch=30, 5 multi-trajets, codage");
 		System.out.println("nb echantillon;temps (ms)");
 		for(int indice = 40000; indice<=400000; indice += 20000) {
-			Simulateur simulateur =  new Simulateur(new String[] {"-mess", String.valueOf(indice), "-form", "NRZ", "-snrpb", "20", "-codeur"});
+			Simulateur simulateur =  new Simulateur(new String[] {"-mess", String.valueOf(indice), "-form", "NRZ", "-snrpb", "10", "-codeur","-ti","10","0.7","26","0.4","-64","0.2","91","0.3","56","0.1"});
 			long debut = System.currentTimeMillis();
 			simulateur.execute();
 			long fin = System.currentTimeMillis();
