@@ -13,10 +13,13 @@ import org.junit.runner.notification.Failure;
 public class Tests {
 	
 	/**
-	 * 
+	 * a
 	 */
 	public Tests () {}
 
+	/**
+	 * teste global
+	 */
 	public static void TestReport(){
 		
 		System.out.println("Beginning of a new Test Report...  ");
@@ -52,7 +55,7 @@ public class Tests {
 	
 	/**
 	 * Lance test()
-	 * @param args
+	 * @param args arguments du main
 	 */
 	public static void main(String[] args) {
 		TestReport();

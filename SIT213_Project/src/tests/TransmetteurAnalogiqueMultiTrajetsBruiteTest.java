@@ -12,14 +12,24 @@ import transmetteurs.*;
 
 
 /**
+ * Classe Tranmsetteur
  * @author jerom
  *
  */
 public class TransmetteurAnalogiqueMultiTrajetsBruiteTest {
-	
+
+	/**
+	 * constructeur de transmetteur analogique multiTrajet
+	 */
+	public TransmetteurAnalogiqueMultiTrajetsBruiteTest() {
+		// TODO Auto-generated constructor stub
+	}
+	/**
+	 * a 
+	 */
 	@Rule
 	public ErrorCollector collector = new ErrorCollector();
-	
+
 	/**
 	 * Test method for {@link transmetteurs.TransmetteurAnalogiqueMultiTrajets#ecartType()}.
 	 * @throws Exception quelconque
@@ -39,10 +49,10 @@ public class TransmetteurAnalogiqueMultiTrajetsBruiteTest {
 		TransmetteurAnalogiqueMultiTrajets transmetteur = new TransmetteurAnalogiqueMultiTrajets(nbEchantillons, SNRParBit, seed, alphas, taus, bruitActif);
 		Float [] signalRecu = {(float)5,(float)5,(float)-5,(float)-5};
 		Information<Float> InfomationRecue = new Information<Float>(signalRecu);
-		
+
 		//Act
 		transmetteur.setInformationRecue(InfomationRecue);
-		
+
 		//Assert
 		assertEquals("L'ecart type n'est pas le bon",(float)2, transmetteur.ecartType(),0.1);
 	}
@@ -61,15 +71,15 @@ public class TransmetteurAnalogiqueMultiTrajetsBruiteTest {
 		alphas.add((float) 0.2);
 		taus.add(12);
 		boolean bruitActif = true;
-		
+
 		TransmetteurAnalogiqueMultiTrajets transmetteur = new TransmetteurAnalogiqueMultiTrajets(nbEchantillons, SNRParBit, seed, alphas, taus, bruitActif);
 		Float [] signalRecu = {(float)5,(float)5,(float)-5,(float)-5};
 		Information<Float> InfomationRecue = new Information<Float>(signalRecu);
-		
+
 		//Act
 		transmetteur.setInformationRecue(InfomationRecue);
 		//transmetteur.emettre();
-		
+
 		//Assert
 		assertEquals("La puissance n'est pas la bonne", 25, transmetteur.puissance(),0.1);
 	}

@@ -6,9 +6,28 @@ import java.io.PrintStream;
 import simulateur.ArgumentsException;
 import simulateur.Simulateur;
 
+/**
+ * classe qui teste la complexite
+ * @author 33663
+ *
+ */
 public class TestsDeComplexite {
+	
+	/**
+	 * constructeur de complexite
+	 */
+	public TestsDeComplexite() {
+		// TODO Auto-generated constructor stub
+	}
+	
 	private final static String CHEMIN = "C:\\Professionnel\\IMT Atlantique\\Info\\Java\\projet2A\\courbes\\complexiteaveccodeur.txt";	//Respecter ce format
 
+	/**
+	 * teste la complexite
+	 * @param args arguments de main
+	 * @throws ArgumentsException exception
+	 * @throws Exception exception
+	 */
 	public static void main(String[] args) throws ArgumentsException, Exception{
 		PrintStream myConsole = new PrintStream(new File(CHEMIN));
 		System.setOut(myConsole);

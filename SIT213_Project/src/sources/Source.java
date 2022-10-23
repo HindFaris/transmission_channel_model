@@ -13,6 +13,7 @@ import java.util.*;
 public  abstract class Source <T> implements  SourceInterface <T> {
 
 	/**
+	 * la methode qui retourne toutes les destinations connectees
 	 * @return recuper les destinations qui sont connectees a la source
 	 */
 	public LinkedList<DestinationInterface<T>> getDestinationsConnectees() {
@@ -20,6 +21,7 @@ public  abstract class Source <T> implements  SourceInterface <T> {
 	}
 
 	/**
+	 * la methode qui retourne toutes les transmetteurs connectees
 	 * @return recuper les transmetteurs qui sont connectees a la source
 	 */
 
@@ -65,11 +67,7 @@ public  abstract class Source <T> implements  SourceInterface <T> {
 	public Information <T>  getInformationEmise() {
 		return this.informationEmise;
 	}
-
-	/**
-	 * connecte une destination a la source
-	 * @param destination la destination a connecter
-	 */
+	@Override
 	public void connecter (DestinationInterface <T> destination) {
 		destinationsConnectees.add(destination); 
 	}
@@ -82,18 +80,20 @@ public  abstract class Source <T> implements  SourceInterface <T> {
 		destinationsConnectees.remove(destination); 
 	}
 
-	/**
-	 *Emet l'information generee
-	 */
+	@Override
 	public void emettre() throws InformationNonConformeException {
 
 		for (DestinationInterface<T> destinationConnectee : destinationsConnectees) {
 			destinationConnectee.recevoir(informationGeneree);
 		}
-		
+
 		this.informationEmise = informationGeneree;   	
 	}
-	
+
+	/**
+	 * permet de recuperer l'info
+	 * @return l'information
+	 */
 	public Information<T> getInformationGeneree() {
 		return informationGeneree;
 	}

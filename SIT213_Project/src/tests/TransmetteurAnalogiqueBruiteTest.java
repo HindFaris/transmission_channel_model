@@ -11,12 +11,15 @@ import information.InformationNonConformeException;
 import transmetteurs.*;
 
 /**
- * 
+ * transmetteur Analogique test
  * @author gaelc
  *
  */
 public class TransmetteurAnalogiqueBruiteTest {
 
+	/**
+	 * a
+	 */
 	@Rule
 	public final ErrorCollector errorCollector= new ErrorCollector();
 	//TODO : JAVADOC
@@ -24,12 +27,15 @@ public class TransmetteurAnalogiqueBruiteTest {
 	//La source qu'on envoie a chaque fois
 	SourceFixe Source = new SourceFixe("0111000111");
 
+	/**
+	 * a
+	 */
 	public TransmetteurAnalogiqueBruiteTest(){}
 
-	@Test
 	/**
-	 * 
+	 * a
 	 */
+	@Test
 	public void TransmetteurAnalogiqueBruiteInitTest() {
 		//Arrange
 		int nbEchantillons = 10;
@@ -46,10 +52,11 @@ public class TransmetteurAnalogiqueBruiteTest {
 
 	}
 
-	@Test
 	/**
-	 * 
+	 * a
 	 */
+	@Test
+
 	public void TransmetteurAnalogiqueBruiteCalculPuissanceNRZTest() {
 		//Arrange
 		int nbEchantillons = 10;
@@ -77,10 +84,11 @@ public class TransmetteurAnalogiqueBruiteTest {
 		assertEquals("La valeur de la puissance ne correspond pas sur le NRZ",25f,puissance,0.5f);
 	}
 	
-	@Test
 	/**
-	 * 
+	 * a
 	 */
+	@Test
+
 	public void TransmetteurAnalogiqueBruiteCalculPuissanceNRZTTest() {
 		//Arrange
 		int nbEchantillons = 10;
@@ -109,10 +117,11 @@ public class TransmetteurAnalogiqueBruiteTest {
 		assertEquals("La valeur de la puissance ne correspond pas sur le NRZT",20f,puissance,0.5f);
 	}
 	
-	@Test
 	/**
-	 * 
+	 * a
 	 */
+	@Test
+
 	public void TransmetteurAnalogiqueBruiteCalculPuissanceRZTest() {
 		//Arrange
 		int nbEchantillons = 10;
@@ -140,10 +149,11 @@ public class TransmetteurAnalogiqueBruiteTest {
 		assertEquals("La valeur de la puissance ne correspond pas sur le RZ",25f,puissance,0.5f);
 	}
 
-	@Test
 	/**
-	 * 
+	 * a
 	 */
+	@Test
+
 	public void TransmetteurAnalogiqueBruiteCalculEcartTypeNRZTest() {
 		
 		//Arrange
@@ -180,10 +190,11 @@ public class TransmetteurAnalogiqueBruiteTest {
 		}
 	}
 	
-	@Test
 	/**
-	 * 
+	 * a
 	 */
+	@Test
+
 	public void TransmetteurAnalogiqueBruiteCalculEcartTypeNRZTTest() {
 		
 		//Arrange
@@ -220,10 +231,11 @@ public class TransmetteurAnalogiqueBruiteTest {
 		}
 	}
 	
-	@Test
 	/**
-	 * 
+	 * a
 	 */
+	@Test
+	
 	public void TransmetteurAnalogiqueBruiteCalculEcartTypeRZTest() {
 		
 		//Arrange
@@ -260,6 +272,10 @@ public class TransmetteurAnalogiqueBruiteTest {
 		}
 	}
 
+	/**
+	 * teste le tranmsetteur
+	 * @param args du main
+	 */
 	public static void main(String[] args) {
 		TransmetteurAnalogiqueBruiteTest T = new TransmetteurAnalogiqueBruiteTest();
 

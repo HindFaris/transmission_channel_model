@@ -10,18 +10,26 @@ import sources.SourceFixe;
 import information.Information;
 
 /**
- * 
+ * Methode qui teste le signal
  * @author gaelc
  *
  */
 public class SignalTest {
-	
+	/**
+	 * a
+	 */
 	@Rule
 	public final ErrorCollector errorCollector= new ErrorCollector();
 	//TODO : JAVADOC
 	
+	/**
+	 * a
+	 */
 	public SignalTest(){}
 
+	/**
+	 * a
+	 */
 	@Test
 	public void SignalInitTest() {
 		//Arrange
@@ -54,6 +62,10 @@ public class SignalTest {
 		errorCollector.checkThat( "La valeur du max ne correspond pas",SignalRZ.getMax() ,is(max));
 	}
 	
+	/**
+	 * teste la main
+	 * @param args arguments du main
+	 */
 	public static void main(String[] args) {
 		
 		SignalTest S = new SignalTest();

@@ -8,23 +8,29 @@ import information.InformationNonConformeException;
 import sources.SourceAleatoire;
 
 /**
- * 
+ * la methode qui teste la source aleatoire
  * @author gaelc
  *
  */
 public class SourceAleatoireTest {
 
+	/**
+	 * a
+	 */
 	@Rule
 	public final ErrorCollector errorCollector= new ErrorCollector();
 	//TODO : JAVADOC
 	
+	/**
+	 * a
+	 */
 	public SourceAleatoireTest() {
 	}
 	
-	@Test
 	/**
-	 * 
+	 * a
 	 */
+	@Test
 	public void SourceAleatoireNbBitQuelconqueTest() {
 		//Arrange
 		int nBitMess=7;
@@ -44,11 +50,10 @@ public class SourceAleatoireTest {
         errorCollector.checkThat("Le nombre de bit du message de correspond pas", 
 				 Source.getInformationGeneree().nbElements(),is(nBitMess));
 	}
-	
-	@Test
 	/**
-	 * 
+	 * a
 	 */
+	@Test
 	public void SourceAleatoireNbBitNulTest() {
 		//Arrange
 		int nBitMess=0;
@@ -70,10 +75,10 @@ public class SourceAleatoireTest {
 		
 	}
 	
-	@Test
 	/**
-	 * 
+	 * a
 	 */
+	@Test
 	public void SourceAleatoireSeedQuelconqueTest() {
 		//Arrange
 		Integer seed=23;
@@ -87,10 +92,10 @@ public class SourceAleatoireTest {
 				Source1.getInformationGeneree(), Source2.getInformationGeneree());
 	}
 
-	@Test
 	/**
-	 * 
+	 *a 
 	 */
+	@Test
 	public void SourceAleatoireSeedNegativeTest() {
 		//Arrange
 		Integer seed=-40;
@@ -105,6 +110,10 @@ public class SourceAleatoireTest {
 
 	}
 
+	/**
+	 * main qui teste
+	 * @param args arguments de la methode
+	 */
 
 	public static void main(String[] args) {
 		

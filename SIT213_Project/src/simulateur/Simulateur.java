@@ -456,13 +456,15 @@ public class Simulateur {
 		}
 	}
 
-	/** @return le nombre d'echantillon a utiliser */
+	/** 
+	 * Un getter du nombre d'achantillons
+	 * @return le nombre d'echantillon a utiliser */
 	public int getNbEchantillon() {
 		return nbEchantillon;
 	}
 
 	/**
-	 * 
+	 * Un getter de l'amplitude minimale
 	 * @return min Le minimum du signal
 	 */
 	public float getMin() {
@@ -470,7 +472,7 @@ public class Simulateur {
 	}
 
 	/**
-	 * 
+	 * Un getter de l'amplitude maximale
 	 * @return max Le maximum du signal
 	 */
 	public float getMax() {
@@ -478,7 +480,7 @@ public class Simulateur {
 	}
 
 	/**
-	 * 
+	 * Un getter de la forme du signal
 	 * @return formeSignal la forme du signal (NRZ, NRZT ou RZ)
 	 */
 	public String getFormSignal() {
@@ -486,7 +488,7 @@ public class Simulateur {
 	}
 
 	/**
-	 * 
+	 * retourne la seed
 	 * @return seed la graine a utiliser en cas de source aleatoire
 	 */
 	public Integer getSeed() {
@@ -494,7 +496,7 @@ public class Simulateur {
 	}
 
 	/**
-	 * 
+	 * retourne le nombre de bits
 	 * @return nbBitsMess le nombre de bit du message a transmettre
 	 */
 	public int getNbBitsMess() {
@@ -502,7 +504,7 @@ public class Simulateur {
 	}
 
 	/**
-	 * 
+	 * Retourne la phrase correspondant au message
 	 * @return messageString la String correspondant au message
 	 */
 	public String getMessageString() {

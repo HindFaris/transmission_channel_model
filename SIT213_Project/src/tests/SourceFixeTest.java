@@ -10,22 +10,28 @@ import information.InformationNonConformeException;
 import sources.SourceFixe;
 
 /**
- * 
+ * La classe qui teste la source fixe
  * @author gaelc
  *
  */
 public class SourceFixeTest {
 	
+	/**
+	 * a
+	 */
 	@Rule
 	public final ErrorCollector errorCollector= new ErrorCollector();
 	//TODO : JAVADOC
 	
+	/**
+	 * a
+	 */
 	public SourceFixeTest(){}
 	
-	@Test
 	/**
-	 * 
+	 * a
 	 */
+	@Test
 	public void SourceFixeInitTest () {
 		//Arrange
 		String longBinary = new String("0111000111");
@@ -54,10 +60,10 @@ public class SourceFixeTest {
         errorCollector.checkThat("ERR : L'information generee ne correspond pas a l'information emise", Source.getInformationEmise(), is(Source.getInformationGeneree()));
 	}
 	 
-	@Test
 	/**
-	 * 
+	 * a
 	 */
+	@Test
 	public void SourceFixeLengthTest () {
 		//Arrange
 		String shortBinary = new String("011");
@@ -73,6 +79,10 @@ public class SourceFixeTest {
 		assertEquals("ERR : La longueur information generee est inferieur a 7", false, result  );
 	}
 	
+	/**
+	 * main du test
+	 * @param args arguments du main
+	 */
 	public static void main(String[] args) {
 		SourceFixeTest S = new SourceFixeTest();
 		

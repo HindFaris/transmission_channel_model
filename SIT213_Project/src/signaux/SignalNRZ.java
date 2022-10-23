@@ -4,14 +4,19 @@ import java.util.LinkedList;
 
 import information.Information;
 
+/**
+ * classe permettant de gener le signal NRZ
+ * @author 33663
+ *
+ */
 public class SignalNRZ extends Signal{
 
 	/**
 	 * Le constructeur faisant appel au constructeur de la classe mere : Signal
-	 * @param informationRecue
-	 * @param nbEchantillons
-	 * @param min
-	 * @param max
+	 * @param informationRecue information recu
+	 * @param nbEchantillons le nombre d'echantillons
+	 * @param min l'amplitude minimale
+	 * @param max l'amplitude maximale
 	 */
 	public SignalNRZ(Information<Boolean> informationRecue, int nbEchantillons, float min, float max) {
 		super(informationRecue, nbEchantillons, min, max);

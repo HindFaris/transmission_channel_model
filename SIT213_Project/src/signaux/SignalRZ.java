@@ -5,8 +5,20 @@ import java.util.function.ObjDoubleConsumer;
 
 import information.Information;
 
+/**
+ * Classe pour generer le signal RZ
+ * @author 33663
+ *
+ */
 public class SignalRZ extends Signal{
 
+	/**
+	 * permet d'initialiser le signal RZ
+	 * @param informationRecue l'info recue
+	 * @param nbEchantillons le nb d'echantillons
+	 * @param min l'amplitude minimale
+	 * @param max l'amplitude maximale
+	 */
 	public SignalRZ(Information<Boolean> informationRecue, int nbEchantillons, float min, float max) {
 		super(informationRecue, nbEchantillons, min, max);
 	}
