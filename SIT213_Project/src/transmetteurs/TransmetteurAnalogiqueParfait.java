@@ -4,6 +4,11 @@ import destinations.DestinationInterface;
 import information.Information;
 import information.InformationNonConformeException;
 
+/**
+ * Le transmetteur analogique parfait
+ * @author jerom
+ *
+ */
 public class TransmetteurAnalogiqueParfait extends Transmetteur<Float, Float> {
 
 	@Override

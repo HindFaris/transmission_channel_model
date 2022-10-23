@@ -1,10 +1,12 @@
 package sources;
 
 import information.Information;
-
+/**
+ * La source generant la trame de bits demandee
+ * @author jerom
+ *
+ */
 public class SourceFixe extends Source<Boolean>{
-    
-    
     /**
      * Une source qui envoie toujours le meme message
      * @param binaryWord

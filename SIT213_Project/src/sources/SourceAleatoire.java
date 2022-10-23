@@ -3,7 +3,11 @@ package sources;
 import java.util.Random;
 import information.Information;
 
-
+/**
+ * La source generant une trame de bit de maniere aleatoire
+ * @author jerom
+ *
+ */
 public class SourceAleatoire extends Source<Boolean>{
 
 	/**
