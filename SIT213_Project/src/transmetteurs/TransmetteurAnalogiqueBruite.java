@@ -8,23 +8,39 @@ import information.InformationNonConformeException;
 import signaux.Bruit;
 
 public class TransmetteurAnalogiqueBruite extends Transmetteur<Float, Float> {
-
+	
+	private float SNRParBit;
+	private Integer seed = null;
 	private int nbEchantillons;
+	
+	
+	/**
+	 * retourne le nombre d'echantillons
+	 */
 	public int getNbEchantillons() {
 		return nbEchantillons;
 	}
 
+	/**
+	 * retourne le SNRparBit
+	 */
 	public float getSNRParBit() {
 		return SNRParBit;
 	}
-
+	/**
+	 * retourne la seed si elle existe
+	 */
 	public Integer getSeed() {
 		return seed;
 	}
 
-	private float SNRParBit;
-	private Integer seed = null;
 	
+	/**
+	 * initialise le transmetteur analogique bruite avec le nbEchantillons, la seed et le SNR
+	 * @param nbEchantillons
+	 * @param SNRParBit
+	 * @param seed
+	 */
 	public TransmetteurAnalogiqueBruite(int nbEchantillons, float SNRParBit, Integer seed) {
 		super();
 		this.nbEchantillons = nbEchantillons;
@@ -33,16 +49,16 @@ public class TransmetteurAnalogiqueBruite extends Transmetteur<Float, Float> {
 		informationEmise = new Information<Float>();
 	}
 	
-	/**
-	 * recevoir l'information float
-	 */
+	@Override
 	public void recevoir(Information <Float> information) throws InformationNonConformeException{
 
 		informationRecue = information;
 	}
 
 	/**
-	 * emettre l'information float a toutes les destinations connectees
+	 * calculer l'ecartype en faisant appel a puissance 
+	 * @return ecartType
+	 * @throws Exception
 	 */
 	
 	public float ecartType() throws Exception{
@@ -50,12 +66,16 @@ public class TransmetteurAnalogiqueBruite extends Transmetteur<Float, Float> {
 		return ecartType;
 	}
 	
+	/**
+	 * calcul de la puissance du signal emis
+	 * @return puissance du signal
+	 */
 	public float puissance(){
 		float puissance = 0;
 		LinkedList<Float> copieInformationRecue = new LinkedList<Float>();
 		
 		try {
-			copieInformationRecue = informationRecue.cloneInformation();
+			copieInformationRecue = informationRecue.cloneInformation();//travaille sur la copie pour eviter les problemes de complexite
 		} catch (Exception e) {
 
 		}
@@ -67,12 +87,14 @@ public class TransmetteurAnalogiqueBruite extends Transmetteur<Float, Float> {
 		return puissance;
 	}
 	
+	@Override
 	public void emettre() throws InformationNonConformeException {
 		
 		Bruit bruit = null;
 		try {
 			bruit = new Bruit(this.ecartType(), informationRecue.nbElements(), seed);
 		} catch (Exception e) {
+			System.out.println("Probleme survenu dans la creation du bruit");
 		}
 		int tailleInformation = informationRecue.nbElements();
 		for(int indice = 0 ; indice < tailleInformation; indice++) {

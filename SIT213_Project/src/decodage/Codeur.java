@@ -17,7 +17,7 @@ public class Codeur extends Transmetteur<Boolean, Boolean> {
 	}
 
 	@Override
-	/**
+	/*
 	 * On traduit l'information recue de l'Emetteur (l'Objet JAVA du moins, car le codeur fait en soit partie de l'emission)
 	 * Pour un bit a 1 en entree on ajoute 101 a l'information qui sera emise
 	 * Pour un bit a 0 en entree on ajoute 010 a l'information qui sera emise
@@ -28,7 +28,7 @@ public class Codeur extends Transmetteur<Boolean, Boolean> {
 		final int TAILLEINFORMATIONRECUE = informationRecue.nbElements();
 		LinkedList<Boolean> informationRecueCopie = new LinkedList<Boolean>();
 		try {
-			informationRecueCopie = informationRecue.cloneInformation();
+			informationRecueCopie = informationRecue.cloneInformation();//on travaille sur la copie pour eviter les problème de la complexite
 		} catch (Exception e) {
 			e.printStackTrace();
 		}

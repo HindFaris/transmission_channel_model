@@ -6,16 +6,12 @@ import information.InformationNonConformeException;
 
 public class TransmetteurAnalogiqueParfait extends Transmetteur<Float, Float> {
 
-	/**
-	 * recevoir l'information float
-	 */
+	@Override
 	public void recevoir(Information <Float> information) throws InformationNonConformeException{
 		informationRecue = information;
 	}
 
-	/**
-	 * emettre l'information float a toutes les destinations connectees
-	 */
+	@Override
 	public void emettre() throws InformationNonConformeException{
 		for (DestinationInterface<Float> destinationConnectee : destinationsConnectees) {
 			destinationConnectee.recevoir(informationRecue);

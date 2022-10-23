@@ -6,14 +6,13 @@ import information.InformationNonConformeException;
 
 public class TransmetteurParfait extends Transmetteur<Boolean, Boolean>{
 
+	@Override
 	public void recevoir(Information <Boolean> information) throws InformationNonConformeException{
 
 		informationRecue = information;
 	}
 
-	/**
-	 * emet l'information construite par le transmetteur
-	 */
+	@Override
 	public void emettre() throws InformationNonConformeException{
 
 		for (DestinationInterface <Boolean> destinationConnectee : destinationsConnectees) {
